@@ -12,7 +12,7 @@ class AddNameToStudents < ActiveRecord::Migration[5.2]
     add_column :students, :address, :text
     add_column :students, :phone, :string
     add_column :students, :parent_email, :string
-    add_column :students, :class, :integer
+    add_column :students, :subject, :integer
     add_column :students, :membership_number, :integer
     add_column :students, :status, :boolean, null: false, default: true
   end

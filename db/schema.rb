@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2020_12_05_094242) do
     t.text "address"
     t.string "phone"
     t.string "parent_email"
-    t.integer "class"
+    t.integer "subject"
     t.integer "membership_number"
     t.boolean "status", default: true, null: false
     t.index ["email"], name: "index_students_on_email", unique: true
