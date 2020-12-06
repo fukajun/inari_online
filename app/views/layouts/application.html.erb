@@ -9,6 +9,34 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
+  <header class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <nav>
+        <ul class="nav navbar-nav navbar-right">
+          <!-- 管理者ログイン -->
+          <% if admin_signed_in? %>
+            <li><%= link_to ' Home', root_path %></li>
+            <li><%= link_to ' About', homes_about_path %></li>
+            <li><%= link_to ' Log Out', destroy_admin_session_path, method: :delete %></li>
+
+          <!-- 塾生ログイン -->
+          <% elsif student_signed_in? %>
+            <li><%= link_to ' Home', root_path %></li>
+            <li><%= link_to ' About', homes_about_path %></li>
+            <li><%= link_to ' Log Out', destroy_student_session_path, method: :delete %></li>
+
+          <!-- ログアウト -->
+          <% else %>
+            <li><%= link_to ' Home', root_path %></li>
+            <li><%= link_to ' About', homes_about_path %></li>
+            <li><%= link_to ' Student Log In', new_student_session_path %></li>
+            <li><%= link_to ' Admin', new_admin_session_path %></li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
   <body>
     <%= yield %>
   </body>
