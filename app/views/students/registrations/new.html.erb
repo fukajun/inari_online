@@ -1,29 +1,95 @@
-<h2>Sign up</h2>
+<div>
+  <h2>Sign up</h2>
+</div>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "students/shared/error_messages", resource: resource %>
+<div>  
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "students/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    <div class="field">
+      <%= f.label :first_name %><br />
+      <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name" %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+    <div class="field">
+      <%= f.label :last_name %><br />
+      <%= f.text_field :last_name, autocomplete: "last_name" %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+    <div class="field">
+      <%= f.label :kana_name %><br />
+      <%= f.text_field :kana_name, autocomplete: "kana_name" %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
+    <div class="field">
+      <%= f.label :parent_name %><br />
+      <%= f.text_field :parent_name, autocomplete: "parent_name" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :gender %><br />
+      <%= f.radio_button :gender, :male %>
+      <%= f.label :male %>
+      <%= f.radio_button :gender, :female %>
+      <%= f.label :female %>
+    </div>
+
+    <div class="field">
+      <%= f.label :birthday %><br />
+      <%= f.date_field :birthday, autocomplete: "birthday" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :school %><br />
+      <%= f.text_field :school, autocomplete: "school" %>
+    </div>
+
+    <!-- grade -->
+    <!-- prefecture -->
+
+    <div class="field">
+      <%= f.label :address %><br />
+      <%= f.text_field :address, autocomplete: "address" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :phone %><br />
+      <%= f.text_field :phone, autocomplete: "phone" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autocomplete: "email" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :parent_email %><br />
+      <%= f.email_field :parent_email, autocomplete: "parent_email" %>
+    </div>
+
+    <!-- subject -->
+
+
+
+
+
+    <div class="field">
+      <%= f.label :password %>
+      <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %><br />
+      <%= f.password_field :password, autocomplete: "new-password" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Sign up" %>
+    </div>
+  <% end %>
+</div>
 
 <%= render "students/shared/links" %>
