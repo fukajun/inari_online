@@ -20,16 +20,16 @@
             <li><%= link_to ' Log Out', destroy_admin_session_path, method: :delete %></li>
 
           <!-- 塾生ログイン -->
-          <% elsif student_signed_in? %>
+          <% elsif online_signed_in? %>
             <li><%= link_to ' Home', root_path %></li>
             <li><%= link_to ' About', homes_about_path %></li>
-            <li><%= link_to ' Log Out', destroy_student_session_path, method: :delete %></li>
+            <li><%= link_to ' Log Out', destroy_online_session_path, method: :delete %></li>
 
           <!-- ログアウト -->
           <% else %>
             <li><%= link_to ' Home', root_path %></li>
             <li><%= link_to ' About', homes_about_path %></li>
-            <li><%= link_to ' Student Log In', new_student_session_path %></li>
+            <li><%= link_to ' Log In', new_online_session_path %></li>
             <li><%= link_to ' Admin', new_admin_session_path %></li>
           <% end %>
         </ul>
