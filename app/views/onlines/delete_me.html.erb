@@ -1,0 +1,17 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-offset-4 col-xs-4">
+			<h3>Are you really withdraw ?</h3>
+			<section>
+				退会すると、会員登録情報や<br>
+				これまでの購入履歴が閲覧できなくなります。<br>
+				退会する場合は、【退会する】をクリックしてください。
+			</section>
+
+			<div>
+				<%= link_to "Don't withdraw", online_path, class: "btn btn-success btn-lg center-block" %>
+				<%= link_to "Withdraw", online_withdraw_path, method: :put, class: "btn btn-danger btn-lg center-block" %>
+			</div>
+		</div>
+	</div>
+</div>
