@@ -39,12 +39,12 @@ ActiveRecord::Schema.define(version: 2020_12_05_094242) do
     t.integer "gender"
     t.date "birthday"
     t.string "school"
-    t.integer "grade"
-    t.integer "prefecture"
+    t.integer "grade", default: 0
+    t.integer "prefecture", default: 0
     t.text "address"
     t.string "phone"
     t.string "parent_email"
-    t.integer "subject"
+    t.integer "subject", default: 0
     t.integer "membership_number"
     t.boolean "status", default: true, null: false
     t.index ["email"], name: "index_onlines_on_email", unique: true
