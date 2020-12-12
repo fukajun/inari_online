@@ -23,6 +23,7 @@
           <% elsif online_signed_in? %>
             <li><%= link_to ' Home', root_path %></li>
             <li><%= link_to ' About', homes_about_path %></li>
+            <li><%= link_to ' My page', online_path(current_online) %></li>
             <li><%= link_to ' Log Out', destroy_online_session_path, method: :delete %></li>
 
           <!-- ログアウト -->
