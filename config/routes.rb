@@ -5,10 +5,17 @@ Rails.application.routes.draw do
 
   devise_for :admins
 
+
   devise_for :onlines, controllers:{
   	sessions:      "onlines/sessions",
 		passwords:     "onlines/passwords",
 		registrations: "onlines/registrations" 
   }
+
+  resources :onlines, only: [:show, :edit, :update]
+
+  get "onlines/:id/delete_me" => "onlines#delete_me", as: "online_delete_me"
+  put "onlines/:id/delete_me" => "onlines#withdraw", as: "online_withdraw"
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
