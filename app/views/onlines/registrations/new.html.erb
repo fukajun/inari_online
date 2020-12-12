@@ -7,27 +7,27 @@
     <%= render "onlines/shared/error_messages", resource: resource %>
 
     <div class="field">
-      <%= f.label :first_name %><br />
+      <%= f.label :first_name, "名前(姓)" %><br />
       <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name" %>
     </div>
 
     <div class="field">
-      <%= f.label :last_name %><br />
+      <%= f.label :last_name, "名前(名)" %><br />
       <%= f.text_field :last_name, autocomplete: "last_name" %>
     </div>
 
     <div class="field">
-      <%= f.label :kana_name %><br />
+      <%= f.label :kana_name, "名前(カナ)" %><br />
       <%= f.text_field :kana_name, autocomplete: "kana_name" %>
     </div>
 
     <div class="field">
-      <%= f.label :parent_name %><br />
+      <%= f.label :parent_name, "名前(保護者)" %><br />
       <%= f.text_field :parent_name, autocomplete: "parent_name" %>
     </div>
 
     <div class="field">
-      <%= f.label :gender %><br />
+      <%= f.label :gender, "性別" %><br />
       <%= f.radio_button :gender, :male %>
       <%= f.label :male %>
       <%= f.radio_button :gender, :female %>
@@ -35,41 +35,50 @@
     </div>
 
     <div class="field">
-      <%= f.label :birthday %><br />
+      <%= f.label :birthday, "生年月日" %><br />
       <%= f.date_field :birthday, autocomplete: "birthday" %>
     </div>
 
     <div class="field">
-      <%= f.label :school %><br />
+      <%= f.label :school, "2021年4月からの学校名" %><br />
       <%= f.text_field :school, autocomplete: "school" %>
     </div>
 
-    <!-- grade -->
-    <!-- prefecture -->
+    <div class="field">
+      <%= f.label :grade, "2021年4月からの学年" %><br />
+      <%= f.select :grade, Online.grades.keys, class: "grade" %>
+    </div>
 
     <div class="field">
-      <%= f.label :address %><br />
+      <%= f.label :prefecture, "都道府県" %><br />
+      <%= f.select :prefecture, Online.prefectures.keys, class: "prefecture" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :address, "市区町村以下の住所" %><br />
       <%= f.text_field :address, autocomplete: "address" %>
     </div>
 
     <div class="field">
-      <%= f.label :phone %><br />
+      <%= f.label :phone, "電話番号" %><br />
       <%= f.text_field :phone, autocomplete: "phone" %>
     </div>
 
     <div class="field">
-      <%= f.label :email %><br />
+      <%= f.label :email, "E-mail" %><br />
       <%= f.email_field :email, autocomplete: "email" %>
     </div>
 
     <div class="field">
-      <%= f.label :parent_email %><br />
+      <%= f.label :parent_email, "E-mail(保護者)" %><br />
       <%= f.email_field :parent_email, autocomplete: "parent_email" %>
     </div>
 
     <!-- subject -->
-
-
+    <div class="field">
+      <%= f.label :subject, "受講科目" %><br />
+      <%= f.select :subject, Online.subjects.keys, class: "subject" %>
+    </div>
 
 
 
