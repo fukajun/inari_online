@@ -3,13 +3,21 @@ Rails.application.routes.draw do
   get 'homes/top'
   get 'homes/about'
 
-  devise_for :admins
+  # 管理者
+  devise_for :admins, controllers:{
+    sessions:      "admins/sessions",
+    passwords:     "admins/passwords",
+    registrations: "admins/registrations"
+  }
+
+  get 'admins/top'
 
 
+  # 塾生
   devise_for :onlines, controllers:{
   	sessions:      "onlines/sessions",
 		passwords:     "onlines/passwords",
-		registrations: "onlines/registrations" 
+		registrations: "onlines/registrations"
   }
 
   resources :onlines, only: [:show, :edit, :update]

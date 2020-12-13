@@ -5,9 +5,16 @@ class Admins::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    redirect_to admins_top_path if admin_signed_in?
+    super
+  end
+
+  def after_sign_up_path_for(resource)
+    admin = current_admin
+    admins_top_path
+  end
+
 
   # POST /resource
   # def create
