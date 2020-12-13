@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     registrations: "admins/registrations"
   }
 
+  namespace :admin do
+    resources :onlines, only: [:index, :show, :edit, :update]
+  end
+
   get 'admins/top'
 
 
