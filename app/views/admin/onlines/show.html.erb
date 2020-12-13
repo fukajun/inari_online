@@ -1,2 +1,73 @@
-<h1>Admin::Onlines#show</h1>
-<p>Find me in app/views/admin/onlines/show.html.erb</p>
+<div class="container">
+	<div class="row">
+		<h3>登録情報確認画面</h3>
+	</div>
+	<div class="row">
+		<h4>登録情報</h4>
+		<table>
+			<tr>
+				<td>受講生番号</td>
+				<td><%= @online.membership_number %></td>
+			</tr>
+			<tr>
+				<td>名前(姓)</td>
+				<td><%= @online.first_name %></td>
+			</tr>
+			<tr>
+				<td>名前(名)</td>
+				<td><%= @online.last_name %></td>
+			</tr>
+			<tr>
+				<td>名前(カナ)</td>
+				<td><%= @online.kana_name %></td>
+			</tr>
+			<tr>
+				<td>名前(保護者)</td>
+				<td><%= @online.parent_name %></td>
+			</tr>
+			<tr>
+				<td>性別</td>
+				<td><%= @online.gender %></td>
+			</tr>
+			<tr>
+				<td>生年月日</td>
+				<td><%= @online.birthday %></td>
+			</tr>
+			<tr>
+				<td>2021年4月からの学校名</td>
+				<td><%= @online.school %></td>
+			</tr>
+			<tr>
+				<td>2021年4月からの学年</td>
+				<td><%= @online.grade %></td>
+			</tr>
+			<tr>
+				<td>都道府県</td>
+				<td><%= @online.prefecture %></td>
+			</tr>
+			<tr>
+				<td>市区町村以下の住所</td>
+				<td><%= @online.address %></td>
+			</tr>
+			<tr>
+				<td>電話番号</td>
+				<td><%= @online.phone %></td>
+			</tr>
+			<tr>
+				<td>E-mail</td>
+				<td><%= @online.email %></td>
+			</tr>
+			<tr>
+				<td>E-mail(保護者)</td>
+				<td><%= @online.parent_email %></td>
+			</tr>
+			<tr>
+				<td>受講科目</td>
+				<td><%= @online.subject %></td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<%= link_to "Edit", edit_admin_online_path, class: "btn btn-primary btn-lg center-block" %>
+	</div>
+</div>

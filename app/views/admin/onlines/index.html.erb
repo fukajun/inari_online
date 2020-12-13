@@ -1,2 +1,30 @@
-<h1>Admin::Onlines#index</h1>
-<p>Find me in app/views/admin/onlines/index.html.erb</p>
+<div class="container">
+	<div class="row">
+		<h3>登録情報確認画面</h3>
+	</div>
+	<div class="row">
+		<h4>登録情報</h4>
+		<table>
+			<thead>
+				<th>受講生番号</th>
+				<th>氏名</th>
+				<th>ﾒｰﾙｱﾄﾞﾚｽ</th>
+				<th>受講科目</th>
+				<th>ステータス</th>
+			</thead>
+			<% @onlines.each do |online| %>
+				<tbody>
+					<td></td>
+					<td>
+						<%= link_to admin_online_path(online) do %>
+							<%= online.first_name %> <%= online.last_name %>
+						<% end %>
+					</td>
+					<td><%= online.email %></td>
+					<td><%= online.subject %></td>
+					<td><%= online.status %></td>
+				</tbody>
+			<% end %>
+		</table>
+	</div>
+</div>
