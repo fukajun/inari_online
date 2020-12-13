@@ -17,6 +17,7 @@
           <% if admin_signed_in? %>
             <li><%= link_to ' Home', root_path %></li>
             <li><%= link_to ' About', homes_about_path %></li>
+            <li><%= link_to ' Student', admin_onlines_path %></li>
             <li><%= link_to ' Log Out', destroy_admin_session_path, method: :delete %></li>
 
           <!-- 塾生ログイン -->
