@@ -8,8 +8,8 @@
 			<thead>
 				<th>受講生番号</th>
 				<th>氏名</th>
-				<th>ﾒｰﾙｱﾄﾞﾚｽ</th>
 				<th>受講科目</th>
+				<th>学年</th>
 				<th>ステータス</th>
 			</thead>
 			<% @onlines.each do |online| %>
@@ -20,8 +20,8 @@
 							<%= online.first_name %> <%= online.last_name %>
 						<% end %>
 					</td>
-					<td><%= online.email %></td>
 					<td><%= online.subject %></td>
+					<td><%= online.grade %></td>
 					<td><%= online.status %></td>
 				</tbody>
 			<% end %>
