@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   get 'admins/top'
 
 
-  # 塾生
+  # 受講生
   get "onlines/policy" => "onlines#policy", as: "online_policy"
   get "onlines/:id/delete_me" => "onlines#delete_me", as: "online_delete_me"
   put "onlines/:id/delete_me" => "onlines#withdraw", as: "online_withdraw"
@@ -27,6 +27,11 @@ Rails.application.routes.draw do
 		passwords:     "onlines/passwords",
 		registrations: "onlines/registrations"
   }
+
+  devise_scope :online do
+    post "onlines/sign_up/confirm", to: "onlines/registrations#confirm"
+    get "onlines/sign_up/complete", to: "onlines/registrations#complete"
+  end
 
   resources :onlines, only: [:show, :edit, :update]
 

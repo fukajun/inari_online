@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Onlines::RegistrationsController < Devise::RegistrationsController
-  before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_sign_up_params, only: [:create, :confirm]
   before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
@@ -10,9 +10,33 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    @online = Online.new(sign_up_params)
+    render :new and return if params[:back]
+    super
+  end
+
+  def confirm
+    @online = Online.new(sign_up_params)
+
+    # パスワードの非表示設定
+    i = 0
+    @password = ""
+    while i < @online.password.length
+      @password += "*"
+      i += 1
+    end
+    
+    if @online.valid?
+      render :action => "confirm"
+    else
+      render :action => "new"
+    end
+
+  end
+
+  def complete
+  end
 
   # GET /resource/edit
   # def edit
@@ -42,17 +66,18 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :kana_name, :parent_name, :gender, :birthday, :school, :grade, :prefecture, :address, :phone, :parent_email, :subject, :membership_number, :status])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :kana_name, :parent_name, :gender, :birthday, :school, :grade, :prefecture, :address, :phone, :email, :parent_email, :subject, :membership_number, :status])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :kana_name, :parent_name, :gender, :birthday, :school, :grade, :prefecture, :address, :phone, :parent_email, :subject, :membership_number, :status])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :kana_name, :parent_name, :gender, :birthday, :school, :grade, :prefecture, :address, :phone, :email, :parent_email, :subject, :membership_number, :status])
   end
 
   # The path used after sign up.
   def after_sign_up_path_for(resource)
-    super(resource)
+    onlines_sign_up_complete_path(resource)
+    # super(resource)
   end
 
   # The path used after sign up for inactive accounts.
