@@ -84,20 +84,14 @@
       <%= f.hidden_field :parent_email %>
     </div>
 
-    <!-- subject -->
     <div class="field">
       <%= f.label :subject, "受講科目" %><br />
       <%= @online.subject %>
       <%= f.hidden_field :subject %>
     </div>
 
-    <div class="field">
-      <%= f.label :password, "パスワード" %><br />
-      <%= @password %>
-      <%= f.hidden_field :password %>
-    </div>
-
     <div class="actions">
+      <%= f.hidden_field :password %>
       <%= f.submit "back", name: :back %>
       <%= f.submit "Sign up" %>
     </div>

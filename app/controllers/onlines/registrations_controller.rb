@@ -18,15 +18,7 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
 
   def confirm
     @online = Online.new(sign_up_params)
-
-    # パスワードの非表示設定
-    i = 0
-    @password = ""
-    while i < @online.password.length
-      @password += "*"
-      i += 1
-    end
-    
+    @online.password = Devise.friendly_token.first(8) #パスワード自動生成
     if @online.valid?
       render :action => "confirm"
     else
