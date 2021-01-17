@@ -30,7 +30,7 @@ Rails.application.routes.draw do
 
   devise_scope :online do
     post "onlines/sign_up/confirm", to: "onlines/registrations#confirm"
-    get "onlines/sign_up/complete", to: "onlines/registrations#complete"
+    get "onlines/sign_up/complete/:id", to: "onlines/registrations#complete", as: "onlines_sign_up_complete"
   end
 
   resources :onlines, only: [:show, :edit, :update]
