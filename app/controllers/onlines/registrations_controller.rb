@@ -31,6 +31,7 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
       @online.save
       redirect_to onlines_sign_up_complete_path(@online)
       RegistrationMailer.welcome(@online).deliver
+      RegistrationMailer.welcome_parent(@online).deliver
     end
 
   #   super
