@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Admins::RegistrationsController < Devise::RegistrationsController
-  # before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
@@ -9,12 +9,6 @@ class Admins::RegistrationsController < Devise::RegistrationsController
     redirect_to admins_top_path if admin_signed_in?
     super
   end
-
-  def after_sign_up_path_for(resource)
-    admin = current_admin
-    admins_top_path
-  end
-
 
   # POST /resource
   # def create
@@ -45,12 +39,12 @@ class Admins::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
-  # end
+  def configure_sign_up_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :membership_number])
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params
@@ -58,9 +52,11 @@ class Admins::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up.
-  # def after_sign_up_path_for(resource)
+  def after_sign_up_path_for(resource)
+    admin = current_admin
+    admins_top_path
   #   super(resource)
-  # end
+  end
 
   # The path used after sign up for inactive accounts.
   # def after_inactive_sign_up_path_for(resource)
