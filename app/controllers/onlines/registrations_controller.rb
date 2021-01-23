@@ -30,6 +30,7 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
     else #完了画面に進む
       @online.save
       redirect_to onlines_sign_up_complete_path(@online)
+      RegistrationMailer.welcome(@online).deliver
     end
 
   #   super

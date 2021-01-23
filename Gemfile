@@ -66,3 +66,4 @@ gem "bootstrap", "~> 4.4.1"
 gem "jquery-rails"
 
 gem "pry-byebug"
+gem "letter_opener_web"
