@@ -35,4 +35,9 @@ Rails.application.routes.draw do
 
   resources :onlines, only: [:show, :edit, :update]
 
+  namespace :math do
+    resources :ia_first, only: [:index, :show]
+  end
+
+
 end
