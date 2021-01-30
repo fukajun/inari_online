@@ -18,6 +18,15 @@ class Onlines::SessionsController < Devise::SessionsController
   #   super
   # end
 
+  def after_sign_in_path_for(resource)
+    online = current_online
+    onlines_top_path
+  end
+
+  def after_sign_out_path_for(resource)
+    new_online_session_path
+  end
+
   protected
 
   # If you have extra params to permit, append them to the sanitizer.

@@ -15,14 +15,14 @@
         <ul class="nav navbar-nav navbar-right">
           <!-- 管理者ログイン -->
           <% if admin_signed_in? %>
-            <li><%= link_to ' Home', root_path %></li>
+            <li><%= link_to ' Home', admins_top_path %></li>
             <li><%= link_to ' About', homes_about_path %></li>
             <li><%= link_to ' Student', admin_onlines_path %></li>
             <li><%= link_to ' Log Out', destroy_admin_session_path, method: :delete %></li>
 
-          <!-- 塾生ログイン -->
+          <!-- 受講生ログイン -->
           <% elsif online_signed_in? %>
-            <li><%= link_to ' Home', root_path %></li>
+            <li><%= link_to ' Home', onlines_top_path %></li>
             <li><%= link_to ' About', homes_about_path %></li>
             <li><%= link_to ' My page', online_path(current_online) %></li>
             <li><%= link_to ' Log Out', destroy_online_session_path, method: :delete %></li>

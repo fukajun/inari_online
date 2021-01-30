@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
 
   # 受講生
+  get 'onlines/top'
   get "onlines/policy" => "onlines#policy", as: "online_policy"
   get "onlines/:id/delete_me" => "onlines#delete_me", as: "online_delete_me"
   put "onlines/:id/delete_me" => "onlines#withdraw", as: "online_withdraw"

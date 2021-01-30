@@ -1,4 +1,7 @@
 class OnlinesController < ApplicationController
+	def top
+	end
+	
 	def show
 		@online = Online.find(params[:id])
 		if @online.id != current_online.id
