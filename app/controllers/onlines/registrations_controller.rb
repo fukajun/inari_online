@@ -29,6 +29,25 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
       return
     else #完了画面に進む
       @online.save
+
+      #Subjectテーブルに初回教科登録
+      @subject = Subject.new
+      @subject.online_id = @online.id
+      if (@online.subject == "数IA 1回目")
+        @subject.math_iaf = true
+      elsif (@online.subject == "数IA 2回目")
+        @subject.math_ias = true
+      elsif (@online.subject == "数IIB 1回目")
+        @subject.math_iibf = true
+      elsif (@online.subject == "数IIB 2回目")
+        @subject.math_iibs = true
+      elsif (@online.subject == "数IIIC 1回目")
+        @subject.math_iiicf = true
+      elsif (@online.subject == "数IIIC 2回目")
+        @subject.math_iiics = true
+      end
+      @subject.save
+
       redirect_to onlines_sign_up_complete_path(@online)
       RegistrationMailer.welcome(@online).deliver
       RegistrationMailer.welcome_parent(@online).deliver
