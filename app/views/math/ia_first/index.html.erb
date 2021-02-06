@@ -1,2 +1,57 @@
 <h1>Math::IaFirst#index</h1>
 <p>Find me in app/views/math/ia_first/index.html.erb</p>
+
+
+<div>
+	<% for num in 1..22 do %>
+		<div>
+			<div>
+				<p><%= "Lesson" %><%= num %></p>
+			</div>
+			<ul>
+				<li>
+					<% if @subject.question_iaf >= num %>
+						<% if @subject.stage_iaf >= 1 %>
+							<%= link_to "テスト問題", math_ia_first_path(num) %>
+						<% end %>
+					<% else %>
+						<%= "テスト問題" %>
+					<% end %>
+				</li>
+				<li>
+					<% if @subject.question_iaf >= num %>
+						<% if @subject.question_iaf > num || @subject.stage_iaf >= 2 %>
+							<%= link_to "テスト解答", math_ia_first_path(num) %>
+						<% else %>
+							<%= "テスト解答" %>
+						<% end %>
+					<% else %>
+						<%= "テスト解答" %>
+					<% end %>
+				</li>
+				<li>
+					<% if @subject.question_iaf >= num %>
+						<% if @subject.question_iaf > num || @subject.stage_iaf >= 3 %>
+							<%= link_to "演習問題", math_ia_first_path(num) %>
+						<% else %>
+							<%= "演習問題" %>
+						<% end %>
+					<% else %>
+						<%= "演習問題" %>
+					<% end %>
+				</li>
+				<li>
+					<% if @subject.question_iaf >= num %>
+						<% if @subject.question_iaf > num || @subject.stage_iaf >= 4 %>
+							<%= link_to "演習解答", math_ia_first_path(num) %>
+						<% else %>
+							<%= "演習解答" %>
+						<% end %>
+					<% else %>
+						<%= "演習解答" %>
+					<% end %>
+				</li>
+			</ul>
+		</div>
+	<% end %>
+</div>
