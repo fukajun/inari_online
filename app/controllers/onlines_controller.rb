@@ -1,5 +1,8 @@
 class OnlinesController < ApplicationController
+	before_action :authenticate_online!
+
 	def top
+		@subject = Subject.find_by(online_id: current_online.id)
 	end
 	
 	def show

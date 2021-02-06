@@ -1,2 +1,45 @@
 <h1>Onlines#top</h1>
 <p>Find me in app/views/onlines/top.html.erb</p>
+
+<div>
+	<% if @subject.math_iaf == true %>
+		<%= link_to "数IA 1回目", math_ia_first_index_path %>
+	<% else %>
+		<%= "数IA 1回目" %>
+	<% end %>
+</div>
+<div>
+	<% if @subject.math_ias == true %>
+		<%= link_to "数IA 2回目", math_ia_second_index_path %>
+	<% else %>
+		<%= "数IA 2回目" %>
+	<% end %>
+</div>
+<div>
+	<% if @subject.math_iibf == true %>
+		<%= link_to "数IIB 1回目", math_iib_first_index_path %>
+	<% else %>
+		<%= "数IIB 1回目" %>
+	<% end %>
+</div>
+<div>
+	<% if @subject.math_iibs == true %>
+		<%= link_to "数IIB 2回目", math_iib_second_index_path %>
+	<% else %>
+		<%= "数IIB 2回目" %>
+	<% end %>
+</div>
+<div>
+	<% if @subject.math_iiicf == true %>
+		<%= link_to "数IIIC 1回目", math_iiic_first_index_path %>
+	<% else %>
+		<%= "数IIIC 1回目" %>
+	<% end %>
+</div>
+<div>
+	<% if @subject.math_iiics == true %>
+		<%= link_to "数IIIC 2回目", math_iiic_second_index_path %>
+	<% else %>
+		<%= "数IIIC 2回目" %>
+	<% end %>
+</div>
