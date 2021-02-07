@@ -1,6 +1,8 @@
 <h1>Math::IaFirst#exercise</h1>
 <p>Find me in app/views/math/ia_first/exercise.html.erb</p>
 
-<figure>
-	<img src='/assets/math_iaf_exercise_<%= @id %>.png' alt="">
-</figure>
+<% for id in @id do %>
+	<figure>
+		<img src='/assets/math_iaf_exercise_<%= id %>.png' alt="">
+	</figure>
+<% end %>
