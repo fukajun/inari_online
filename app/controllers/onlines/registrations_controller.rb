@@ -9,6 +9,9 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
+  def policy    
+  end
+
   def confirm
     @online = Online.new(sign_up_params)
     @online.password = Devise.friendly_token.first(8) #パスワード自動生成

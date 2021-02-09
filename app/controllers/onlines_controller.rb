@@ -28,9 +28,6 @@ class OnlinesController < ApplicationController
 		end
 	end
 
-	def policy		
-	end
-
 	def delete_me
 		@online = Online.find(params[:id])
 	end
