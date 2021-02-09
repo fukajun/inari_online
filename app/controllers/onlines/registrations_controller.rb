@@ -35,16 +35,28 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
       @subject.online_id = @online.id
       if (@online.subject == "数IA 1回目")
         @subject.math_iaf = true
+        @subject.question_iaf = 1;
+        @subject.stage_iaf = 1;
       elsif (@online.subject == "数IA 2回目")
         @subject.math_ias = true
+        @subject.question_ias = 1;
+        @subject.stage_ias = 1;
       elsif (@online.subject == "数IIB 1回目")
         @subject.math_iibf = true
+        @subject.question_iibf = 1;
+        @subject.stage_iibf = 1;
       elsif (@online.subject == "数IIB 2回目")
         @subject.math_iibs = true
+        @subject.question_iibs = 1;
+        @subject.stage_iibs = 1;
       elsif (@online.subject == "数IIIC 1回目")
         @subject.math_iiicf = true
+        @subject.question_iiic = 1;
+        @subject.stage_iiic = 1;
       elsif (@online.subject == "数IIIC 2回目")
         @subject.math_iiics = true
+        @subject.question_iiics = 1;
+        @subject.stage_iiics = 1;
       end
       @subject.save
 
