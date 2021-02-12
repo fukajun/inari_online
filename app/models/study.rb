@@ -1,7 +1,7 @@
 class Study < ApplicationRecord
 	belongs_to :online
 	belongs_to :question
+	has_many :answer_images, dependent: :destroy
 
-	attachment :answer
-	attachment :correction
+	accepts_attachments_for :answer_images, attachment: :image
 end
