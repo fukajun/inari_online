@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   resources :onlines, only: [:show, :edit, :update]
 
   namespace :math do
-    resources :ia_first, only: [:index]
+    resources :ia_first, only: [:index, :create]
     get "ia_first/:id/test", to: "ia_first#test", as: "ia_first_test"
     get "ia_first/:id/test_answer", to: "ia_first#test_answer", as: "ia_first_test_answer"
     get "ia_first/:id/exercise", to: "ia_first#exercise", as: "ia_first_exercise"
