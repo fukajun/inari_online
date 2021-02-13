@@ -10,6 +10,7 @@
 <%= form_for(@study, url: math_ia_first_index_path) do |f| %>
 	<div><%= f.attachment_field :answer_images_images, multiple: true %></div>
 	<div>
+		<%= f.hidden_field :params, :value => @parameter %>
 		<%= f.hidden_field :question_id %>
 		<%= f.submit "send" %>
 	</div>

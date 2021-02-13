@@ -4,8 +4,8 @@ class Math::IaFirstController < ApplicationController
 	end
 
 	def test
-		parameter = params[:id].to_i
-		@question =Question.where("title like ?", "math_iaf_test_#{parameter}%").where.not("title like ?", "%_answer%").order(title: "ASC")
+		@parameter = params[:id].to_i
+		@question =Question.where("title like ?", "math_iaf_test_#{@parameter}%").where.not("title like ?", "%_answer%").order(title: "ASC")
 
 		@id = Array.new
 		@question.each do |i|
@@ -54,8 +54,16 @@ class Math::IaFirstController < ApplicationController
 		@study.online_id = current_online.id
 		@study.question_id = params[:study][:question_id]
 		if @study.save
-			redirect_to math_ia_first_test_answer_path(@study.question_id)
+			@subject = Subject.find_by(online_id: current_online.id)
+			@subject.update(stage_iaf: 3)
+			redirect_to math_ia_first_test_answer_path(params[:study][:params])
 		end
+	end
+
+	def update
+		@subject = Subject.find_by(online_id: current_online.id)
+		@subject.update(question_iaf: @subject.question_iaf + 1, stage_iaf: 1)
+		redirect_to math_ia_first_exercise_answer_path
 	end
 
 	private
