@@ -13,16 +13,7 @@ class Math::IaFirstController < ApplicationController
 			@id.push(num)
 		end
 
-		@study = Study.new(question_id: params[:id])
-	end
-
-	def create
-		@study = Study.new(study_params)
-		@study.online_id = current_online.id
-		@study.question_id = params[:study][:question_id]
-		if @study.save
-			redirect_to math_ia_first_test_answer_path(@study.question_id)
-		end
+		@study = Study.new(question_id: @question[0].id)
 	end
 
 	def test_answer
@@ -58,9 +49,17 @@ class Math::IaFirstController < ApplicationController
 		end
 	end
 
+	def create
+		@study = Study.new(study_params)
+		@study.online_id = current_online.id
+		@study.question_id = params[:study][:question_id]
+		if @study.save
+			redirect_to math_ia_first_test_answer_path(@study.question_id)
+		end
+	end
+
 	private
 	def study_params
-		params.require(:study).permit(:answer, :score)
-		# params.require(:study).permit(:online_id, :question_id, :answer, :correction, :score)
+		params.require(:study).permit(answer_images_images: [])
 	end
 end
