@@ -1,2 +1,44 @@
 <h1>Admin::Studies#index</h1>
 <p>Find me in app/views/admin/studies/index.html.erb</p>
+
+<div class="container">
+	<div class="row">
+		<h3>答案一覧</h3>
+	</div>
+	<div class="row">
+		<table>
+			<thead>
+				<th>受信日時</th>
+				<th>受講生番号</th>
+				<th>クラス</th>
+				<th>問題番号</th>
+			</thead>
+			<% @studies.each do |study| %>
+				<tbody>
+					<td>
+						<%= link_to admin_study_path(study) do %>
+							<%= study.created_at.strftime("%Y/%m/%d %H:%M") %>
+						<% end %>
+					</td>
+					<td><%= study.online.membership_number %></td>
+					<td>
+						<% if study.question.title.include?("iaf") %>
+							<%= "数IA 1回目" %>
+						<% elsif study.question.title.include?("ias") %>
+							<%= "数IA 2回目" %>
+						<% elsif study.question.title.include?("iibf") %>
+							<%= "数IIB 1回目" %>
+						<% elsif study.question.title.include?("iibs") %>
+							<%= "数IIB 2回目" %>
+						<% elsif study.question.title.include?("iiicf") %>
+							<%= "数IIIC 1回目" %>
+						<% elsif study.question.title.include?("iiics") %>
+							<%= "数IIIC 2回目" %>
+						<% end %>
+					</td>
+					<td><%= study.question.title.slice!(-1) %></td>
+				</tbody>
+			<% end %>
+		</table>
+	</div>
+</div>

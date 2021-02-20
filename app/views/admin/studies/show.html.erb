@@ -1,2 +1,47 @@
 <h1>Admin::Studies#show</h1>
 <p>Find me in app/views/admin/studies/show.html.erb</p>
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-4">
+			<h4>プロフィール</h4>
+			<table class="table">
+				<tr><th>受信日時</th></tr>
+				<tr><td><%= @study.created_at.strftime("%Y/%m/%d %H:%M") %></td></tr>
+				<tr><th>受講生番号</th></tr>
+				<tr><td><%= @study.online.membership_number %></td></tr>
+				<tr><th>氏名</th></tr>
+				<tr><td><%= @study.online.first_name %> <%= @study.online.last_name %></td></tr>
+				<tr><th>問題番号</th></tr>
+				<tr><td>
+					<% if @study.question.title.include?("iaf") %>
+						<%= "数IA 1回目 " + @study.question.title.slice!(-1) %>
+					<% elsif @study.question.title.include?("ias") %>
+						<%= "数IA 2回目 " + @study.quetsion.title.slice!(-1) %>
+					<% elsif @study.question.title.include?("iibf") %>
+						<%= "数IIB 1回目 " + @study.question.title.slice!(-1) %>
+					<% elsif @study.question.title.include?("iibs") %>
+						<%= "数IIB 2回目 " + @study.question.title.slice!(-1) %>
+					<% elsif @study.question.title.include?("iiicf") %>
+						<%= "数IIIC 1回目 " + @study.question.title.slice!(-1) %>
+					<% elsif @study.question.title.include?("iiics") %>
+						<%= "数IIIC 2回目 " + @study.question.title.slice!(-1) %>
+					<% end %>
+				</td></tr>
+			</table>
+		</div>
+		<div class="col-sm-4">
+			<h4>答案</h4>
+			<div>
+				<% @answer_images.each do |answer_image| %>
+					<figure>
+						<%= attachment_image_tag(answer_image, :image, :width => '400') %>
+					</figure>
+				<% end %>
+			</div>
+		</div>
+	</div>
+	<div>
+		<%= link_to "Edit", edit_admin_study_path %>
+	</div>
+</div>
