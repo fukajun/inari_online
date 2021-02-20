@@ -64,6 +64,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "devise"
 gem "bootstrap", "~> 4.4.1"
 gem "jquery-rails"
+gem "jp_prefecture"
 gem "refile", require: "refile/rails", github: "manfe/refile"
 gem "refile-mini_magick"
 gem "dotenv-rails"
