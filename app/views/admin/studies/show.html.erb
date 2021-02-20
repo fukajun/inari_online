@@ -35,9 +35,25 @@
 			<div>
 				<% @answer_images.each do |answer_image| %>
 					<figure>
-						<%= attachment_image_tag(answer_image, :image, :width => '400') %>
+						<%= attachment_image_tag(answer_image, :image, :width => '200') %>
 					</figure>
 				<% end %>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<h4>添削</h4>
+			<div>
+				採点結果：<%= @study.score %> 点
+			</div>
+			<div>
+				<% @correction_images.each do |correction_image| %>
+					<figure>
+						<%= attachment_image_tag(correction_image, :image, :width => '200') %>
+					</figure>
+				<% end %>
+			</div>
+			<div>
+				<%= link_to "Destroy", admin_study_path(@study), method: :delete, "data-confirm" => "本当に削除しますか?" %>
 			</div>
 		</div>
 	</div>

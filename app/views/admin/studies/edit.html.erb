@@ -1,2 +1,12 @@
 <h1>Admin::Studies#edit</h1>
 <p>Find me in app/views/admin/studies/edit.html.erb</p>
+
+<%= form_for(@study, url: admin_study_path) do |f| %>
+	<div>
+		採点結果：<%= f.text_field :score, autofocus: true, autocomplete: "score" %> 点
+	</div>
+	<div class="field"><%= f.attachment_field :correction_images_images, multiple: true %></div>
+	<div>
+		<%= f.submit "send" %>
+	</div>
+<% end %>
