@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 2021_02_20_012445) do
     t.date "birthday"
     t.string "school"
     t.integer "grade", default: 0
+    t.integer "postal_code"
     t.integer "prefecture", default: 0
     t.text "address"
     t.string "phone"

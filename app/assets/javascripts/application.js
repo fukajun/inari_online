@@ -14,5 +14,20 @@
 //= require activestorage
 //= require turbolinks
 //= require jquery
+//= require jquery.jpostal
 //= require bootstrap
 //= require_tree .
+
+$(function() {
+	$(document).on('turbolinks:load', () => {
+		$('#online_postal_code').jpostal({
+			postcode : [
+				'#online_postal_code'
+			],
+			address : {
+				"#online_prefecture": "%3",
+				"#online_address": "%4%5%6%7"
+			}
+		});
+	});
+});

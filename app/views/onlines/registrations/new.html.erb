@@ -50,6 +50,11 @@
     </div>
 
     <div class="field">
+      <%= f.label :postal_code, "郵便番号" %><br />
+      <%= f.text_field :postal_code, autocomplete: "postal_code" %>
+    </div>
+
+    <div class="field">
       <%= f.label :prefecture, "都道府県" %><br />
       <%= f.select :prefecture, Online.prefectures.keys, class: "prefecture" %>
     </div>

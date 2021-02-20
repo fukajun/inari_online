@@ -44,6 +44,10 @@
 					<td><%= f.select :grade, Online.grades.keys, class: "grade" %></td>
 				</tr>
 				<tr>
+					<td>郵便番号</td>
+					<td><%= f.text_field :postal_code, autocomplete: "postal_code" %></td>
+				</tr>
+				<tr>
 					<td>都道府県</td>
 					<td><%= f.select :prefecture, Online.prefectures.keys, class: "prefecture" %></td>
 				</tr>
