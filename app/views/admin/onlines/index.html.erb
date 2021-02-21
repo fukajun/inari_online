@@ -14,7 +14,7 @@
 			</thead>
 			<% @onlines.each do |online| %>
 				<tbody>
-					<td></td>
+					<td><%= online.membership_number %></td>
 					<td>
 						<%= link_to admin_online_path(online) do %>
 							<%= online.first_name %> <%= online.last_name %>

@@ -8,22 +8,22 @@
 
     <div class="field">
       <%= f.label :first_name, "名前(姓)" %><br />
-      <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name" %>
+      <%= f.text_field :first_name, autofocus: true, placeholder: "例) 稲荷" %>
     </div>
 
     <div class="field">
       <%= f.label :last_name, "名前(名)" %><br />
-      <%= f.text_field :last_name, autocomplete: "last_name" %>
+      <%= f.text_field :last_name, placeholder: "例) 太郎" %>
     </div>
 
     <div class="field">
       <%= f.label :kana_name, "名前(カナ)" %><br />
-      <%= f.text_field :kana_name, autocomplete: "kana_name" %>
+      <%= f.text_field :kana_name, placeholder: "例) イナリ　タロウ" %>
     </div>
 
     <div class="field">
       <%= f.label :parent_name, "名前(保護者)" %><br />
-      <%= f.text_field :parent_name, autocomplete: "parent_name" %>
+      <%= f.text_field :parent_name, placeholder: "例) 達也" %>
     </div>
 
     <div class="field">
@@ -36,12 +36,12 @@
 
     <div class="field">
       <%= f.label :birthday, "生年月日" %><br />
-      <%= f.date_field :birthday, autocomplete: "birthday" %>
+      <%= f.date_field :birthday %>
     </div>
 
     <div class="field">
       <%= f.label :school, "2021年4月からの学校名" %><br />
-      <%= f.text_field :school, autocomplete: "school" %>
+      <%= f.text_field :school, placeholder: "例) 京都高校" %>
     </div>
 
     <div class="field">
@@ -51,7 +51,7 @@
 
     <div class="field">
       <%= f.label :postal_code, "郵便番号" %><br />
-      <%= f.text_field :postal_code, autocomplete: "postal_code" %>
+      <%= f.text_field :postal_code, placeholder: "例) 000-0000" %>
     </div>
 
     <div class="field">
@@ -61,22 +61,22 @@
 
     <div class="field">
       <%= f.label :address, "市区町村以下の住所" %><br />
-      <%= f.text_field :address, autocomplete: "address" %>
+      <%= f.text_field :address, placeholder: "例) 長岡京市開田０－０－０" %>
     </div>
 
     <div class="field">
       <%= f.label :phone, "電話番号" %><br />
-      <%= f.text_field :phone, autocomplete: "phone" %>
+      <%= f.text_field :phone, placeholder: "例) 000-0000-0000" %>
     </div>
 
     <div class="field">
       <%= f.label :email, "E-mail" %><br />
-      <%= f.email_field :email, autocomplete: "email" %>
+      <%= f.email_field :email, placeholder: "例) xxxx@xxx" %>
     </div>
 
     <div class="field">
       <%= f.label :parent_email, "E-mail(保護者)" %><br />
-      <%= f.email_field :parent_email, autocomplete: "parent_email" %>
+      <%= f.email_field :parent_email, placeholder: "例) yyyy@yyy" %>
     </div>
 
     <div class="field">
