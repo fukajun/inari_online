@@ -5,7 +5,7 @@ class Math::IaFirstController < ApplicationController
 
 	def test
 		@parameter = params[:id].to_i
-		@question =Question.where("title like ?", "math_iaf_test_#{@parameter}%").where.not("title like ?", "%_answer%").order(title: "ASC")
+		@question = Question.where("title like ?", "math_iaf_test_#{@parameter}%").where.not("title like ?", "%_answer%").order(title: "ASC")
 
 		@id = Array.new
 		@question.each do |i|
@@ -17,8 +17,8 @@ class Math::IaFirstController < ApplicationController
 	end
 
 	def test_answer
-		parameter = params[:id].to_i
-		@question =Question.where("title like ?", "math_iaf_test_answer_#{parameter}%").order(title: "ASC")
+		@parameter = params[:id].to_i
+		@question = Question.where("title like ?", "math_iaf_test_answer_#{@parameter}%").order(title: "ASC")
 
 		@id = Array.new
 		@question.each do |i|
@@ -29,7 +29,7 @@ class Math::IaFirstController < ApplicationController
 
 	def exercise
 		parameter = params[:id].to_i
-		@question =Question.where("title like ?", "math_iaf_exercise_#{parameter}%").where.not("title like ?", "%_answer%").order(title: "ASC")
+		@question = Question.where("title like ?", "math_iaf_exercise_#{parameter}%").where.not("title like ?", "%_answer%").order(title: "ASC")
 
 		@id = Array.new
 		@question.each do |i|
@@ -40,7 +40,7 @@ class Math::IaFirstController < ApplicationController
 
 	def exercise_answer
 		parameter = params[:id].to_i
-		@question =Question.where("title like ?", "math_iaf_exercise_answer_#{parameter}%").order(title: "ASC")
+		@question = Question.where("title like ?", "math_iaf_exercise_answer_#{parameter}%").order(title: "ASC")
 
 		@id = Array.new
 		@question.each do |i|
@@ -55,7 +55,12 @@ class Math::IaFirstController < ApplicationController
 		@study.question_id = params[:study][:question_id]
 		if @study.save
 			@subject = Subject.find_by(online_id: current_online.id)
-			@subject.update(stage_iaf: 3)
+			# 単元テストの条件分岐
+			if @study.question_id == 8 || 15 || 22
+				@subject.update(question_iaf: @subject.question_iaf + 1)
+			else
+				@subject.update(stage_iaf: 3)
+			end
 			redirect_to math_ia_first_test_answer_path(params[:study][:params])
 		end
 	end
