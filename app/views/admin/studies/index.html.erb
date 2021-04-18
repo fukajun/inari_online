@@ -36,7 +36,7 @@
 							<%= "数IIIC 2回目" %>
 						<% end %>
 					</td>
-					<td><%= study.question.title.slice!(-1) %></td>
+					<td><%= study.question.title.delete(".png") %></td>
 				</tbody>
 			<% end %>
 		</table>

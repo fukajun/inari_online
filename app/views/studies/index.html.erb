@@ -1,2 +1,48 @@
 <h1>Studies#index</h1>
 <p>Find me in app/views/studies/index.html.erb</p>
+
+<div class="container">
+	<div class="row">
+		<h3>学習履歴一覧</h3>
+	</div>
+	<div class="row">
+		<table>
+			<thead>
+				<th>クラス</th>
+				<th>問題番号</th>
+				<th>学習日時</th>
+				<th>得点</th>
+			</thead>
+						<% @studies.each do |study| %>
+				<tbody>
+					<td>
+						<% if study.question.title.include?("iaf") %>
+							<%= "数IA 1回目" %>
+						<% elsif study.question.title.include?("ias") %>
+							<%= "数IA 2回目" %>
+						<% elsif study.question.title.include?("iibf") %>
+							<%= "数IIB 1回目" %>
+						<% elsif study.question.title.include?("iibs") %>
+							<%= "数IIB 2回目" %>
+						<% elsif study.question.title.include?("iiicf") %>
+							<%= "数IIIC 1回目" %>
+						<% elsif study.question.title.include?("iiics") %>
+							<%= "数IIIC 2回目" %>
+						<% end %>
+					</td>
+					<td><%= study.question.title.delete(".png") %></td>
+					<td>
+						<%= study.created_at.strftime("%Y/%m/%d %H:%M") %>
+					</td>
+					<td>
+						<% if study.score.present? %>
+							<%= study.score %>
+						<% else %>
+							<%= "採点中" %>
+						<% end %>
+					</td>
+				</tbody>
+			<% end %>
+		</table>
+	</div>
+</div>
