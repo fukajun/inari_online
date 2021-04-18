@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :onlines, only: [:index, :show, :edit, :update]
     resources :studies, only: [:index, :show, :edit, :update, :destroy]
+    resources :payments, only: [:index]
   end
 
   get 'admins/top'
