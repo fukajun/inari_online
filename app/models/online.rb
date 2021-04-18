@@ -6,6 +6,7 @@ class Online < ApplicationRecord
 
   has_many :subjects, dependent: :destroy
   has_many :studies, dependent: :destroy
+  has_many :payments, dependent: :destroy
 
   enum gender: {男性: 0, 女性: 1}
   enum grade: {"選択してください": 0, 小学生: 1, 中1: 2, 中2: 3, 中3: 4, 高1: 5, 高2: 6, 高3: 7, 高卒: 8},_suffix: true
