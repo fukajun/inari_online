@@ -36,32 +36,26 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
       #Subjectテーブルに初回教科登録
       @subject = Subject.new
       @subject.online_id = @online.id
-      if (@online.subject == "数IA 1回目")
-        @subject.math_iaf = true
-        @subject.question_iaf = 1;
-        @subject.stage_iaf = 1;
-      elsif (@online.subject == "数IA 2回目")
-        @subject.math_ias = true
-        @subject.question_ias = 1;
-        @subject.stage_ias = 1;
-      elsif (@online.subject == "数IIB 1回目")
-        @subject.math_iibf = true
-        @subject.question_iibf = 1;
-        @subject.stage_iibf = 1;
-      elsif (@online.subject == "数IIB 2回目")
-        @subject.math_iibs = true
-        @subject.question_iibs = 1;
-        @subject.stage_iibs = 1;
-      elsif (@online.subject == "数IIIC 1回目")
-        @subject.math_iiicf = true
-        @subject.question_iiic = 1;
-        @subject.stage_iiic = 1;
-      elsif (@online.subject == "数IIIC 2回目")
-        @subject.math_iiics = true
-        @subject.question_iiics = 1;
-        @subject.stage_iiics = 1;
+      if (@online.math_iaf)
+        @subject.course = 1
+      elsif (@online.math_iibf)
+        @subject.course = 3
+      elsif (@online.math_iiicf)
+        @subject.course = 5
       end
       @subject.save
+
+      #Paymentテーブル作成
+      @payment = Payment.new
+      @payment.online_id = @online.id
+      if (@online.course == "数IA")
+        @payment.course = "数IA 1回目"
+      elsif (@online.course == "数IIB")
+        @payment.course = "数IIB 1回目"
+      elsif (@online.course == "数IIIC")
+        @payment.course = "数IIIC 1回目"
+      end
+      @payment.save
 
       redirect_to onlines_sign_up_complete_path(@online)
       RegistrationMailer.welcome(@online).deliver
@@ -102,7 +96,7 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :kana_name, :parent_name, :gender, :birthday, :school, :grade, :postal_code, :prefecture, :address, :phone, :email, :parent_email, :subject, :membership_number, :status])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :kana_name, :parent_name, :gender, :birthday, :school, :grade, :postal_code, :prefecture, :address, :phone, :email, :parent_email, :course, :status])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
