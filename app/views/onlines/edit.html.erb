@@ -2,8 +2,8 @@
 	<div class="row">
 		<h3>登録情報編集画面</h3>
 	</div>
-		<%= form_for(@online) do |f| %>
-			<div class="row">
+	<%= form_for(@online) do |f| %>
+		<div class="row">
 			<h4>登録情報</h4>		
 			<table>
 				<tr>
@@ -66,10 +66,6 @@
 				<tr>
 					<td>E-mail(保護者)</td>
 					<td><%= f.email_field :parent_email, autocomplete: "parent_email" %></td>
-				</tr>
-				<tr>
-					<td>受講科目</td>
-					<td><%= f.select :subject, Online.subjects.keys, class: "subject" %></td>
 				</tr>
 			</table>
 		</div>

@@ -2,7 +2,7 @@ class OnlinesController < ApplicationController
 	before_action :authenticate_online!
 
 	def top
-		@subject = Subject.find_by(online_id: current_online.id)
+		@online = current_online
 	end
 	
 	def show
@@ -41,6 +41,6 @@ class OnlinesController < ApplicationController
 
 	private
 	def online_params
-		params.require(:online).permit(:first_name, :last_name, :kana_name, :parent_name, :gender, :birthday, :school, :grade, :postal_code, :prefecture, :address, :phone, :parent_email, :subject)
+		params.require(:online).permit(:first_name, :last_name, :kana_name, :parent_name, :gender, :birthday, :school, :grade, :postal_code, :prefecture, :address, :phone, :parent_email)
 	end
 end
