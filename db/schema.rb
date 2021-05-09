@@ -60,8 +60,14 @@ ActiveRecord::Schema.define(version: 2021_04_18_031656) do
     t.text "address"
     t.string "phone"
     t.string "parent_email"
-    t.integer "subject", default: 0
-    t.string "membership_number"
+    t.integer "course"
+    t.boolean "math_iaf"
+    t.boolean "math_ias"
+    t.boolean "math_iibf"
+    t.boolean "math_iibs"
+    t.boolean "math_iiicf"
+    t.boolean "math_iiics"
+    t.integer "membership_number"
     t.boolean "status", default: true, null: false
     t.index ["email"], name: "index_onlines_on_email", unique: true
     t.index ["reset_password_token"], name: "index_onlines_on_reset_password_token", unique: true
@@ -69,8 +75,8 @@ ActiveRecord::Schema.define(version: 2021_04_18_031656) do
 
   create_table "payments", force: :cascade do |t|
     t.integer "online_id"
-    t.integer "month"
-    t.integer "status"
+    t.integer "course"
+    t.boolean "paid", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -91,24 +97,32 @@ ActiveRecord::Schema.define(version: 2021_04_18_031656) do
 
   create_table "subjects", force: :cascade do |t|
     t.integer "online_id"
-    t.boolean "math_iaf", default: false, null: false
-    t.integer "question_iaf"
-    t.integer "stage_iaf"
-    t.boolean "math_ias", default: false, null: false
-    t.integer "question_ias"
-    t.integer "stage_ias"
-    t.boolean "math_iibf", default: false, null: false
-    t.integer "question_iibf"
-    t.integer "stage_iibf"
-    t.boolean "math_iibs", default: false, null: false
-    t.integer "question_iibs"
-    t.integer "stage_iibs"
-    t.boolean "math_iiicf", default: false, null: false
-    t.integer "question_iiicf"
-    t.integer "stage_iiicf"
-    t.boolean "math_iiics", default: false, null: false
-    t.integer "question_iiics"
-    t.integer "stage_iiics"
+    t.integer "course"
+    t.integer "question"
+    t.integer "stage"
+    t.datetime "lesson1"
+    t.datetime "lesson2"
+    t.datetime "lesson3"
+    t.datetime "lesson4"
+    t.datetime "lesson5"
+    t.datetime "lesson6"
+    t.datetime "lesson7"
+    t.datetime "lesson8"
+    t.datetime "lesson9"
+    t.datetime "lesson10"
+    t.datetime "lesson11"
+    t.datetime "lesson12"
+    t.datetime "lesson13"
+    t.datetime "lesson14"
+    t.datetime "lesson15"
+    t.datetime "lesson16"
+    t.datetime "lesson17"
+    t.datetime "lesson18"
+    t.datetime "lesson19"
+    t.datetime "lesson20"
+    t.datetime "lesson21"
+    t.datetime "lesson22"
+    t.integer "postphonement"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

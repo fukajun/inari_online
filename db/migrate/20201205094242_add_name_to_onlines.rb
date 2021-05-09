@@ -13,8 +13,14 @@ class AddNameToOnlines < ActiveRecord::Migration[5.2]
     add_column :onlines, :address, :text
     add_column :onlines, :phone, :string
     add_column :onlines, :parent_email, :string
-    add_column :onlines, :subject, :integer, default: 0
-    add_column :onlines, :membership_number, :string
+    add_column :onlines, :course, :integer
+    add_column :onlines, :math_iaf, :boolean
+    add_column :onlines, :math_ias, :boolean
+    add_column :onlines, :math_iibf, :boolean
+    add_column :onlines, :math_iibs, :boolean
+    add_column :onlines, :math_iiicf, :boolean
+    add_column :onlines, :math_iiics, :boolean
+    add_column :onlines, :membership_number, :integer
     add_column :onlines, :status, :boolean, null: false, default: true
   end
 end
