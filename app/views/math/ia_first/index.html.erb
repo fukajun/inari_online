@@ -12,8 +12,8 @@
 			<% if num == 8 || num == 15 || num == 22 %>
 				<ul>
 					<li>
-						<% if @subject.question_iaf >= num %>
-							<% if @subject.stage_iaf >= 1 %>
+						<% if @subject.question >= num %>
+							<% if @subject.stage >= 1 %>
 								<%= link_to "単元テスト問題", math_ia_first_test_path(num) %>
 							<% end %>
 						<% else %>
@@ -21,8 +21,8 @@
 						<% end %>
 					</li>
 					<li>
-						<% if @subject.question_iaf >= num %>
-							<% if @subject.question_iaf > num || @subject.stage_iaf >= 2 %>
+						<% if @subject.question >= num %>
+							<% if @subject.question > num || @subject.stage >= 2 %>
 								<%= link_to "単元テスト解答", math_ia_first_test_answer_path(num) %>
 							<% else %>
 								<%= "単元テスト解答" %>
@@ -35,8 +35,8 @@
 			<% else %>
 				<ul>
 					<li>
-						<% if @subject.question_iaf >= num %>
-							<% if @subject.stage_iaf >= 1 %>
+						<% if @subject.question >= num %>
+							<% if @subject.stage >= 1 %>
 								<%= link_to "テスト問題", math_ia_first_test_path(num) %>
 							<% end %>
 						<% else %>
@@ -44,8 +44,8 @@
 						<% end %>
 					</li>
 					<li>
-						<% if @subject.question_iaf >= num %>
-							<% if @subject.question_iaf > num || @subject.stage_iaf >= 2 %>
+						<% if @subject.question >= num %>
+							<% if @subject.question > num || @subject.stage >= 2 %>
 								<%= link_to "テスト解答", math_ia_first_test_answer_path(num) %>
 							<% else %>
 								<%= "テスト解答" %>
@@ -55,8 +55,8 @@
 						<% end %>
 					</li>
 					<li>
-						<% if @subject.question_iaf >= num %>
-							<% if @subject.question_iaf > num || @subject.stage_iaf >= 3 %>
+						<% if @subject.question >= num %>
+							<% if @subject.question > num || @subject.stage >= 3 %>
 								<%= link_to "演習問題", math_ia_first_exercise_path(num) %>
 							<% else %>
 								<%= "演習問題" %>
@@ -66,8 +66,8 @@
 						<% end %>
 					</li>
 					<li>
-						<% if @subject.question_iaf >= num %>
-							<% if @subject.question_iaf > num || @subject.stage_iaf >= 4 %>
+						<% if @subject.question >= num %>
+							<% if @subject.question > num || @subject.stage >= 4 %>
 								<%= link_to "演習解答", math_ia_first_exercise_answer_path(num) %>
 							<% else %>
 								<%= "演習解答" %>

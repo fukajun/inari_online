@@ -56,10 +56,12 @@ class Math::IaFirstController < ApplicationController
 		if @study.save
 			@subject = Subject.find_by(online_id: current_online.id)
 			# 単元テストの条件分岐
-			if @study.question_id == 8 || 15 || 22
-				@subject.update(question_iaf: @subject.question_iaf + 1)
-			else
-				@subject.update(stage_iaf: 3)
+			if @subject.question == params[:study][:params].to_i
+				if @subject.question.in?([8, 15, 22])
+					@subject.update(question: @subject.question + 1)
+				else
+					@subject.update(stage: 3)
+				end
 			end
 			redirect_to math_ia_first_test_answer_path(params[:study][:params])
 		end
@@ -67,7 +69,9 @@ class Math::IaFirstController < ApplicationController
 
 	def update
 		@subject = Subject.find_by(online_id: current_online.id)
-		@subject.update(question_iaf: @subject.question_iaf + 1, stage_iaf: 1)
+		if @subject.question == params[:id].to_i
+			@subject.update(question: @subject.question + 1, stage: 1)
+		end		
 		redirect_to math_ia_first_exercise_answer_path
 	end
 
