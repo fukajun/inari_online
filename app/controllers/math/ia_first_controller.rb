@@ -1,50 +1,51 @@
 class Math::IaFirstController < ApplicationController
 	def index
-		@subject = Subject.find_by(online_id: current_online.id)
+		@subject = Subject.find_by(online_id: current_online.id, course: 1)
 	end
 
 	def test
 		@parameter = params[:id].to_i
-		@question = Question.where("title like ?", "math_iaf_test_#{@parameter}%").where.not("title like ?", "%_answer%").order(title: "ASC")
+		@number = "%02d" % params[:id]
+		@question = Question.where("title like ?", "math_iaf_test_#{@number}%").where.not("title like ?", "%_answer%").order(title: "ASC")
 
 		@id = Array.new
 		@question.each do |i|
-			num = i.title.delete!("math_iaf_test_")
+			num = i.title.delete!("math_iaf_test_").delete!(".png")
 			@id.push(num)
 		end
 
-		@study = Study.new(question_id: @question[0].id)
+		@study = Study.new(question_id: @parameter)
 	end
 
 	def test_answer
-		@parameter = params[:id].to_i
-		@question = Question.where("title like ?", "math_iaf_test_answer_#{@parameter}%").order(title: "ASC")
+		@number = "%02d" % params[:id]
+		@question = Question.where("title like ?", "math_iaf_test_answer_#{@number}%").order(title: "ASC")
 
 		@id = Array.new
 		@question.each do |i|
-			num = i.title.delete!("math_iaf_test_answer_")
+			num = i.title.delete!("math_iaf_test_answer_").delete!(".png")
 			@id.push(num)
 		end
 	end
 
 	def exercise
-		parameter = params[:id].to_i
-		@question = Question.where("title like ?", "math_iaf_exercise_#{parameter}%").where.not("title like ?", "%_answer%").order(title: "ASC")
+		number = "%02d" % params[:id]
+		@question = Question.where("title like ?", "math_iaf_exercise_#{number}%").where.not("title like ?", "%_answer%").order(title: "ASC")
 
 		@id = Array.new
 		@question.each do |i|
-			num = i.title.delete!("math_iaf_exercise_")
+			num = i.title.delete!("math_iaf_exercise_").delete!(".png")
 			@id.push(num)
 		end
 	end
 
 	def exercise_answer
-		parameter = params[:id].to_i
-		@question = Question.where("title like ?", "math_iaf_exercise_answer_#{parameter}%").order(title: "ASC")
+		number = "%02d" % params[:id]
+		@question = Question.where("title like ?", "math_iaf_exercise_answer_#{number}%").order(title: "ASC")
 
 		@id = Array.new
 		@question.each do |i|
-			num = i.title.delete!("math_iaf_exercise_answer_")
+			num = i.title.delete!("math_iaf_exercise_answer_").delete!(".png")
 			@id.push(num)
 		end
 	end
@@ -54,7 +55,7 @@ class Math::IaFirstController < ApplicationController
 		@study.online_id = current_online.id
 		@study.question_id = params[:study][:question_id]
 		if @study.save
-			@subject = Subject.find_by(online_id: current_online.id)
+			@subject = Subject.find_by(online_id: current_online.id, course: 1)
 			# 単元テストの条件分岐
 			if @subject.question == params[:study][:params].to_i
 				if @subject.question.in?([8, 15, 22])
