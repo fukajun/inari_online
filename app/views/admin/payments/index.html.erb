@@ -1,2 +1,43 @@
 <h1>Admin::Payments#index</h1>
 <p>Find me in app/views/admin/payments/index.html.erb</p>
+
+<div class="container">
+	<div class="row">
+		<h3>支払い一覧</h3>
+	</div>
+	<div class="row">
+		<table>
+			<thead>
+				<th>申請日</th>
+				<th>受講生番号</th>
+				<th>受講者氏名</th>
+				<th>保護者氏名</th>
+				<th>保護者メールアドレス</th>
+				<th>受講クラス</th>
+				<th>振込期日</th>
+				<th></th>
+			</thead>
+			<% @payments.each do |payment| %>
+				<tbody>
+					<td><%= payment.created_at.strftime("%Y年%m月%d日 %H:%M") %></td>
+					<td><%= payment.online.membership_number %></td>
+					<td>
+						<%= payment.online.first_name %> <%= payment.online.last_name %>
+					</td>
+					<td><%= payment.online.parent_name %></td>
+					<td><%= payment.online.parent_email %></td>
+					<% if payment.course == nil %>
+						<td><%= payment.online.course %></td>
+					<% else %>
+						<td><%= payment.course %></td>
+					<% end %>
+					<% if payment.paid == true %>
+						<td>振込済</td>
+					<% else %>
+						<td><%= (payment.created_at + 14.days).strftime("%Y年%m月%d日") %></td>
+					<% end %>
+				</tbody>
+			<% end %>
+		</table>
+	</div>
+</div>
