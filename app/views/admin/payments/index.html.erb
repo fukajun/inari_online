@@ -22,7 +22,9 @@
 					<td><%= payment.created_at.strftime("%Y年%m月%d日 %H:%M") %></td>
 					<td><%= payment.online.membership_number %></td>
 					<td>
-						<%= payment.online.first_name %> <%= payment.online.last_name %>
+						<%= link_to edit_admin_payment_path(payment), remote: true do %>
+							<%= payment.online.first_name %> <%= payment.online.last_name %>
+						<% end %>
 					</td>
 					<td><%= payment.online.parent_name %></td>
 					<td><%= payment.online.parent_email %></td>
@@ -36,8 +38,12 @@
 					<% else %>
 						<td><%= (payment.created_at + 14.days).strftime("%Y年%m月%d日") %></td>
 					<% end %>
+					<td><%= link_to "削除", admin_payment_path(payment), method: :delete, "data-confirm" => "本当に削除しますか？" %></td>
 				</tbody>
 			<% end %>
 		</table>
 	</div>
 </div>
+
+<!-- modal -->
+<div id="payment-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
