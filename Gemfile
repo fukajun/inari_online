@@ -68,6 +68,7 @@ gem "jp_prefecture"
 gem "refile", require: "refile/rails", github: "manfe/refile"
 gem "refile-mini_magick"
 gem "dotenv-rails"
+gem "ransack"
 
 gem "pry-byebug"
 gem "letter_opener_web"
