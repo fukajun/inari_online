@@ -1,6 +1,8 @@
 class Admin::PaymentsController < ApplicationController
 	def index
-		@payments = Payment.all
+		@q = Online.ransack(params[:q])
+		@onlines = @q.result(distinct: true)
+		@payments = Payment.where(online_id: @onlines).order(id: "DESC")
 	end
 
 	def edit
