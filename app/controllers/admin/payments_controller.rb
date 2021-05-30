@@ -17,6 +17,23 @@ class Admin::PaymentsController < ApplicationController
 		@payment = Payment.find(params[:id])
 		@online = Online.find(@payment.online_id)
 		if @payment.update(payment_params)
+			# 受講生番号採番
+			if @online.membership_number == 0
+				birthDay = @online.birthday.strftime("%Y%m%d").to_i
+				baseDate = 20020402
+				diffYear = (birthDay - baseDate) / 10000
+
+				if diffYear < 0 # 2020年以前受講生
+					numbering = Numbering.find(1)
+				else
+					numbering = Numbering.find(diffYear + 2)
+				end
+				number = numbering.final_number.floor(-2)
+				newNumber = number + 100 + rand(100)
+				numbering.update(final_number: newNumber)
+
+				@online.membership_number = newNumber
+			end
 
 			# 振込確認後に学習教科開放
 			if @payment.course == "数IA 1回目"
@@ -77,6 +94,6 @@ class Admin::PaymentsController < ApplicationController
 	end
 
 	def online_params
-		params.permit(:math_iaf, :math_ias, :math_iibf, :math_iibs, :math_iiicf, :math_iiics)
+		params.permit(:math_iaf, :math_ias, :math_iibf, :math_iibs, :math_iiicf, :math_iiics, :membership_number)
 	end
 end
