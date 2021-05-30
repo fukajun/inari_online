@@ -8,6 +8,7 @@
 	<div class="row">
 		<%= search_form_for(@q, url: admin_payments_path) do |f| %>
 			<%= f.search_field :first_name_or_last_name_or_membership_number_eq %>
+			<%= check_box_tag :unpaid, true, ("true" == params[:unpaid]) %>未入金
 			<%= f.submit "検索" %>
 		<% end %>
 	</div>

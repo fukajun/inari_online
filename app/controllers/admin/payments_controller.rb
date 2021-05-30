@@ -2,7 +2,11 @@ class Admin::PaymentsController < ApplicationController
 	def index
 		@q = Online.ransack(params[:q])
 		@onlines = @q.result(distinct: true)
-		@payments = Payment.where(online_id: @onlines).order(id: "DESC")
+		if params[:unpaid]
+			@payments = Payment.where(online_id: @onlines, paid: false).order(id: "DESC")
+		else
+			@payments = Payment.where(online_id: @onlines).order(id: "DESC")
+		end
 	end
 
 	def edit
