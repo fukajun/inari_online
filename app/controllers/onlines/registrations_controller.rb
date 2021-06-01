@@ -33,18 +33,6 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
     else #完了画面に進む
       @online.save
 
-      #Subjectテーブルに初回教科登録
-      @subject = Subject.new
-      @subject.online_id = @online.id
-      if (@online.math_iaf)
-        @subject.course = 1
-      elsif (@online.math_iibf)
-        @subject.course = 3
-      elsif (@online.math_iiicf)
-        @subject.course = 5
-      end
-      @subject.save
-
       #Paymentテーブル作成
       @payment = Payment.new
       @payment.online_id = @online.id
