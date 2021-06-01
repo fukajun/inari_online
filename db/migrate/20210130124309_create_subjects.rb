@@ -31,5 +31,6 @@ class CreateSubjects < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
+    add_index :subjects, [:online_id, :course], unique: true
   end
 end

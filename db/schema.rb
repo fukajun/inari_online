@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_101719) do
     t.integer "postphonement"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["online_id", "course"], name: "index_subjects_on_online_id_and_course", unique: true
   end
 
 end
