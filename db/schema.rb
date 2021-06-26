@@ -67,12 +67,12 @@ ActiveRecord::Schema.define(version: 2021_05_30_101719) do
     t.string "phone"
     t.string "parent_email"
     t.integer "course"
-    t.boolean "math_iaf"
-    t.boolean "math_ias"
-    t.boolean "math_iibf"
-    t.boolean "math_iibs"
-    t.boolean "math_iiicf"
-    t.boolean "math_iiics"
+    t.integer "math_iaf"
+    t.integer "math_ias"
+    t.integer "math_iibf"
+    t.integer "math_iibs"
+    t.integer "math_iiicf"
+    t.integer "math_iiics"
     t.integer "membership_number"
     t.boolean "status", default: true, null: false
     t.index ["email"], name: "index_onlines_on_email", unique: true

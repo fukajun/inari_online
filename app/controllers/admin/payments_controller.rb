@@ -38,72 +38,75 @@ class Admin::PaymentsController < ApplicationController
 			#Subjectテーブルに教科登録
 			@subject = Subject.new
 			@subject.online_id = @online.id
+			@subject.question = 1
+			@subject.stage = 1
 
 			# 振込確認後に学習教科開放
 			if @payment.course == "数IA 1回目"
 				if @payment.paid == true
-					@online.math_iaf = true
+					@online.math_iaf = 1
 					@subject.course = 1
 				else
 					@online.math_iaf = nil
 				end
 			elsif @payment.course == "数IA 2回目"
 				if @payment.paid == true
-					@online.math_ias = true
+					@online.math_ias = 1
 					@subject.course = 2
 				else
 					@online.math_ias = nil
 				end
 			elsif @payment.course == "数IIB 1回目"
 				if @payment.paid == true
-					@online.math_iibf = true
+					@online.math_iibf = 1
 					@subject.course = 3
 				else
 					@online.math_iibf = nil
 				end
 			elsif @payment.course == "数IIB 2回目"
 				if @payment.paid == true
-					@online.math_iibs = true
+					@online.math_iibs = 1
 					@subject.course = 4
 				else
 					@online.math_iibs = nil
 				end
 			elsif @payment.course == "数IIIC 1回目"
 				if @payment.paid == true
-					@online.math_iiicf = true
+					@online.math_iiicf = 1
 					@subject.course = 5
 				else
 					@online.math_iiicf = nil
 				end
 			elsif @payment.course == "数IIIC 2回目"
 				if @payment.paid == true
-					@online.math_iiics = true
+					@online.math_iiics = 1
 					@subject.course = 6
 				else
 					@online.math_iiics = nil
 				end
 			elsif @payment.course == "数IA トライアル"
 				if @payment.paid == true
-					@online.math_iaf = true
+					@online.math_iaf = 1
 					@subject.course = 7
 				else
 					@online.math_iaf = nil
 				end
 			elsif @payment.course == "数IIB トライアル"
 				if @payment.paid == true
-					@online.math_iibf = true
+					@online.math_iibf = 1
 					@subject.course = 8
 				else
 					@online.math_iibf = nil
 				end
 			elsif @payment.course == "数IIIC トライアル"
 				if @payment.paid == true
-					@online.math_iiicf = true
+					@online.math_iiicf = 1
 					@subject.course = 9
 				else
 					@online.math_iiicf = nil
 				end
 			end
+
 			
 			@online.update(online_params)
 			if @subject.course != nil
