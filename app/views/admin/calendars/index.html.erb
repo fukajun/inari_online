@@ -1,0 +1,18 @@
+<h1>Admin::Calendars#index</h1>
+<p>Find me in app/views/admin/calendars/index.html.erb</p>
+
+<%= month_calendar(events: @calendars) do |date, calendars| %>
+	<%= date.day %>
+
+	<% calendars.each do |calendar| %>
+	<%= calendar.title %>
+		<div>
+			<% if calendar.check == true %>
+				<%= link_to "〇", admin_calendar_path(calendar, params: {check: true}), method: :put %>
+			<% elsif calendar.check == false %>
+				<%= link_to "×", admin_calendar_path(calendar, params: {check: false}), method: :put %>
+			<% end %>
+		</div>
+	<% end %>
+
+<% end %>
