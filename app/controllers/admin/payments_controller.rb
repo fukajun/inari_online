@@ -35,7 +35,7 @@ class Admin::PaymentsController < ApplicationController
 				@online.membership_number = newNumber
 			end
 
-			#Subjectテーブルに教科登録
+			# Subjectテーブルに教科登録
 			@subject = Subject.new
 			@subject.online_id = @online.id
 			@subject.question = 1
@@ -107,6 +107,28 @@ class Admin::PaymentsController < ApplicationController
 				end
 			end
 
+			# Subjectテーブルに提出期限登録
+			checkDate = Calendar.where(check: true)
+			today = Time.current
+			lessonArray = Array.new
+			count = -2
+			times = 1
+			checkDate.each do |i|
+				date = i.start_time.strftime("%Y-%m-%d %H:%M:%S")
+				if today < i.start_time - (9 * 60 * 60)
+					if count > 5
+						lessonArray.push(date)
+						lessonColumn = "lesson#{times}"
+						@subject[lessonColumn] = date
+						count = 0
+						times += 1
+						if times > 22
+							break
+						end
+					end
+					count += 1
+				end
+			end
 			
 			@online.update(online_params)
 			if @subject.course != nil
