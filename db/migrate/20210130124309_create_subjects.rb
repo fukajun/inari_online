@@ -27,7 +27,7 @@ class CreateSubjects < ActiveRecord::Migration[5.2]
       t.datetime :lesson20
       t.datetime :lesson21
       t.datetime :lesson22
-      t.integer :postphonement
+      t.integer :postphonement, null: false, default: 0
 
       t.timestamps
     end

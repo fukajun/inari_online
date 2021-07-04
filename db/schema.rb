@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(version: 2021_06_28_144939) do
     t.datetime "lesson20"
     t.datetime "lesson21"
     t.datetime "lesson22"
-    t.integer "postphonement"
+    t.integer "postphonement", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["online_id", "course"], name: "index_subjects_on_online_id_and_course", unique: true

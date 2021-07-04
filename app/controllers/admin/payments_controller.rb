@@ -122,9 +122,7 @@ class Admin::PaymentsController < ApplicationController
 						@subject[lessonColumn] = date
 						count = 0
 						times += 1
-						if times > 22
-							break
-						end
+						break if times > 22
 					end
 					count += 1
 				end
