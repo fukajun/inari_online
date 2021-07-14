@@ -1,12 +1,16 @@
 <h1>Math::IaFirst#index</h1>
 <p>Find me in app/views/math/ia_first/index.html.erb</p>
 
+<div>
+	<%= link_to "Postphone", math_ia_first_postphone_path, "data-confirm" => "本当に延期しますか?" %>
+</div>
 
 <div>
 	<% for num in 1..22 do %>
 		<div>
 			<div>
 				<p><%= "Lesson" %><%= num %></p>
+				<p>提出期限：<%= @subject["lesson#{num}"].strftime("%Y/%m/%d") %></p>
 			</div>
 			<!-- 単元テストの条件分岐 -->
 			<% if num == 8 || num == 15 || num == 22 %>

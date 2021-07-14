@@ -47,6 +47,7 @@ Rails.application.routes.draw do
     get "ia_first/:id/test_answer", to: "ia_first#test_answer", as: "ia_first_test_answer"
     get "ia_first/:id/exercise", to: "ia_first#exercise", as: "ia_first_exercise"
     get "ia_first/:id/exercise_answer", to: "ia_first#exercise_answer", as: "ia_first_exercise_answer"
+    get "ia_first/postphone", to: "ia_first#postphone", as: "ia_first_postphone"
   end
 
 end

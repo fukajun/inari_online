@@ -3,6 +3,35 @@ class Math::IaFirstController < ApplicationController
 		@subject = Subject.find_by(online_id: current_online.id, course: 1)
 	end
 
+	def postphone
+		@subject = Subject.find_by(online_id: current_online.id, course: 1)
+
+		# 課題提出期限延長
+		if @subject.postphonement < 3
+			checkDate = Calendar.where(check: true)
+			lessonArray = Array.new
+			checkDate.each do |i|
+				date = i.start_time.strftime("%Y-%m-%d %H:%M:%S")
+				lessonArray.push(date)
+			end
+
+			lessonId = @subject.question
+			lessonArray.each do |j|
+		 		lessonColumn = "lesson#{lessonId}"
+		 		if (@subject[lessonColumn].strftime("%Y-%m-%d %H:%M:%S") == j)
+		 			index = lessonArray.index(j)
+		 			@subject[lessonColumn] = lessonArray[index + 6]
+					lessonId += 1
+					break if lessonId > 22
+				end
+			end
+			@subject.postphonement += 1
+			@subject.update(subject_params)
+		end
+
+		redirect_to request.referer
+	end
+
 	def test
 		@parameter = params[:id].to_i
 		@number = "%02d" % params[:id]
@@ -69,15 +98,19 @@ class Math::IaFirstController < ApplicationController
 	end
 
 	def update
-		@subject = Subject.find_by(online_id: current_online.id)
+		@subject = Subject.find_by(online_id: current_online.id, course: 1)
 		if @subject.question == params[:id].to_i
 			@subject.update(question: @subject.question + 1, stage: 1)
-		end		
+		end
 		redirect_to math_ia_first_exercise_answer_path
 	end
 
 	private
 	def study_params
 		params.require(:study).permit(answer_images_images: [])
+	end
+
+	def subject_params
+		params.permit(:lesson1, :lesson2, :lesson3, :lesson4, :lesson5, :lesson6, :lesson7, :lesson8, :lesson9, :lesson10, :lesson11, :lesson12, :lesson13, :lesson14, :lesson15, :lesson16, :lesson17, :lesson18, :lesson19, :lesson20, :lesson21, :lesson22, :postphonement)
 	end
 end
