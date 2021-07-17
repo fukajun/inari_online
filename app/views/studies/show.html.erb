@@ -1,0 +1,17 @@
+<h1>Studies#show</h1>
+<p>Find me in app/views/studies/show.html.erb</p>
+
+<div class="container">
+	<div class="row">
+		<div>
+			採点結果：<%= @study.score %> 点
+		</div>
+		<div>
+			<% @correction_images.each do |correction_image| %>
+				<figure>
+					<%= attachment_image_tag(correction_image, :image, :width => '100%') %>
+				</figure>
+			<% end %>
+		</div>
+	</div>
+</div>
