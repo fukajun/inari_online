@@ -21,8 +21,8 @@ class Admin::StudiesController < ApplicationController
 
 	def destroy
 		@study = Study.find(params[:id])
-		@correction_image = CorrectionImage.find_by(study_id: @study.id)
-		@correction_image.destroy
+		@correction_image = CorrectionImage.where(study_id: @study.id)
+		@correction_image.delete_all
 		redirect_to admin_study_path(@study)
 	end
 
