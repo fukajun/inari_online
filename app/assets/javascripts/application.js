@@ -17,6 +17,7 @@
 //= require jquery.jpostal
 //= require bootstrap
 //= require_tree .
+//= require data-confirm-modal
 
 $(function() {
 	$(document).on('turbolinks:load', () => {

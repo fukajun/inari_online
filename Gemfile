@@ -63,6 +63,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "devise"
 gem "bootstrap", "~> 4.4.1"
+gem "data-confirm-modal"
 gem "jquery-rails"
 gem "jp_prefecture"
 gem "refile", require: "refile/rails", github: "manfe/refile"
