@@ -39,7 +39,7 @@ Rails.application.routes.draw do
 
   resources :onlines, only: [:show, :edit, :update]
   resources :studies, only: [:index, :show]
-  resources :payments, only: [:index]
+  resources :payments, only: [:index, :create]
 
   namespace :math do
     resources :ia_first, only: [:index, :create, :update]
