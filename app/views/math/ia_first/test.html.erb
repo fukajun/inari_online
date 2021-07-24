@@ -7,13 +7,9 @@
 	</figure>
 <% end %>
 
-<%= form_for(@study, url: math_ia_first_index_path) do |f| %>
+<%= form_for(@study, url: math_ia_first_path) do |f| %>
 	<div><%= f.attachment_field :answer_images_images, multiple: true %></div>
-	<div>
-		<%= f.hidden_field :params, :value => @parameter %>
-		<%= f.hidden_field :question_id %>
-		<%= f.submit "send" %>
-	</div>
+	<div><%= f.submit "send" %></div>
 <% end %>
 <img id="preview_0" style="width:30%;">
 <img id="preview_1" style="width:30%;">

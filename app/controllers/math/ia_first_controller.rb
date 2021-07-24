@@ -43,7 +43,13 @@ class Math::IaFirstController < ApplicationController
 			@id.push(num)
 		end
 
-		@study = Study.new(question_id: @parameter)
+		@study = Study.find_by(online_id: current_online.id, question_id: @parameter)
+		if @study == nil
+			@study = Study.new
+			@study.online_id = current_online.id
+			@study.question_id = @parameter
+			@study.save
+		end
 	end
 
 	def test_answer
@@ -79,30 +85,26 @@ class Math::IaFirstController < ApplicationController
 		end
 	end
 
-	def create
-		@study = Study.new(study_params)
-		@study.online_id = current_online.id
-		@study.question_id = params[:study][:question_id]
-		if @study.save
-			@subject = Subject.find_by(online_id: current_online.id, course: 1)
+	def update
+		@subject = Subject.find_by(online_id: current_online.id, course: 1)
+		if params[:commit] != nil
+			@study = Study.find_by(online_id: current_online.id, question_id: params[:id])
+			@study.update(study_params)
 			# 単元テストの条件分岐
-			if @subject.question == params[:study][:params].to_i
+			if @subject.question == params[:id].to_i
 				if @subject.question.in?([8, 15, 22])
 					@subject.update(question: @subject.question + 1)
 				else
 					@subject.update(stage: 3)
 				end
 			end
-			redirect_to math_ia_first_test_answer_path(params[:study][:params])
+			redirect_to math_ia_first_test_answer_path(params[:id])
+		else
+			if @subject.question == params[:id].to_i
+				@subject.update(question: @subject.question + 1, stage: 1)
+			end
+			redirect_to math_ia_first_exercise_answer_path(params[:id])
 		end
-	end
-
-	def update
-		@subject = Subject.find_by(online_id: current_online.id, course: 1)
-		if @subject.question == params[:id].to_i
-			@subject.update(question: @subject.question + 1, stage: 1)
-		end
-		redirect_to math_ia_first_exercise_answer_path
 	end
 
 	private

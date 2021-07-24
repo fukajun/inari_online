@@ -42,7 +42,7 @@ Rails.application.routes.draw do
   resources :payments, only: [:index, :create]
 
   namespace :math do
-    resources :ia_first, only: [:index, :create, :update]
+    resources :ia_first, only: [:index, :update]
     get "ia_first/:id/test", to: "ia_first#test", as: "ia_first_test"
     get "ia_first/:id/test_answer", to: "ia_first#test_answer", as: "ia_first_test_answer"
     get "ia_first/:id/exercise", to: "ia_first#exercise", as: "ia_first_exercise"
