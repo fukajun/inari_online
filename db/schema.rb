@@ -47,8 +47,6 @@ ActiveRecord::Schema.define(version: 2021_06_28_144939) do
 
   create_table "numberings", force: :cascade do |t|
     t.integer "final_number"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "onlines", force: :cascade do |t|
@@ -95,13 +93,12 @@ ActiveRecord::Schema.define(version: 2021_06_28_144939) do
 
   create_table "questions", force: :cascade do |t|
     t.string "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "studies", force: :cascade do |t|
     t.integer "online_id"
     t.integer "question_id"
+    t.integer "answer_time"
     t.integer "score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

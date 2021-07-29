@@ -1,6 +1,7 @@
 <h1>Math::IaFirst#test</h1>
 <p>Find me in app/views/math/ia_first/test.html.erb</p>
 
+<div class="answer_time" data-json="<%= @timeArray.to_json %>"></div>
 <% for id in @id do %>
 	<figure>
 		<img src='/assets/math_iaf_test_<%= id %>.png' alt="">
@@ -26,6 +27,21 @@
 
 
 <script>
+	const timeJSON = JSON.parse(document.querySelector('.answer_time').dataset.json);
+	const startTime = Date.parse(timeJSON[0]);
+	const answerTime = timeJSON[1];
+
+	if (answerTime === null){
+		setInterval(() => {
+			const currentTime = Date.now();
+			const diff = parseInt((currentTime - startTime) / 1000);
+			const minute = ('00' + parseInt(diff / 60)).slice(-2);
+			const second = ('00' + diff % 60).slice(-2);
+			document.querySelector('.answer_time').innerHTML = `${minute}:${second}`
+		});
+	}
+
+	
 	$('#study_answer_images_images').on('change', function (e) {
 		// 初期化
 		let reader = new FileReader(12);
