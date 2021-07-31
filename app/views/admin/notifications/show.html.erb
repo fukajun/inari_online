@@ -1,2 +1,35 @@
 <h1>Admin::Notifications#show</h1>
 <p>Find me in app/views/admin/notifications/show.html.erb</p>
+
+<div class="container">
+	<div class="row">
+		<h3>通知詳細</h3>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="row">
+				<table>
+					<thead>
+						<th></th>
+						<th>氏名</th>
+					</thead>
+					<% @notification_histories.each do |history| %>
+						<tbody>
+							<td><%= history.checked ? "既読" : "未読" %></td>
+							<td><%= history.online.first_name %><%= history.online.last_name %></td>
+						</tbody>
+					<% end %>
+				</table>
+			</div>
+		</div>
+		<div class="col-sm-8">
+			<h4>投稿内容</h4>
+			<table>
+				<tbody>
+					<tr><td><%= @notification.title %></td></tr>
+					<tr><td><%= @notification.body %></td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

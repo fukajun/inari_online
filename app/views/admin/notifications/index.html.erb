@@ -1,2 +1,28 @@
 <h1>Admin::Notifications#index</h1>
 <p>Find me in app/views/admin/notifications/index.html.erb</p>
+
+<div class="container">
+	<div class="row">
+		<h3>通知一覧</h3>
+	</div>
+	<div><%= link_to "新規投稿", new_admin_notification_path %></div>
+	<div class="row">
+		<table>
+			<thead>
+				<th>送信日時</th>
+				<th>件名</th>
+			</thead>
+			<% @notifications.each do |notification| %>
+				<tbody>
+					<td><%= notification.created_at.strftime("%Y年%m月%d日 %H:%M") %></td>
+					<td>
+						<%= link_to admin_notification_path(notification) do %>
+							<%= notification.title %>
+						<% end %>
+					</td>
+					<td><%= link_to "削除", admin_notification_path(notification), method: :delete, "data-confirm" => "本当に削除しますか？" %></td>
+				</tbody>
+			<% end %>
+		</table>
+	</div>
+</div>

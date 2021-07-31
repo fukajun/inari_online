@@ -1,2 +1,61 @@
 <h1>Admin::Notifications#new</h1>
 <p>Find me in app/views/admin/notifications/new.html.erb</p>
+
+<div class="container">
+	<div class="row">
+		<h3>新規通知作成</h3>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="row">
+				<table>
+					<thead>
+						<th></th>
+						<th>氏名</th>
+					</thead>
+					<% @onlines.each do |online| %>
+						<tbody>
+							<td><input type="checkbox" name="onlineId" value="<%= online.id %>"></td>
+							<td><%= online.first_name %><%= online.last_name %></td>
+						</tbody>
+					<% end %>
+				</table>
+			</div>
+		</div>
+		<div class="col-sm-8">
+			<div class="row">
+				<h4>投稿内容</h4>
+			</div>
+			<div class="row">
+				<%= form_for(@notification, url: admin_notifications_path) do |f| %>
+					<div><%= f.text_field :title, placeholder:"title" %></div>
+					<div><%= f.text_area :body, class:"form-control", placeholder:"body" %></div>
+					<div>
+						<%= f.hidden_field :onlineList, :value => "", class: "onlineList" %>
+						<%= f.submit "send", class: "btn btn-primary btn-block" %>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	const element = document.getElementsByName('onlineId');
+	const onlineList = document.querySelector('.onlineList');
+
+	element.forEach(function(target) {
+		target.addEventListener('change', function() {
+			let onlineArray = new Array();
+			let num = 0;
+			for (let i = 0; i < element.length; i++) {
+				if (element[i].checked) {
+					onlineArray[num] = element[i].value;
+					num ++;
+				}
+			}
+			onlineList.value = onlineArray;
+		}, false);
+	});
+</script>
