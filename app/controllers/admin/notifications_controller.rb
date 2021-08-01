@@ -5,7 +5,9 @@ class Admin::NotificationsController < ApplicationController
 
 	def new
 		@notification = Notification.new
-		@onlines = Online.all
+
+		@q = Online.ransack(params[:q])
+		@onlines = @q.result(distinct: true)
 	end
 
 	def create

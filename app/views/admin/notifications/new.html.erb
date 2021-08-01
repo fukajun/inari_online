@@ -8,6 +8,19 @@
 	<div class="row">
 		<div class="col-sm-4">
 			<div class="row">
+				<%= search_form_for(@q, url: new_admin_notification_path) do |f| %>
+					<%= f.search_field :first_name_or_last_name_or_membership_number_eq %>
+					<div><%= f.check_box :course_eq_any, {multiple: true}, 1, '' %>数IA 1回目</div>
+					<div><%= f.check_box :course_eq_any, {multiple: true}, 2, '' %>数IA 2回目</div>
+					<div><%= f.check_box :course_eq_any, {multiple: true}, 3, '' %>数IIB 1回目</div>
+					<div><%= f.check_box :course_eq_any, {multiple: true}, 4, '' %>数IIB 2回目</div>
+					<div><%= f.check_box :course_eq_any, {multiple: true}, 5, '' %>数IIIC 1回目</div>
+					<div><%= f.check_box :course_eq_any, {multiple: true}, 6, '' %>数IIIC 2回目</div>
+					<%= f.submit "検索" %>
+				<% end %>
+			</div>
+			<div class="row">
+				<div><%= check_box "", "", {class: "all_select"} %>全選択/解除</div>
 				<table>
 					<thead>
 						<th></th>
@@ -15,7 +28,7 @@
 					</thead>
 					<% @onlines.each do |online| %>
 						<tbody>
-							<td><input type="checkbox" name="onlineId" value="<%= online.id %>"></td>
+							<td><%= check_box "", "onlineId", {}, online.id, false %></td>
 							<td><%= online.first_name %><%= online.last_name %></td>
 						</tbody>
 					<% end %>
@@ -43,8 +56,24 @@
 
 <script>
 	const element = document.getElementsByName('onlineId');
+	const allSelect = document.querySelector('.all_select');
 	const onlineList = document.querySelector('.onlineList');
 
+	// 投稿先全選択
+	allSelect.addEventListener('change', function() {
+		let onlineArray = new Array();
+		for (let i = 0; i < element.length; i++) {
+			if (allSelect.checked) {
+				element[i].checked = true;
+				onlineArray[i] = element[i].value;
+			} else {
+				element[i].checked = false;
+			}
+		}
+		onlineList.value = onlineArray;
+	});
+
+	// 投稿先選択
 	element.forEach(function(target) {
 		target.addEventListener('change', function() {
 			let onlineArray = new Array();
