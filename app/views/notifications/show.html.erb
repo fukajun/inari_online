@@ -1,2 +1,16 @@
 <h1>Notifications#show</h1>
 <p>Find me in app/views/notifications/show.html.erb</p>
+
+<div class="container">
+	<div class="row">
+		<h4>投稿内容</h4>
+	</div>
+	<div class="row">
+		<table>
+			<tbody>
+				<tr><td><%= @notification.title %></td></tr>
+				<tr><td><%= @notification.body %></td></tr>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -72,6 +72,8 @@ class OnlinesController < ApplicationController
 			@subject.postphonement += 1
 			@subject.update(subject_params)
 		end
+
+		@notification_histories = NotificationHistory.where(online_id: current_online.id).order(id: "DESC")
 	end
 	
 	def show

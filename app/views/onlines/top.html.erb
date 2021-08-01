@@ -1,45 +1,71 @@
 <h1>Onlines#top</h1>
 <p>Find me in app/views/onlines/top.html.erb</p>
 
-<div>
-	<% if @online.math_iaf > 1 %>
-		<%= link_to "数IA 1回目", math_ia_first_index_path %>
-	<% else %>
-		<%= "数IA 1回目" %>
-	<% end %>
-</div>
-<div>
-	<% if @online.math_ias > 1 %>
-		<%= link_to "数IA 2回目", math_ia_second_index_path %>
-	<% else %>
-		<%= "数IA 2回目" %>
-	<% end %>
-</div>
-<div>
-	<% if @online.math_iibf > 1 %>
-		<%= link_to "数IIB 1回目", math_iib_first_index_path %>
-	<% else %>
-		<%= "数IIB 1回目" %>
-	<% end %>
-</div>
-<div>
-	<% if @online.math_iibs > 1 %>
-		<%= link_to "数IIB 2回目", math_iib_second_index_path %>
-	<% else %>
-		<%= "数IIB 2回目" %>
-	<% end %>
-</div>
-<div>
-	<% if @online.math_iiicf > 1 %>
-		<%= link_to "数IIIC 1回目", math_iiic_first_index_path %>
-	<% else %>
-		<%= "数IIIC 1回目" %>
-	<% end %>
-</div>
-<div>
-	<% if @online.math_iiics > 1 %>
-		<%= link_to "数IIIC 2回目", math_iiic_second_index_path %>
-	<% else %>
-		<%= "数IIIC 2回目" %>
-	<% end %>
+<div class="container">
+	<div class="row">
+		<% if @online.math_iaf > 1 %>
+			<%= link_to "数IA 1回目", math_ia_first_index_path %>
+		<% else %>
+			<%= "数IA 1回目" %>
+		<% end %>
+	</div>
+	<div class="row">
+		<% if @online.math_ias > 1 %>
+			<%= link_to "数IA 2回目", math_ia_second_index_path %>
+		<% else %>
+			<%= "数IA 2回目" %>
+		<% end %>
+	</div>
+	<div class="row">
+		<% if @online.math_iibf > 1 %>
+			<%= link_to "数IIB 1回目", math_iib_first_index_path %>
+		<% else %>
+			<%= "数IIB 1回目" %>
+		<% end %>
+	</div>
+	<div class="row">
+		<% if @online.math_iibs > 1 %>
+			<%= link_to "数IIB 2回目", math_iib_second_index_path %>
+		<% else %>
+			<%= "数IIB 2回目" %>
+		<% end %>
+	</div>
+	<div class="row">
+		<% if @online.math_iiicf > 1 %>
+			<%= link_to "数IIIC 1回目", math_iiic_first_index_path %>
+		<% else %>
+			<%= "数IIIC 1回目" %>
+		<% end %>
+	</div>
+	<div class="row">
+		<% if @online.math_iiics > 1 %>
+			<%= link_to "数IIIC 2回目", math_iiic_second_index_path %>
+		<% else %>
+			<%= "数IIIC 2回目" %>
+		<% end %>
+	</div>
+
+	<div class="row">
+		<h3>通知一覧</h3>
+	</div>
+	<div class="row">
+		<table>
+			<thead>
+				<th></th>
+				<th>件名</th>
+				<th>受信日時</th>
+			</thead>
+			<% @notification_histories.each do |history| %>
+				<tbody>
+					<td><%= history.checked ? "既読" : "未読" %></td>
+					<td>
+						<%= link_to notification_path(history.notification) do %>
+							<%= history.notification.title %>
+						<% end %>
+					</td>
+					<td><%= history.created_at.strftime("%Y年%m月%d日 %H:%M") %></td>
+				</tbody>
+			<% end %>
+		</table>
+	</div>
 </div>
