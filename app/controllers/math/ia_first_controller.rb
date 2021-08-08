@@ -55,6 +55,7 @@ class Math::IaFirstController < ApplicationController
 	end
 
 	def test_answer
+		@parameter = params[:id].to_i
 		@number = "%02d" % params[:id]
 		@question = Question.where("title like ?", "math_iaf_test_answer_#{@number}%").order(title: "ASC")
 
@@ -110,6 +111,12 @@ class Math::IaFirstController < ApplicationController
 					else
 						@subject.update(stage: 3)
 					end
+				end
+				# 単元修了処理
+				@online = current_online
+				if @subject.question == 23
+					@online.update(math_iaf: 3)
+					@subject.update(stage: 0)
 				end
 			end
 			redirect_to math_ia_first_test_answer_path(params[:id])

@@ -92,7 +92,13 @@
 
     <div class="field">
       <%= f.label :course, "受講科目" %><br />
-      <%= @online.course %>
+      <% if @online.course == 1 %>
+        <%= f.label :math_iaf, "数IA" %>
+      <% elsif @online.course == 3 %>
+        <%= f.label :math_iibf, "数IIB" %>
+      <% elsif @online.course == 5 %>
+        <%= f.label :math_iiicf, "数IIIC" %>
+      <% end %>
       <%= f.hidden_field :course %>
     </div>
 

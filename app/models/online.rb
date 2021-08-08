@@ -20,6 +20,5 @@ class Online < ApplicationRecord
     					徳島県: 36, 香川県: 37, 愛媛県: 38, 高知県: 39, 
     					福岡県: 40, 佐賀県: 41, 長崎県: 42, 熊本県: 43, 大分県: 44, 宮崎県: 45, 鹿児島県: 46, 沖縄県: 47
     				},_suffix: true
-  enum course: {数IA: 1, 数IIB: 3, 数IIIC: 5}
   enum status: {有効: true, 退会: false}
 end
