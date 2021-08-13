@@ -49,6 +49,18 @@ class Math::IaFirstController < ApplicationController
 			@study.online_id = current_online.id
 			@study.question_id = @parameter
 			@study.save
+			# 受講申請案内
+			if @study.question_id == 16
+				@notification = Notification.new
+				@notification.title = "次の講座のご案内"
+				@notification.body = "次の講座の受講申請が可能です。"
+				if @notification.save
+					@notification_history = NotificationHistory.new
+					@notification_history.online_id = current_online.id
+					@notification_history.notification_id = @notification.id
+					@notification_history.save
+				end
+			end
 		end
 
 		@timeArray = [@study.created_at, @study.answer_time]

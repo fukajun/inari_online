@@ -27,7 +27,7 @@
 			<table>
 				<tbody>
 					<tr><td><%= @notification.title %></td></tr>
-					<tr><td><%= @notification.body %></td></tr>
+					<tr><td><%= safe_join(@notification.body.split("\n"), tag(:br)) %></td></tr>
 				</tbody>
 			</table>
 		</div>
