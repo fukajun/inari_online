@@ -3,7 +3,6 @@
 
 <%= month_calendar(events: @calendars) do |date, calendars| %>
 	<%= date.day %>
-
 	<% calendars.each do |calendar| %>
 	<%= calendar.title %>
 		<div>
@@ -14,5 +13,4 @@
 			<% end %>
 		</div>
 	<% end %>
-
 <% end %>

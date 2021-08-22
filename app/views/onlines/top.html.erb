@@ -68,4 +68,23 @@
 			<% end %>
 		</table>
 	</div>
+
+	<div class="row">
+		<h3>カレンダー</h3>
+	</div>
+	<div>
+		<%= month_calendar(events: @calendars) do |date, calendars| %>
+			<%= date.day %>
+			<% calendars.each do |calendar| %>
+			<%= calendar.title %>
+				<div>
+					<% if calendar.check == true %>
+						<%= "〇" %>
+					<% elsif calendar.check == false %>
+						<%= "×" %>
+					<% end %>
+				</div>
+			<% end %>
+		<% end %>
+	</div>
 </div>

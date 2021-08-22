@@ -95,6 +95,9 @@ class OnlinesController < ApplicationController
 		end
 
 		@notification_histories = NotificationHistory.where(online_id: current_online.id).order(id: "DESC")
+
+		# カレンダー表示
+		@calendars = Calendar.all
 	end
 	
 	def show
