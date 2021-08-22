@@ -1,6 +1,8 @@
 class Admin::StudiesController < ApplicationController
 	def index
-		@studies = Study.all.reverse_order
+		@q = Online.ransack(params[:q])
+		@onlines = @q.result(distinct: true)
+		@studies = Study.where(online_id: @onlines).reverse_order
   end
 
 	def show
