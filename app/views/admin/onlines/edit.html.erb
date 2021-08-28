@@ -11,6 +11,13 @@
 					<td><%= @online.membership_number %></td>
 				</tr>
 				<tr>
+					<td>会員ステータス</td>
+					<td>
+						<%= f.radio_button :status, :有効 %>有効
+						<%= f.radio_button :status, :失効 %>失効
+					</td>
+				</tr>
+				<tr>
 					<td>名前(姓)</td>
 					<td><%= f.text_field :first_name, autocomplete: "first_name" %></td>
 				</tr>
@@ -28,8 +35,10 @@
 				</tr>
 				<tr>
 					<td>性別</td>
-					<td><%= f.radio_button :gender, :男性 %>男性</td>
-					<td><%= f.radio_button :gender, :女性 %>女性</td>
+					<td>
+						<%= f.radio_button :gender, :男性 %>男性
+						<%= f.radio_button :gender, :女性 %>女性
+					</td>
 				</tr>
 				<tr>
 					<td>生年月日</td>
@@ -66,6 +75,22 @@
 				<tr>
 					<td>E-mail(保護者)</td>
 					<td><%= f.email_field :parent_email, autocomplete: "parent_email" %></td>
+				</tr>
+				<tr>
+				<td>受講科目</td>
+					<% if @online.course == 1 %>
+						<td><%= "数IA 1回目" %></td>
+					<% elsif @online.course == 2 %>
+						<td><%= "数IA 2回目" %></td>
+					<% elsif @online.course == 3 %>
+						<td><%= "数IIB 1回目" %></td>
+					<% elsif @online.course == 4 %>
+						<td><%= "数IIB 2回目" %></td>
+					<% elsif @online.course == 5 %>
+						<td><%= "数IIIC 1回目" %></td>
+					<% elsif @online.course == 6 %>
+						<td><%= "数IIC 2回目" %></td>
+					<% end %>
 				</tr>
 			</table>
 		</div>
