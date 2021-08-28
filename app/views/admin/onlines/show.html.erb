@@ -70,4 +70,53 @@
 	<div>
 		<%= link_to "Edit", edit_admin_online_path, class: "btn btn-primary btn-lg center-block" %>
 	</div>
+
+	<div class="row">
+		<h3>学習履歴一覧</h3>
+	</div>
+	<div class="row">
+		<table>
+			<thead>
+				<th>クラス</th>
+				<th>問題番号</th>
+				<th>学習日時</th>
+				<th>得点</th>
+			</thead>
+			<% @studies.each do |study| %>
+				<tbody>
+					<% if study.question.title.include?("iaf") %>
+						<td><%= "数IA 1回目" %></td>
+						<td><%= study.question.title.delete("math_iaf_test_").slice(0..1) %></td>
+					<% elsif study.question.title.include?("ias") %>
+						<td><%= "数IA 2回目" %></td>
+						<td><%= study.question.title.delete("math_ias_test_").slice(0..1) %></td>
+					<% elsif study.question.title.include?("iibf") %>
+						<td><%= "数IIB 1回目" %></td>
+						<td><%= study.question.title.delete("math_iibf_test_").slice(0..1) %></td>
+					<% elsif study.question.title.include?("iibs") %>
+						<td><%= "数IIB 2回目" %></td>
+						<td><%= study.question.title.delete("math_iibs_test_").slice(0..1) %></td>
+					<% elsif study.question.title.include?("iiicf") %>
+						<td><%= "数IIIC 1回目" %></td>
+						<td><%= study.question.title.delete("math_iiicf_test_").slice(0..1) %></td>
+					<% elsif study.question.title.include?("iiics") %>
+						<td><%= "数IIIC 2回目" %></td>
+						<td><%= study.question.title.delete("math_iiics_test_").slice(0..1) %></td>
+					<% end %>
+					<td>
+						<%= study.created_at.strftime("%Y/%m/%d %H:%M") %>
+					</td>
+					<td>
+						<% if study.score.present? %>
+							<%= link_to study_path(study) do %>
+								<%= study.score %> 点
+							<% end %>
+						<% else %>
+							<%= "採点中" %>
+						<% end %>
+					</td>
+				</tbody>
+			<% end %>
+		</table>
+	</div>
 </div>

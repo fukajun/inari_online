@@ -5,6 +5,7 @@ class Admin::OnlinesController < ApplicationController
 
 	def show
 		@online = Online.find(params[:id])
+		@studies = Study.where(online_id: @online.id)
 	end
 
 	def edit
@@ -13,6 +14,7 @@ class Admin::OnlinesController < ApplicationController
 
 	def update
 		@online = Online.find(params[:id])
+		@studies = Study.where(online_id: @online.id)
 		if @online.update(online_params)
 			render "show", notice: "successfully updated!"
 		else
