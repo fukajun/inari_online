@@ -34,69 +34,112 @@ class Math::IaFirstController < ApplicationController
 
 	def test
 		@parameter = params[:id].to_i
-		@number = "%02d" % params[:id]
-		@question = Question.where("title like ?", "math_iaf_test_#{@number}%").where.not("title like ?", "%_answer%").order(title: "ASC")
+		@subject = Subject.find_by(online_id: current_online.id, course: 1)
+		access = (@parameter <= @subject.question)? true : false
 
-		@id = Array.new
-		@question.each do |i|
-			num = i.title.delete!("math_iaf_test_").delete!(".png")
-			@id.push(num)
-		end
+		if (access)
+			@number = "%02d" % params[:id]
+			@question = Question.where("title like ?", "math_iaf_test_#{@number}%").where.not("title like ?", "%_answer%").order(title: "ASC")
 
-		@study = Study.find_by(online_id: current_online.id, question_id: @parameter)
-		if @study == nil
-			@study = Study.new
-			@study.online_id = current_online.id
-			@study.question_id = @parameter
-			@study.save
-			# 受講申請案内
-			if @study.question_id == 16
-				@notification = Notification.new
-				@notification.title = "次の講座のご案内"
-				@notification.body = "次の講座の受講申請が可能です。"
-				if @notification.save
-					@notification_history = NotificationHistory.new
-					@notification_history.online_id = current_online.id
-					@notification_history.notification_id = @notification.id
-					@notification_history.save
+			@id = Array.new
+			@question.each do |i|
+				num = i.title.delete!("math_iaf_test_").delete!(".png")
+				@id.push(num)
+			end
+
+			@study = Study.find_by(online_id: current_online.id, question_id: @parameter)
+			if @study == nil
+				@study = Study.new
+				@study.online_id = current_online.id
+				@study.question_id = @parameter
+				@study.save
+				# 受講申請案内
+				if @study.question_id == 16
+					@notification = Notification.new
+					@notification.title = "次の講座のご案内"
+					@notification.body = "次の講座の受講申請が可能です。"
+					if @notification.save
+						@notification_history = NotificationHistory.new
+						@notification_history.online_id = current_online.id
+						@notification_history.notification_id = @notification.id
+						@notification_history.save
+					end
 				end
 			end
-		end
 
-		@timeArray = [@study.created_at, @study.answer_time]
+			@timeArray = [@study.created_at, @study.answer_time]
+		else
+			@studies = Study.where(online_id: current_online.id)
+			render "index"
+		end
 	end
 
 	def test_answer
 		@parameter = params[:id].to_i
-		@number = "%02d" % params[:id]
-		@question = Question.where("title like ?", "math_iaf_test_answer_#{@number}%").order(title: "ASC")
+		@subject = Subject.find_by(online_id: current_online.id, course: 1)
+		if (@subject.stage == 1)
+			access = (@parameter < @subject.question)? true : false
+		elsif (@subject.stage == 3)
+			access = (@parameter <= @subject.question)? true : false
+		end
 
-		@id = Array.new
-		@question.each do |i|
-			num = i.title.delete!("math_iaf_test_answer_").delete!(".png")
-			@id.push(num)
+		if (access)
+			@number = "%02d" % params[:id]
+			@question = Question.where("title like ?", "math_iaf_test_answer_#{@number}%").order(title: "ASC")
+
+			@id = Array.new
+			@question.each do |i|
+				num = i.title.delete!("math_iaf_test_answer_").delete!(".png")
+				@id.push(num)
+			end
+		else
+			@studies = Study.where(online_id: current_online.id)
+			render "index"
 		end
 	end
 
 	def exercise
-		number = "%02d" % params[:id]
-		@question = Question.where("title like ?", "math_iaf_exercise_#{number}%").where.not("title like ?", "%_answer%").order(title: "ASC")
+		@parameter = params[:id].to_i
+		@subject = Subject.find_by(online_id: current_online.id, course: 1)
 
-		@id = Array.new
-		@question.each do |i|
-			num = i.title.delete!("math_iaf_exercise_").delete!(".png")
-			@id.push(num)
+		if (@subject.stage == 1)
+			access = (@parameter < @subject.question)? true : false
+		elsif (@subject.stage == 3)
+			access = (@parameter <= @subject.question)? true : false
+		end
+
+		if (access)
+			number = "%02d" % params[:id]
+			@question = Question.where("title like ?", "math_iaf_exercise_#{number}%").where.not("title like ?", "%_answer%").order(title: "ASC")
+
+			@id = Array.new
+			@question.each do |i|
+				num = i.title.delete!("math_iaf_exercise_").delete!(".png")
+				@id.push(num)
+			end
+		else
+			@studies = Study.where(online_id: current_online.id)
+			render "index"
 		end
 	end
 
 	def exercise_answer
-		number = "%02d" % params[:id]
-		@question = Question.where("title like ?", "math_iaf_exercise_answer_#{number}%").order(title: "ASC")
+		@parameter = params[:id].to_i
+		@subject = Subject.find_by(online_id: current_online.id, course: 1)
+		access = (@parameter < @subject.question)? true : false
 
-		@id = Array.new
-		@question.each do |i|
-			num = i.title.delete!("math_iaf_exercise_answer_").delete!(".png")
-			@id.push(num)
+		if (access)
+			number = "%02d" % params[:id]
+			@question = Question.where("title like ?", "math_iaf_exercise_answer_#{number}%").order(title: "ASC")
+
+			@id = Array.new
+			@question.each do |i|
+				num = i.title.delete!("math_iaf_exercise_answer_").delete!(".png")
+				@id.push(num)
+			end
+		else
+			@studies = Study.where(online_id: current_online.id)
+			render "index"
 		end
 	end
 
