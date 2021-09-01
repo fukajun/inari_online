@@ -8,22 +8,29 @@
 	</figure>
 <% end %>
 
-<%= form_for(@study, url: math_ia_first_path) do |f| %>
-	<div><%= f.attachment_field :answer_images_images, multiple: true %></div>
-	<div><%= f.submit "send" %></div>
+<% if current_online.status == "有効" && @study.score == nil %>
+	<%= form_for(@study, url: math_ia_first_path) do |f| %>
+		<div><%= f.attachment_field :answer_images_images, multiple: true %></div>
+		<div><%= f.submit "send" %></div>
+	<% end %>
+	<img id="preview_0" style="width:30%;">
+	<img id="preview_1" style="width:30%;">
+	<img id="preview_2" style="width:30%;">
+	<img id="preview_3" style="width:30%;">
+	<img id="preview_4" style="width:30%;">
+	<img id="preview_5" style="width:30%;">
+	<img id="preview_6" style="width:30%;">
+	<img id="preview_7" style="width:30%;">
+	<img id="preview_8" style="width:30%;">
+	<img id="preview_9" style="width:30%;">
+	<img id="preview_10" style="width:30%;">
+	<img id="preview_11" style="width:30%;">
+<% else %>
+	<div>
+		<%= link_to "index", math_ia_first_index_path %>
+		<%= link_to "next", math_ia_first_test_answer_path %>
+	</div>
 <% end %>
-<img id="preview_0" style="width:30%;">
-<img id="preview_1" style="width:30%;">
-<img id="preview_2" style="width:30%;">
-<img id="preview_3" style="width:30%;">
-<img id="preview_4" style="width:30%;">
-<img id="preview_5" style="width:30%;">
-<img id="preview_6" style="width:30%;">
-<img id="preview_7" style="width:30%;">
-<img id="preview_8" style="width:30%;">
-<img id="preview_9" style="width:30%;">
-<img id="preview_10" style="width:30%;">
-<img id="preview_11" style="width:30%;">
 
 
 <script>

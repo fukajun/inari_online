@@ -36,7 +36,13 @@ class Math::IaFirstController < ApplicationController
 	def test
 		@parameter = params[:id].to_i
 		@subject = Subject.find_by(online_id: current_online.id, course: 1)
-		access = (@parameter <= @subject.question)? true : false
+		@study = Study.find_by(online_id: current_online.id, question_id: @parameter)
+
+		if (current_online.status == "有効")
+			access = (@parameter <= @subject.question)? true : false
+		else
+			access = ((@study != nil) && (@parameter <= @subject.question))? true : false
+		end
 
 		if (access)
 			@number = "%02d" % params[:id]
@@ -48,7 +54,6 @@ class Math::IaFirstController < ApplicationController
 				@id.push(num)
 			end
 
-			@study = Study.find_by(online_id: current_online.id, question_id: @parameter)
 			if @study == nil
 				@study = Study.new
 				@study.online_id = current_online.id
@@ -78,10 +83,20 @@ class Math::IaFirstController < ApplicationController
 	def test_answer
 		@parameter = params[:id].to_i
 		@subject = Subject.find_by(online_id: current_online.id, course: 1)
-		if (@subject.stage == 1)
-			access = (@parameter < @subject.question)? true : false
-		elsif (@subject.stage == 3)
-			access = (@parameter <= @subject.question)? true : false
+		study = Study.find_by(online_id: current_online.id, question_id: @parameter)
+
+		if (current_online.status == "有効")
+			if (@subject.stage == 1)
+				access = (@parameter < @subject.question)? true : false
+			elsif (@subject.stage == 3)
+				access = (@parameter <= @subject.question)? true : false
+			end
+		else
+			if (@subject.stage == 1)
+				access = ((study != nil) && (@parameter < @subject.question))? true : false
+			elsif (@subject.stage == 3)
+				access = ((study != nil) && (@parameter <= @subject.question))? true : false
+			end
 		end
 
 		if (access)
@@ -102,11 +117,20 @@ class Math::IaFirstController < ApplicationController
 	def exercise
 		@parameter = params[:id].to_i
 		@subject = Subject.find_by(online_id: current_online.id, course: 1)
+		study = Study.find_by(online_id: current_online.id, question_id: @parameter)
 
-		if (@subject.stage == 1)
-			access = (@parameter < @subject.question)? true : false
-		elsif (@subject.stage == 3)
-			access = (@parameter <= @subject.question)? true : false
+		if (current_online.status == "有効")
+			if (@subject.stage == 1)
+				access = (@parameter < @subject.question)? true : false
+			elsif (@subject.stage == 3)
+				access = (@parameter <= @subject.question)? true : false
+			end
+		else
+			if (@subject.stage == 1)
+				access = ((study != nil) && (@parameter < @subject.question))? true : false
+			elsif (@subject.stage == 3)
+				access = ((study != nil) && (@parameter <= @subject.question))? true : false
+			end
 		end
 
 		if (access)
@@ -127,7 +151,13 @@ class Math::IaFirstController < ApplicationController
 	def exercise_answer
 		@parameter = params[:id].to_i
 		@subject = Subject.find_by(online_id: current_online.id, course: 1)
-		access = (@parameter < @subject.question)? true : false
+		study = Study.find_by(online_id: current_online.id, question_id: @parameter)
+
+		if (current_online.status == "有効")
+			access = (@parameter < @subject.question)? true : false
+		else
+			access = ((study != nil) && (@parameter < @subject.question))? true : false
+		end
 
 		if (access)
 			number = "%02d" % params[:id]

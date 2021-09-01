@@ -38,6 +38,13 @@ class OnlinesController < ApplicationController
 			@online.update(online_math_params)
 		end
 
+		# 会員ステータス更新
+		if ((iaf == 1) || (iaf == 2) || (ias == 1) || (ias == 2) || (iibf == 1) || (iibf == 2) || (iibs == 1) || (iibs == 2) || (iiicf == 1) || (iiicf == 2) || (iiics == 1) || (iiics == 2))
+			@online.update(status: "有効")
+		else
+			@online.update(status: "失効")
+		end
+
 		# 課題提出期限確認
 		if iaf == 2
 			@subject = Subject.find_by(online_id: current_online.id, course: 1)
