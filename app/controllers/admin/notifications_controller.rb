@@ -1,4 +1,6 @@
 class Admin::NotificationsController < ApplicationController
+	before_action :authenticate_admin!
+	
 	def index
 		@notifications = Notification.all.order(id: "DESC")
 	end

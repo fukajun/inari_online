@@ -1,4 +1,6 @@
 class Admin::PaymentsController < ApplicationController
+	before_action :authenticate_admin!
+	
 	def index
 		@q = Online.ransack(params[:q])
 		@onlines = @q.result(distinct: true)

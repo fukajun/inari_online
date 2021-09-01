@@ -1,4 +1,6 @@
 class Admin::OnlinesController < ApplicationController
+	before_action :authenticate_admin!
+	
 	def index
 		@onlines = Online.all
 	end
