@@ -1,4 +1,6 @@
 class PaymentsController < ApplicationController
+	before_action :authenticate_online!
+	
 	def index
 		# 受講申請可否配列
 		subjects = Array.new(6)

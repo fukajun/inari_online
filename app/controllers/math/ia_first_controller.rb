@@ -1,4 +1,6 @@
 class Math::IaFirstController < ApplicationController
+	before_action :authenticate_online!
+	
 	def index
 		@subject = Subject.find_by(online_id: current_online.id, course: 1)
 		@studies = Study.where(online_id: current_online.id)
