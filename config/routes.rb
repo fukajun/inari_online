@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   resources :studies, only: [:index, :show]
   resources :payments, only: [:index, :create]
   resources :notifications, only: [:show]
+  resources :reports, only: [:index]
 
   namespace :math do
     resources :ia_first, only: [:index, :update]
