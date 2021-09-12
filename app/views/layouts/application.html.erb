@@ -28,6 +28,11 @@
             <li><%= link_to ' Achievement', studies_path %></li>
             <li><%= link_to ' Log Out', destroy_online_session_path, method: :delete %></li>
 
+          <!-- 保護者ログイン -->
+          <% elsif parent_signed_in? %>
+            <li><%= link_to ' About', homes_about_path %></li>
+            <li><%= link_to ' Log Out', destroy_parent_session_path, method: :delete %></li>
+
           <!-- ログアウト -->
           <% else %>
             <li><%= link_to ' Home', root_path %></li>
