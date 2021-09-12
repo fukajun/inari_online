@@ -51,4 +51,9 @@ Rails.application.routes.draw do
     get "ia_first/postphone", to: "ia_first#postphone", as: "ia_first_postphone"
   end
 
+  #保護者
+  get "parents/sign_in", to: "parents/sessions#new", as: "new_parent_session"
+  post "parents/sign_in", to: "parents/sessions#create", as: "parent_session"
+  delete "parents/sign_out", to: "parents/sessions#destroy", as: "destroy_parent_session"
+
 end
