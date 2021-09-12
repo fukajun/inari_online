@@ -1,0 +1,21 @@
+<div>
+  <h2>Log in</h2>
+</div>
+
+<div>
+  <%= form_for :session, url: parent_session_path do |f| %>
+    <div class="field">
+      <%= f.label :membership_number, "受講生番号" %><br />
+      <%= f.text_field :membership_number, autofocus: true, autocomplete: "membership_number" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :parent_email, "E-mail(保護者)" %><br />
+      <%= f.email_field :parent_email, autocomplete: "parent_email" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Log in" %>
+    </div>
+  <% end %>
+</div>
