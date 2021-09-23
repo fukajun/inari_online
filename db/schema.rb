@@ -78,22 +78,25 @@ ActiveRecord::Schema.define(version: 2021_07_30_143715) do
     t.string "parent_name"
     t.integer "gender"
     t.date "birthday"
-    t.string "school"
+    t.string "high_school"
+    t.string "junior_high_school"
+    t.string "elementary_school"
     t.integer "grade", default: 0
     t.integer "postal_code"
     t.integer "prefecture", default: 0
-    t.text "address"
+    t.string "address"
     t.string "phone"
     t.string "parent_email"
     t.integer "course"
-    t.integer "math_iaf"
-    t.integer "math_ias"
-    t.integer "math_iibf"
-    t.integer "math_iibs"
-    t.integer "math_iiicf"
-    t.integer "math_iiics"
+    t.integer "math_iaf", default: 0
+    t.integer "math_ias", default: 0
+    t.integer "math_iibf", default: 0
+    t.integer "math_iibs", default: 0
+    t.integer "math_iiicf", default: 0
+    t.integer "math_iiics", default: 0
     t.integer "membership_number"
     t.boolean "status", default: true, null: false
+    t.string "note"
     t.index ["email"], name: "index_onlines_on_email", unique: true
     t.index ["reset_password_token"], name: "index_onlines_on_reset_password_token", unique: true
   end
