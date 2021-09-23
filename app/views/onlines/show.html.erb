@@ -38,11 +38,25 @@
 				<td><%= @online.birthday %></td>
 			</tr>
 			<tr>
-				<td>2021年4月からの学校名</td>
-				<td><%= @online.school %></td>
+				<% if @online.high_school != "" %>
+					<td>高校</td>
+					<td><%= @online.high_school %></td>
+				<% end %>
 			</tr>
 			<tr>
-				<td>2021年4月からの学年</td>
+				<% if @online.junior_high_school != "" %>
+					<td>中学校</td>
+					<td><%= @online.junior_high_school %></td>
+				<% end %>
+			</tr>
+			<tr>
+				<% if @online.elementary_school != "" %>
+					<td>小学校</td>
+					<td><%= @online.elementary_school %></td>
+				<% end %>
+			</tr>
+			<tr>
+				<td>学年</td>
 				<td><%= @online.grade %></td>
 			</tr>
 			<tr>

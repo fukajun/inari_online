@@ -44,8 +44,12 @@
 
     <div class="field">
       <%= f.label :school, "2021年4月からの学校名" %><br />
-      <%= @online.school %>
-      <%= f.hidden_field :school %>
+      <%= @online.high_school %>
+      <%= @online.junior_high_school %>
+      <%= @online.elementary_school %>
+      <%= f.hidden_field :high_school %>
+      <%= f.hidden_field :junior_high_school %>
+      <%= f.hidden_field :elementary_school %>
     </div>
 
     <div class="field">

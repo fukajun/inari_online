@@ -16,6 +16,15 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
     @online = Online.new(sign_up_params)
     @online.password = Devise.friendly_token.first(8) #パスワード自動生成
 
+    # 学校登録調整
+    if @online.grade == "中1" || @online.grade == "中2" || @online.grade == "中3"
+      @online.junior_high_school = @online.high_school
+      @online.high_school = nil
+    elsif @online.grade == "小学生"
+      @online.elementary_school = @online.high_school
+      @online.high_school = nil
+    end
+
     if @online.valid?
       render :action => "confirm"
     else
@@ -84,7 +93,7 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :kana_name, :parent_name, :gender, :birthday, :school, :grade, :postal_code, :prefecture, :address, :phone, :email, :parent_email, :course, :status])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :kana_name, :parent_name, :gender, :birthday, :high_school, :junior_high_school, :elementary_school, :grade, :postal_code, :prefecture, :address, :phone, :email, :parent_email, :course, :status])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
