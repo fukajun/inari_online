@@ -17,6 +17,8 @@
           <% if admin_signed_in? %>
             <li><%= link_to ' Home', admins_top_path %></li>
             <li><%= link_to ' About', homes_about_path %></li>
+            <li><%= link_to ' Study', admin_studies_path %></li>
+            <li><%= link_to ' Payment', admin_payments_path %></li>
             <li><%= link_to ' Student', admin_onlines_path %></li>
             <li><%= link_to ' Log Out', destroy_admin_session_path, method: :delete %></li>
 
