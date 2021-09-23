@@ -14,6 +14,10 @@
 				<td><%= @online.status %></td>
 			</tr>
 			<tr>
+				<td>登録日</td>
+				<td><%= @online.created_at.strftime("%Y年%m月%d日") %></td>
+			</tr>
+			<tr>
 				<td>名前(姓)</td>
 				<td><%= @online.first_name %></td>
 			</tr>
@@ -99,6 +103,10 @@
 					<td><%= "数IIC 2回目" %></td>
 				<% end %>
 			</tr>
+			<tr>
+				<td>備考</td>
+				<td><%= @online.note %></td>
+			</tr>
 		</table>
 	</div>
 	<div>
@@ -141,12 +149,12 @@
 						<%= study.created_at.strftime("%Y/%m/%d %H:%M") %>
 					</td>
 					<td>
-						<% if study.score.present? %>
-							<%= link_to study_path(study) do %>
+						<%= link_to admin_study_path(study) do %>
+							<% if study.score.present? %>
 								<%= study.score %> 点
+							<% else %>
+								<%= "採点中" %>
 							<% end %>
-						<% else %>
-							<%= "採点中" %>
 						<% end %>
 					</td>
 				</tbody>
