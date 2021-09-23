@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     resources :onlines, only: [:index, :show, :edit, :update]
     resources :studies, only: [:index, :show, :edit, :update, :destroy]
     resources :payments, only: [:index, :edit, :update, :destroy]
-    resources :calendars, only: [:index, :update]
+    resources :calendars, only: [:update]
     resources :notifications, only: [:index, :new, :create, :show, :destroy]
   end
 

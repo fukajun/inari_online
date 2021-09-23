@@ -1,10 +1,6 @@
 class Admin::CalendarsController < ApplicationController
 	before_action :authenticate_admin!
 	
-	def index
-		@calendars = Calendar.all
-	end
-
 	def update
 		@calendar = Calendar.find(params[:id])
 		if params[:check] == "true"
