@@ -19,6 +19,7 @@
 				<th>受講者氏名</th>
 				<th>クラス</th>
 				<th>問題番号</th>
+				<th>解答時間(分)</th>
 				<th>採点結果</th>
 			</thead>
 			<% @studies.each do |study| %>
@@ -44,6 +45,7 @@
 					<% elsif study.question.title.include?("iiics") %>
 						<td><%= study.question.title.delete("math_iiics_test_").slice(0..1) %></td>
 					<% end %>
+					<td><%= study.answer_time / 60 %></td>
 					<td>
 						<% if study.score.present? %>
 							<%= study.score %> 点

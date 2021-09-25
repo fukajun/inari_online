@@ -3,6 +3,64 @@
 
 <div class="container">
 	<div class="row">
+		<h3>単元テスト</h3>
+	</div>
+	<div class="row">
+		<table>
+			<thead>
+				<th></th>
+				<th>1回目</th>
+				<th>2回目</th>
+				<th>3回目</th>
+				<th>平均点</th>
+			</thead>
+			<tbody>
+				<tr>
+					<td>数IA 1回目</td>
+					<td><%= @iafScore[0] %></td>
+					<td><%= @iafScore[1] %></td>
+					<td><%= @iafScore[2] %></td>
+					<td><%= @iafAverage %></td>
+				</tr>
+				<tr>
+					<td>数IA 2回目</td>
+					<td><%=  %></td>
+					<td><%=  %></td>
+					<td><%=  %></td>
+					<td><%=  %></td>
+				</tr>
+				<tr>
+					<td>数IIB 1回目</td>
+					<td><%=  %></td>
+					<td><%=  %></td>
+					<td><%=  %></td>
+					<td><%=  %></td>
+				</tr>
+				<tr>
+					<td>数IIB 2回目</td>
+					<td><%=  %></td>
+					<td><%=  %></td>
+					<td><%=  %></td>
+					<td><%=  %></td>
+				</tr>
+				<tr>
+					<td>数IIIC 1回目</td>
+					<td><%=  %></td>
+					<td><%=  %></td>
+					<td><%=  %></td>
+					<td><%=  %></td>
+				</tr>
+				<tr>
+					<td>数IIIC 2回目</td>
+					<td><%=  %></td>
+					<td><%=  %></td>
+					<td><%=  %></td>
+					<td><%=  %></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="row">
 		<h3>学習履歴一覧</h3>
 	</div>
 	<div class="row">
@@ -11,7 +69,8 @@
 				<th>クラス</th>
 				<th>問題番号</th>
 				<th>学習日時</th>
-				<th>得点</th>
+				<th>解答時間(分)</th>
+				<th>採点結果</th>
 			</thead>
 			<% @studies.each do |study| %>
 				<tbody>
@@ -29,9 +88,8 @@
 					<% elsif study.question.title.include?("iiics") %>
 						<td><%= study.question.title.delete("math_iiics_test_").slice(0..1) %></td>
 					<% end %>
-					<td>
-						<%= study.created_at.strftime("%Y/%m/%d %H:%M") %>
-					</td>
+					<td><%= study.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+					<td><%= study.answer_time / 60 %></td>
 					<td>
 						<% if study.score.present? %>
 							<%= link_to study_path(study) do %>
