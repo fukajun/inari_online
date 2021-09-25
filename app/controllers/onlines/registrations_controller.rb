@@ -45,12 +45,12 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
       #Paymentテーブル作成
       @payment = Payment.new
       @payment.online_id = @online.id
-      if (@online.course == "数IA")
-        @payment.course = "数IA 1回目"
-      elsif (@online.course == "数IIB")
-        @payment.course = "数IIB 1回目"
-      elsif (@online.course == "数IIIC")
-        @payment.course = "数IIIC 1回目"
+      if (@online.course == "数IA 1回目")
+        @payment.course = 1
+      elsif (@online.course == "数IIB 1回目")
+        @payment.course = 3
+      elsif (@online.course == "数IIIC 1回目")
+        @payment.course = 5
       end
       @payment.save
 

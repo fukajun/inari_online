@@ -20,21 +20,7 @@
 							<%= online.first_name %> <%= online.last_name %>
 						<% end %>
 					</td>
-					<td>
-						<% if online.math_iiics %>
-							<%= "数IIIC 2回目" %>
-						<% elsif online.math_iiicf %>
-							<%= "数IIIC 1回目" %>
-						<% elsif online.math_iibs %>
-							<%= "数IIB 2回目" %>
-						<% elsif online.math_iibf %>
-							<%= "数IIB 1回目" %>
-						<% elsif online.math_ias %>
-							<%= "数IA 2回目" %>
-						<% elsif online.math_iaf %>
-							<%= "数IA 1回目" %>
-						<% end %>
-					</td>
+					<td><%= online.course %></td>
 					<td><%= online.grade %></td>
 					<td><%= online.status %></td>
 				</tbody>

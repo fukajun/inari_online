@@ -96,11 +96,11 @@
 
     <div class="field">
       <%= f.label :course, "受講科目" %><br />
-      <% if @online.course == 1 %>
+      <% if @online.course == "数IA 1回目" %>
         <%= f.label :math_iaf, "数IA" %>
-      <% elsif @online.course == 3 %>
+      <% elsif @online.course == "数IIB 1回目" %>
         <%= f.label :math_iibf, "数IIB" %>
-      <% elsif @online.course == 5 %>
+      <% elsif @online.course == "数IIIC 1回目" %>
         <%= f.label :math_iiicf, "数IIIC" %>
       <% end %>
       <%= f.hidden_field :course %>

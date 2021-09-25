@@ -83,19 +83,7 @@
 				</tr>
 				<tr>
 					<td>受講科目</td>
-					<% if @online.course == 1 %>
-						<td><%= "数IA 1回目" %></td>
-					<% elsif @online.course == 2 %>
-						<td><%= "数IA 2回目" %></td>
-					<% elsif @online.course == 3 %>
-						<td><%= "数IIB 1回目" %></td>
-					<% elsif @online.course == 4 %>
-						<td><%= "数IIB 2回目" %></td>
-					<% elsif @online.course == 5 %>
-						<td><%= "数IIIC 1回目" %></td>
-					<% elsif @online.course == 6 %>
-						<td><%= "数IIC 2回目" %></td>
-					<% end %>
+					<td><%= @online.course %></td>
 				</tr>
 			</table>
 		</div>

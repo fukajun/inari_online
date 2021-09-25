@@ -20,7 +20,7 @@ class Admin::PaymentsController < ApplicationController
 		@online = Online.find(@payment.online_id)
 		if @payment.update(payment_params)
 			# 受講生番号採番
-			if @online.membership_number == 0
+			if @online.membership_number == nil
 				birthDay = @online.birthday.strftime("%Y%m%d").to_i
 				baseDate = 20020402
 				diffYear = (birthDay - baseDate) / 10000
