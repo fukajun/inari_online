@@ -15,17 +15,17 @@
 				<tr><th>問題番号</th></tr>
 				<tr><td>
 					<% if @study.question.title.include?("iaf") %>
-						<%= @study.online.course + " " + @study.question.title.delete("math_iaf_test_").slice(0..1) %>
+						<%= @study.online.course + " " %><%= @study.question_id %>
 					<% elsif @study.question.title.include?("ias") %>
-						<%= @study.online.course + " " + @study.question.title.delete("math_ias_test_").slice(0..1) %>
+						<%= @study.online.course + " " %><%= @study.question_id %>
 					<% elsif @study.question.title.include?("iibf") %>
-						<%= @study.online.course + " " + @study.question.title.delete("math_iibf_test_").slice(0..1) %>
+						<%= @study.online.course + " " %><%= @study.question_id %>
 					<% elsif @study.question.title.include?("iibs") %>
-						<%= @study.online.course + " " + @study.question.title.delete("math_iibs_test_").slice(0..1) %>
+						<%= @study.online.course + " " %><%= @study.question_id %>
 					<% elsif @study.question.title.include?("iiicf") %>
-						<%= @study.online.course + " " + @study.question.title.delete("math_iiicf_test_").slice(0..1) %>
+						<%= @study.online.course + " " %><%= @study.question_id %>
 					<% elsif @study.question.title.include?("iiics") %>
-						<%= @study.online.course + " " + @study.question.title.delete("math_iiics_test_").slice(0..1) %>
+						<%= @study.online.course + " " %><%= @study.question_id %>
 					<% end %>
 				</td></tr>
 			</table>
