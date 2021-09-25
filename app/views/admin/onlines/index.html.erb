@@ -3,28 +3,80 @@
 		<h3>登録情報確認画面</h3>
 	</div>
 	<div class="row">
-		<h4>登録情報</h4>
-		<table>
-			<thead>
-				<th>受講生番号</th>
-				<th>氏名</th>
-				<th>受講科目</th>
-				<th>学年</th>
-				<th>ステータス</th>
-			</thead>
-			<% @onlines.each do |online| %>
-				<tbody>
-					<td><%= online.membership_number %></td>
-					<td>
-						<%= link_to admin_online_path(online) do %>
-							<%= online.first_name %> <%= online.last_name %>
-						<% end %>
-					</td>
-					<td><%= online.course %></td>
-					<td><%= online.grade %></td>
-					<td><%= online.status %></td>
-				</tbody>
-			<% end %>
-		</table>
+		<div class="col-sm-4">
+			<div class="row">
+				<%= search_form_for(@q, url: admin_onlines_path) do |f| %>
+					<%= f.search_field :first_name_or_last_name_or_membership_number_eq %>
+					<div><%= check_box_tag :AllStudent, true, ("true" == params[:AllStudent]) %>全登録者</div>
+					<div><%= f.check_box :course_eq_any, {multiple: true}, 1, '' %>数IA 1回目</div>
+					<div><%= f.check_box :course_eq_any, {multiple: true}, 2, '' %>数IA 2回目</div>
+					<div><%= f.check_box :course_eq_any, {multiple: true}, 3, '' %>数IIB 1回目</div>
+					<div><%= f.check_box :course_eq_any, {multiple: true}, 4, '' %>数IIB 2回目</div>
+					<div><%= f.check_box :course_eq_any, {multiple: true}, 5, '' %>数IIIC 1回目</div>
+					<div><%= f.check_box :course_eq_any, {multiple: true}, 6, '' %>数IIIC 2回目</div>
+					<%= f.submit "検索" %>
+				<% end %>
+			</div>
+			<div class="row">
+				<h4>受講生数</h4>
+				<table class="table">
+					<tr>
+						<td>合計</td>
+						<td><%= @AllStudent %></td>
+					</tr>
+					<tr>
+						<td>数IA 1回目</td>
+						<td><%= @mathIAF %></td>
+					</tr>
+					<tr>
+						<td>数IA 2回目</td>
+						<td><%= @mathIAS %></td>
+					</tr>
+					<tr>
+						<td>数IIB 1回目</td>
+						<td><%= @mathIIBF %></td>
+					</tr>
+					<tr>
+						<td>数IIB 2回目</td>
+						<td><%= @mathIIBS %></td>
+					</tr>
+					<tr>
+						<td>数IIIC 1回目</td>
+						<td><%= @mathIIICF %></td>
+					</tr>
+					<tr>
+						<td>数IIIC 2回目</td>
+						<td><%= @mathIIICS %></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="col-sm-8">
+			<div class="row">
+				<h4>受講生一覧</h4>
+			</div>
+			<table>
+				<thead>
+					<th>受講生番号</th>
+					<th>氏名</th>
+					<th>受講科目</th>
+					<th>学年</th>
+					<th>ステータス</th>
+				</thead>
+				<% @onlines.each do |online| %>
+					<tbody>
+						<td><%= online.membership_number %></td>
+						<td>
+							<%= link_to admin_online_path(online) do %>
+								<%= online.first_name %> <%= online.last_name %>
+							<% end %>
+						</td>
+						<td><%= online.course %></td>
+						<td><%= online.grade %></td>
+						<td><%= online.status %></td>
+					</tbody>
+				<% end %>
+			</table>
+		</div>
 	</div>
 </div>

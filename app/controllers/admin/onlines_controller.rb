@@ -2,7 +2,21 @@ class Admin::OnlinesController < ApplicationController
 	before_action :authenticate_admin!
 	
 	def index
-		@onlines = Online.all
+		@q = Online.ransack(params[:q])
+		if params[:AllStudent]
+			@onlines = @q.result(distinct: true)
+		else
+			@onlines = @q.result(distinct: true).where(status: true)
+		end
+
+		# 受講生数
+		@AllStudent = Online.where(status: true).count
+		@mathIAF = Online.where(course: 1, status: true).count
+		@mathIAS = Online.where(course: 2, status: true).count
+		@mathIIBF = Online.where(course: 3, status: true).count
+		@mathIIBS = Online.where(course: 4, status: true).count
+		@mathIIICF = Online.where(course: 5, status: true).count
+		@mathIIICS = Online.where(course: 6, status: true).count
 	end
 
 	def show
