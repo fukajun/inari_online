@@ -66,6 +66,7 @@ class OnlinesController < ApplicationController
 		today = Time.current
 		loopTime = 3 - @subject.postphonement
 
+		# 期限超過による更新
 		loopTime.times do
 			lessonId = @subject.question
 
@@ -98,6 +99,23 @@ class OnlinesController < ApplicationController
 				@subject.postphonement += 1
 				loopTime -= 1
 				@subject.update(subject_params)
+			end
+		end
+
+		# 期限超過かつ延期回数満期によるステータス失効
+		if (loopTime <= 0)
+			lessonId = @subject.question
+			if @subject.stage == 1
+				deadLine = @subject["lesson#{lessonId}"]
+			elsif @subject.stage == 3
+				lessonId += 1
+				deadLine = @subject["lesson#{lessonId}"]
+			else
+				deadLine = today + (24 * 60 * 60)
+			end
+
+			if (today > deadLine - (9 * 60 * 60))
+				@online.update(status: "失効")
 			end
 		end
 

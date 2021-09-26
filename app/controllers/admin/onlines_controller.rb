@@ -21,6 +21,7 @@ class Admin::OnlinesController < ApplicationController
 
 	def show
 		@online = Online.find(params[:id])
+		@subject = Subject.find_by(online_id: @online.id, course: @online.course)
 		@studies = Study.where(online_id: @online.id)
 
 		# 単元テストスコア

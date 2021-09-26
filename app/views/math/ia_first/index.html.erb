@@ -2,7 +2,12 @@
 <p>Find me in app/views/math/ia_first/index.html.erb</p>
 
 <div>
-	<%= link_to "Postphone", math_ia_first_postphone_path, "data-confirm" => "本当に延期しますか?" %>
+	<% if @subject.postphonement < 3 %>
+		<%= link_to "Postphone", math_ia_first_postphone_path, "data-confirm" => "本当に延期しますか?" %>
+	<% else %>
+		<%= link_to "Postphone", math_ia_first_postphone_path, "data-confirm" => "期限の延期回数が3回に達しているため変更できません。次回のテストは必ず期限までに受けましょう。" %>
+	<% end %>
+	<%= "延期回数：" %><%= @subject.postphonement %><%= "回" %>
 </div>
 
 <div>
