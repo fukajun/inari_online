@@ -85,7 +85,9 @@
 			</tr>
 			<tr>
 				<td>受講科目</td>
-				<td><%= @online.course %></td>
+				<% if current_online.status == "有効" %>
+					<td><%= @online.course %></td>
+				<% end %>
 			</tr>
 		</table>
 	</div>

@@ -22,7 +22,7 @@
 				<ul>
 					<li>
 						<% if @subject.question >= num %>
-							<% if @subject.stage >= 1 %>
+							<% if @subject.stage >= 0 %>
 								<% if @studies.find_by(question_id: num) == nil %>
 									<% if current_online.status == "有効" %>
 										<%= link_to "単元テスト問題", math_ia_first_test_path(num), method: :get,
@@ -55,7 +55,7 @@
 				<ul>
 					<li>
 						<% if @subject.question >= num %>
-							<% if @subject.stage >= 1 %>
+							<% if @subject.stage >= 0 %>
 								<% if @studies.find_by(question_id: num) == nil %>
 									<% if current_online.status == "有効" %>
 										<%= link_to "テスト問題", math_ia_first_test_path(num), method: :get,

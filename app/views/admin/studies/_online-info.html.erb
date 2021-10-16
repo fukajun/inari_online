@@ -1,0 +1,25 @@
+<h4>プロフィール</h4>
+<table class="table">
+	<tr><th>受信日時</th></tr>
+	<tr><td><%= study.created_at.strftime("%Y/%m/%d %H:%M") %></td></tr>
+	<tr><th>受講生番号</th></tr>
+	<tr><td><%= study.online.membership_number %></td></tr>
+	<tr><th>氏名</th></tr>
+	<tr><td><%= study.online.first_name %> <%= study.online.last_name %></td></tr>
+	<tr><th>問題番号</th></tr>
+	<tr><td>
+		<% if study.question.title.include?("iaf") %>
+			<%= study.online.course + " " %><%= study.question_id %>
+		<% elsif study.question.title.include?("ias") %>
+			<%= study.online.course + " " %><%= study.question_id %>
+		<% elsif study.question.title.include?("iibf") %>
+			<%= study.online.course + " " %><%= study.question_id %>
+		<% elsif study.question.title.include?("iibs") %>
+			<%= study.online.course + " " %><%= study.question_id %>
+		<% elsif study.question.title.include?("iiicf") %>
+			<%= study.online.course + " " %><%= study.question_id %>
+		<% elsif study.question.title.include?("iiics") %>
+			<%= study.online.course + " " %><%= study.question_id %>
+		<% end %>
+	</td></tr>
+</table>
