@@ -42,8 +42,10 @@
 					<% end %>
 					<% if payment.paid == true %>
 						<td>振込済</td>
-					<% else %>
+					<% elsif (payment.online.math_iaf + payment.online.math_ias + payment.online.math_iibf + payment.online.math_iibs + payment.online.math_iiicf + payment.online.math_iiics) < 2 %>
 						<td><%= (payment.created_at + 14.days).strftime("%Y年%m月%d日") %></td>
+					<% else %>
+						<td>-</td>
 					<% end %>
 					<td><%= link_to "削除", admin_payment_path(payment), method: :delete, "data-confirm" => "本当に削除しますか？" %></td>
 				</tbody>

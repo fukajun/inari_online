@@ -2,6 +2,18 @@ class PaymentsController < ApplicationController
 	before_action :authenticate_online!
 	
 	def index
+		iaf = current_online.math_iaf
+		ias = current_online.math_ias
+		iibf = current_online.math_iibf
+		iibs = current_online.math_iibs
+		iiicf = current_online.math_iiicf
+		iiics = current_online.math_iiics
+		num = iaf + ias + iibf + iibs + iiicf + iiics
+		deadLineDisp = false
+		if num < 2
+			deadLineDisp = true
+		end
+
 		# 受講申請可否配列
 		subjects = Array.new(6)
 		unpaid = Payment.find_by(online_id: current_online, paid: 0)
@@ -28,9 +40,11 @@ class PaymentsController < ApplicationController
 				@payments[i][1] = @payment.created_at.strftime("%Y年%m月%d日")
 				if @payment.paid == true
 					@payments[i][2] = "振込済"
-				else
+				elsif deadLineDisp
 					deadLine = @payment.created_at  + 14.days
 					@payments[i][2] = deadLine.strftime("%Y年%m月%d日")
+				else
+					@payments[i][2] = "-"
 				end
 			else
 				@payments[i][1] = subjects[i]
@@ -42,6 +56,20 @@ class PaymentsController < ApplicationController
 		@payment = Payment.new
 		@payment.online_id = current_online.id
 		@payment.course = params[:course]
+
+		if (@payment.course == "数IA 1回目")
+			current_online.update(math_iaf: 1)
+		elsif (@payment.course == "数IA 2回目")
+			current_online.update(math_ias: 1)
+		elsif (@payment.course == "数IIB 1回目")
+			current_online.update(math_iibf: 1)
+		elsif (@payment.course == "数IIB 2回目")
+			current_online.update(math_iibs: 1)
+		elsif (@payment.course == "数IIIC 1回目")
+			current_online.update(math_iiicf: 1)
+		elsif (@payment.course == "数IIIC 2回目")
+			current_online.update(math_iiics: 1)
+		end
 		@payment.save
 		redirect_to request.referer
 	end

@@ -40,18 +40,19 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
       render :new
       return
     else #完了画面に進む
+      if (@online.course == "数IA 1回目")
+        @online.math_iaf = 1
+      elsif (@online.course == "数IIB 1回目")
+        @online.math_iibf = 1
+      elsif (@online.course == "数IIIC 1回目")
+        @online.math_iiicf = 1
+      end
       @online.save
 
       #Paymentテーブル作成
       @payment = Payment.new
       @payment.online_id = @online.id
-      if (@online.course == "数IA 1回目")
-        @payment.course = 1
-      elsif (@online.course == "数IIB 1回目")
-        @payment.course = 3
-      elsif (@online.course == "数IIIC 1回目")
-        @payment.course = 5
-      end
+      @payment.course = @online.course
       @payment.save
 
       redirect_to onlines_sign_up_complete_path(@online)

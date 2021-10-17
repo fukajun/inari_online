@@ -9,41 +9,6 @@ class OnlinesController < ApplicationController
 		iibs = @online.math_iibs
 		iiicf = @online.math_iiicf
 		iiics = @online.math_iiics
-		if (iaf != 2) && (ias != 2) && (iibf != 2) && (iibs != 2) && (iiicf != 2) && (iiics != 2)
-			if iaf == 1
-				@online.math_iaf = 2
-				@online.course = 1
-				iaf = 2
-			elsif ias == 1
-				@online.math_ias = 2
-				@online.course = 2
-				ias = 2
-			elsif iibf == 1
-				@online.math_iibf = 2
-				@online.course = 3
-				iibf = 2
-			elsif iibs == 1
-				@online.math_iibs = 2
-				@online.course = 4
-				iibs = 2
-			elsif iiicf == 1
-				@online.math_iiicf = 2
-				@online.course = 5
-				iiicf = 2
-			elsif iiics == 1
-				@online.math_iiics = 2
-				@online.course = 6
-				iiics = 2
-			end
-			@online.update(online_math_params)
-		end
-
-		# 会員ステータス更新
-		if ((iaf == 1) || (iaf == 2) || (ias == 1) || (ias == 2) || (iibf == 1) || (iibf == 2) || (iibs == 1) || (iibs == 2) || (iiicf == 1) || (iiicf == 2) || (iiics == 1) || (iiics == 2))
-			@online.update(status: "有効")
-		else
-			@online.update(status: "失効")
-		end
 
 		# 課題提出期限確認
 		if iaf == 2

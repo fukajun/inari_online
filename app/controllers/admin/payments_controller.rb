@@ -46,45 +46,45 @@ class Admin::PaymentsController < ApplicationController
 			# 振込確認後に学習教科開放
 			if @payment.course == "数IA 1回目"
 				if @payment.paid == true
-					@online.math_iaf = 1
+					@online.math_iaf = 2
 					@subject.course = 1
 				else
-					@online.math_iaf = nil
+					@online.math_iaf = 1
 				end
 			elsif @payment.course == "数IA 2回目"
 				if @payment.paid == true
-					@online.math_ias = 1
+					@online.math_ias = 2
 					@subject.course = 2
 				else
-					@online.math_ias = nil
+					@online.math_ias = 1
 				end
 			elsif @payment.course == "数IIB 1回目"
 				if @payment.paid == true
-					@online.math_iibf = 1
+					@online.math_iibf = 2
 					@subject.course = 3
 				else
-					@online.math_iibf = nil
+					@online.math_iibf = 1
 				end
 			elsif @payment.course == "数IIB 2回目"
 				if @payment.paid == true
-					@online.math_iibs = 1
+					@online.math_iibs = 2
 					@subject.course = 4
 				else
-					@online.math_iibs = nil
+					@online.math_iibs = 1
 				end
 			elsif @payment.course == "数IIIC 1回目"
 				if @payment.paid == true
-					@online.math_iiicf = 1
+					@online.math_iiicf = 2
 					@subject.course = 5
 				else
-					@online.math_iiicf = nil
+					@online.math_iiicf = 1
 				end
 			elsif @payment.course == "数IIIC 2回目"
 				if @payment.paid == true
-					@online.math_iiics = 1
+					@online.math_iiics = 2
 					@subject.course = 6
 				else
-					@online.math_iiics = nil
+					@online.math_iiics = 1
 				end
 			elsif @payment.course == "数IA トライアル"
 				if @payment.paid == true
@@ -129,6 +129,11 @@ class Admin::PaymentsController < ApplicationController
 					count += 1
 				end
 			end
+
+			# 会員ステータス更新
+			if @payment.paid == true
+				@online.status = "有効"
+			end
 			
 			@online.update(online_params)
 			if @subject.course != nil
@@ -144,7 +149,25 @@ class Admin::PaymentsController < ApplicationController
 
 	def destroy
 		@payment = Payment.find(params[:id])
+		online = Online.find(@payment.online_id)
+
+		if (@payment.course == "数IA 1回目")
+			online.math_iaf = 0
+		elsif (@payment.course == "数IA 2回目")
+			online.math_ias = 0
+		elsif (@payment.course == "数IIB 1回目")
+			online.math_iibf = 0
+		elsif (@payment.course == "数IIB 2回目")
+			online.math_iibs = 0
+		elsif (@payment.course == "数IIIC 1回目")
+			online.math_iiicf = 0
+		elsif (@payment.course == "数IIIC 2回目")
+			online.math_iiics = 0
+		end
+
+		online.update(online_params)
 		@payment.destroy
+
 		redirect_to request.referer
 	end
 
@@ -154,6 +177,6 @@ class Admin::PaymentsController < ApplicationController
 	end
 
 	def online_params
-		params.permit(:math_iaf, :math_ias, :math_iibf, :math_iibs, :math_iiicf, :math_iiics, :membership_number)
+		params.permit(:math_iaf, :math_ias, :math_iibf, :math_iibs, :math_iiicf, :math_iiics, :membership_number, :status)
 	end
 end
