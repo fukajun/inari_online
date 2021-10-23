@@ -9,17 +9,17 @@
 	<tr><th>問題番号</th></tr>
 	<tr><td>
 		<% if study.question.title.include?("iaf") %>
-			<%= study.online.course + " " %><%= study.question_id %>
+			<%= study.online.course + " " %><%= study.question.title.slice(14, 2) %>
 		<% elsif study.question.title.include?("ias") %>
-			<%= study.online.course + " " %><%= study.question_id %>
+			<%= study.online.course + " " %><%= study.question.title.slice(14, 2) %>
 		<% elsif study.question.title.include?("iibf") %>
-			<%= study.online.course + " " %><%= study.question_id %>
+			<%= study.online.course + " " %><%= study.question.title.slice(15, 2) %>
 		<% elsif study.question.title.include?("iibs") %>
-			<%= study.online.course + " " %><%= study.question_id %>
+			<%= study.online.course + " " %><%= study.question.title.slice(15, 2) %>
 		<% elsif study.question.title.include?("iiicf") %>
-			<%= study.online.course + " " %><%= study.question_id %>
+			<%= study.online.course + " " %><%= study.question.title.slice(16, 2) %>
 		<% elsif study.question.title.include?("iiics") %>
-			<%= study.online.course + " " %><%= study.question_id %>
+			<%= study.online.course + " " %><%= study.question.title.slice(16, 2) %>
 		<% end %>
 	</td></tr>
 </table>

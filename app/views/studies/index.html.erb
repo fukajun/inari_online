@@ -74,19 +74,24 @@
 			</thead>
 			<% @studies.each do |study| %>
 				<tbody>
-					<td><%= study.online.course %></td>
 					<% if study.question.title.include?("iaf") %>
-						<td><%= study.question_id %></td>
+						<td>数IA 1回目</td>
+						<td><%= study.question.title.slice(14, 2) %></td>
 					<% elsif study.question.title.include?("ias") %>
-						<td><%= study.question_id %></td>
+						<td>数IA 2回目</td>
+						<td><%= study.question.title.slice(14, 2) %></td>
 					<% elsif study.question.title.include?("iibf") %>
-						<td><%= study.question_id %></td>
+						<td>数IIB 1回目</td>
+						<td><%= study.question.title.slice(15, 2) %></td>
 					<% elsif study.question.title.include?("iibs") %>
-						<td><%= study.question_id %></td>
+						<td>数IIB 2回目</td>
+						<td><%= study.question.title.slice(15, 2) %></td>
 					<% elsif study.question.title.include?("iiicf") %>
-						<td><%= study.question_id %></td>
+						<td>数IIIC 1回目</td>
+						<td><%= study.question.title.slice(16, 2) %></td>
 					<% elsif study.question.title.include?("iiics") %>
-						<td><%= study.question_id %></td>
+						<td>数IIIC 2回目</td>
+						<td><%= study.question.title.slice(16, 2) %></td>
 					<% end %>
 					<td><%= study.created_at.strftime("%Y/%m/%d %H:%M") %></td>
 					<td><%= study.answer_time / 60 %></td>

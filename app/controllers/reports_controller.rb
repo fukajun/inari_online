@@ -9,12 +9,12 @@ class ReportsController < ApplicationController
 		iafTotal = 0
 		iafCount = 0
 		@studies.each do |i|
-			num = i.question_id
+			num = i.question.title.slice(14, 2).to_i
 			if (num == 8 || num == 15 || num == 22)
-				@iafScore.push(@studies.find_by(question_id: num).score)
-				if @studies.find_by(question_id: num).score != nil
+				@iafScore.push(i.score)
+				if i.score != nil
 					iafCount += 1
-					iafTotal += @studies.find_by(question_id: num).score
+					iafTotal += i.score
 					@iafAverage = iafTotal / iafCount
 				end
 			end
