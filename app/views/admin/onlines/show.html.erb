@@ -179,29 +179,34 @@
 				<tbody>
 					<td><%= study.online.course %></td>
 					<% if study.question.title.include?("iaf") %>
-						<td><%= study.question_id %></td>
+						<td><%= study.question.title.slice(14, 2) %></td>
 					<% elsif study.question.title.include?("ias") %>
-						<td><%= study.question_id %></td>
+						<td><%= study.question.title.slice(14, 2) %></td>
 					<% elsif study.question.title.include?("iibf") %>
-						<td><%= study.question_id %></td>
+						<td><%= study.question.title.slice(15, 2) %></td>
 					<% elsif study.question.title.include?("iibs") %>
-						<td><%= study.question_id %></td>
+						<td><%= study.question.title.slice(15, 2) %></td>
 					<% elsif study.question.title.include?("iiicf") %>
-						<td><%= study.question_id %></td>
+						<td><%= study.question.title.slice(16, 2) %></td>
 					<% elsif study.question.title.include?("iiics") %>
-						<td><%= study.question_id %></td>
+						<td><%= study.question.title.slice(16, 2) %></td>
 					<% end %>
 					<td><%= study.created_at.strftime("%Y/%m/%d %H:%M") %></td>
-					<td><%= study.answer_time / 60 %></td>
-					<td>
-						<%= link_to admin_study_path(study) do %>
-							<% if study.score.present? %>
-								<%= study.score %> 点
-							<% else %>
-								<%= "採点中" %>
+					<% if study.answer_time.present? %>
+						<td><%= study.answer_time / 60 %></td>
+						<td>
+							<%= link_to admin_study_path(study) do %>
+								<% if study.score.present? %>
+									<%= study.score %> 点
+								<% else %>
+									<%= "採点中" %>
+								<% end %>
 							<% end %>
-						<% end %>
-					</td>
+						</td>
+					<% else %>
+						<td><%= "-" %></td>
+						<td><%= "試験中" %></td>
+					<% end %>
 				</tbody>
 			<% end %>
 		</table>

@@ -23,7 +23,7 @@
 					<li>
 						<% if @subject.question >= num %>
 							<% if @subject.stage >= 0 %>
-								<% if @studies.find_by(question_id: num) == nil %>
+								<% if @studies.find_by(question_id: Question.find_by("title like ?", "math_iaf_test_#{format("%02d", num)}%").id) == nil %>
 									<% if current_online.status == "有効" %>
 										<%= link_to "単元テスト問題", math_ia_first_test_path(num), method: :get,
 											data:{confirm: "テストを開始しますか？", cancel: "キャンセル", commit: "開始する"},
@@ -56,7 +56,7 @@
 					<li>
 						<% if @subject.question >= num %>
 							<% if @subject.stage >= 0 %>
-								<% if @studies.find_by(question_id: num) == nil %>
+								<% if @studies.find_by(question_id: Question.find_by("title like ?", "math_iaf_test_#{format("%02d", num)}%").id) == nil %>
 									<% if current_online.status == "有効" %>
 										<%= link_to "テスト問題", math_ia_first_test_path(num), method: :get,
 											data:{confirm: "テストを開始しますか？", cancel: "キャンセル", commit: "開始する"},

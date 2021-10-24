@@ -94,16 +94,21 @@
 						<td><%= study.question.title.slice(16, 2) %></td>
 					<% end %>
 					<td><%= study.created_at.strftime("%Y/%m/%d %H:%M") %></td>
-					<td><%= study.answer_time / 60 %></td>
-					<td>
-						<% if study.score.present? %>
-							<%= link_to study_path(study) do %>
-								<%= study.score %> 点
+					<% if study.answer_time.present? %>
+						<td><%= study.answer_time / 60 %></td>
+						<td>
+							<% if study.score.present? %>
+								<%= link_to study_path(study) do %>
+									<%= study.score %> 点
+								<% end %>
+							<% else %>
+								<%= "採点中" %>
 							<% end %>
-						<% else %>
-							<%= "採点中" %>
-						<% end %>
-					</td>
+						</td>
+					<% else %>
+						<td><%= "-" %></td>
+						<td><%= "試験中" %></td>
+					<% end %>
 				</tbody>
 			<% end %>
 		</table>

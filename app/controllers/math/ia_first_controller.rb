@@ -44,7 +44,9 @@ class Math::IaFirstController < ApplicationController
 		subject = Subject.find_by(online_id: current_online.id, course: 1)
 		@study = Study.find_by(online_id: current_online.id, question_id: questionId)
 
-		if (current_online.status == "有効")
+		if (current_online.math_iaf == 3)
+			access = true
+		elsif (current_online.status == "有効")
 			access = (parameter <= subject.question)? true : false
 		else
 			access = ((@study != nil) && (parameter <= subject.question))? true : false
@@ -92,7 +94,9 @@ class Math::IaFirstController < ApplicationController
 		subject = Subject.find_by(online_id: current_online.id, course: 1)
 		study = Study.find_by(online_id: current_online.id, question_id: questionId)
 
-		if (current_online.status == "有効")
+		if (current_online.math_iaf == 3)
+			access = true
+		elsif (current_online.status == "有効")
 			if (subject.stage == 1)
 				access = (@parameter < subject.question)? true : false
 			elsif (subject.stage == 3)
@@ -127,7 +131,9 @@ class Math::IaFirstController < ApplicationController
 		subject = Subject.find_by(online_id: current_online.id, course: 1)
 		study = Study.find_by(online_id: current_online.id, question_id: questionId)
 
-		if (current_online.status == "有効")
+		if (current_online.math_iaf == 3)
+			access = true
+		elsif (current_online.status == "有効")
 			if (subject.stage == 1)
 				access = (parameter < subject.question)? true : false
 			elsif (subject.stage == 3)
@@ -162,7 +168,9 @@ class Math::IaFirstController < ApplicationController
 		subject = Subject.find_by(online_id: current_online.id, course: 1)
 		study = Study.find_by(online_id: current_online.id, question_id: questionId)
 
-		if (current_online.status == "有効")
+		if (current_online.math_iaf == 3)
+			access = true
+		elsif (current_online.status == "有効")
 			access = (parameter < subject.question)? true : false
 		else
 			access = ((study != nil) && (parameter < subject.question))? true : false
