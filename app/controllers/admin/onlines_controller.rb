@@ -49,7 +49,7 @@ class Admin::OnlinesController < ApplicationController
 		@online = Online.find(params[:id])
 		@studies = Study.where(online_id: @online.id)
 		if @online.update(online_params)
-			render "show", notice: "successfully updated!"
+			redirect_to admin_online_path(@online)
 		else
 			render "edit"
 		end

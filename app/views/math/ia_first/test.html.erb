@@ -10,21 +10,10 @@
 
 <% if current_online.status == "有効" && @study.score == nil %>
 	<%= form_for(@study, url: math_ia_first_path) do |f| %>
-		<div><%= f.attachment_field :answer_images_images, multiple: true %></div>
-		<div><%= f.submit "send" %></div>
+		<div><%= f.attachment_field :answer_images_images, multiple: true, onchange: 'selectFile(this)' %></div>
+		<div><%= f.submit "send", id: 'send', disabled: true %></div>
 	<% end %>
-	<img id="preview_0" style="width:30%;">
-	<img id="preview_1" style="width:30%;">
-	<img id="preview_2" style="width:30%;">
-	<img id="preview_3" style="width:30%;">
-	<img id="preview_4" style="width:30%;">
-	<img id="preview_5" style="width:30%;">
-	<img id="preview_6" style="width:30%;">
-	<img id="preview_7" style="width:30%;">
-	<img id="preview_8" style="width:30%;">
-	<img id="preview_9" style="width:30%;">
-	<img id="preview_10" style="width:30%;">
-	<img id="preview_11" style="width:30%;">
+	<div id="preview"></div>
 <% else %>
 	<div>
 		<%= link_to "index", math_ia_first_index_path %>
@@ -40,32 +29,36 @@
 
 	if (answerTime === null){
 		setInterval(() => {
-			const currentTime = Date.now();
-			const diff = parseInt((currentTime - startTime) / 1000);
-			const minute = ('00' + parseInt(diff / 60)).slice(-2);
-			const second = ('00' + diff % 60).slice(-2);
+			let currentTime = Date.now();
+			let diff = parseInt((currentTime - startTime) / 1000);
+			let minute = ('00' + parseInt(diff / 60)).slice(-2);
+			let second = ('00' + diff % 60).slice(-2);
 			document.querySelector('.answer_time').innerHTML = `${minute}:${second}`
 		});
 	}
 
-	
-	$('#study_answer_images_images').on('change', function (e) {
-		// 初期化
-		let reader = new FileReader(12);
-		for (let i = 0; i < 12; i++) {
-			$(`#preview_${i}`).attr('src', "");
+
+	function selectFile(test) {
+		if (test.files.length == 0) {
+			document.getElementById('send').disabled = true;
+		} else {
+			document.getElementById('send').disabled = false;
 		}
 
-		for (let i = 0; i < e.target.files.length; i++) {
-			reader[i] = new FileReader();
-			reader[i].onload = finisher(i, e);
-			reader[i].readAsDataURL(e.target.files[i]);
-
-			function finisher(i, e) {
-				return function(e) {
-					$(`#preview_${i}`).attr('src', e.target.result);
-				}
-			}
+		let preview = document.getElementById('preview');
+		while (preview.firstChild) {
+			preview.removeChild(preview.firstChild);
 		}
-	});
+
+		for (let i = 0; i < test.files.length; i++) {
+			let reader = new FileReader();
+			reader.onload = (function (e) {
+				let img = new Image();
+				img.src = e.target.result;
+				img.width = "400";
+				document.getElementById('preview').appendChild(img);
+			});
+			reader.readAsDataURL(test.files[i]);
+		}
+	}
 </script>
