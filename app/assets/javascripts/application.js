@@ -15,7 +15,8 @@
 //= require turbolinks
 //= require jquery
 //= require jquery.jpostal
-//= require bootstrap
+//= require popper
+//= require bootstrap-sprockets
 //= require_tree .
 //= require data-confirm-modal
 
