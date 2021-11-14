@@ -4,51 +4,69 @@
     <title>InariOnline</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <header class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container">
-      <nav>
-        <ul class="nav navbar-nav navbar-right">
-          <!-- 管理者ログイン -->
-          <% if admin_signed_in? %>
-            <li><%= link_to ' Home', admins_top_path %></li>
-            <li><%= link_to ' About', homes_about_path %></li>
-            <li><%= link_to ' Study', admin_studies_path %></li>
-            <li><%= link_to ' Payment', admin_payments_path %></li>
-            <li><%= link_to ' Student', admin_onlines_path %></li>
-            <li><%= link_to ' Notification', admin_notifications_path %></li>
-            <li><%= link_to ' Log Out', destroy_admin_session_path, method: :delete %></li>
+  <header>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="nav navbar-nav">
+            <!-- 管理者ログイン -->
+            <% if admin_signed_in? %>
+              <%= link_to 'ホーム', admins_top_path, class: "nav-link" %>
+              <%= link_to 'アバウト', homes_about_path, class: "nav-link" %>
+              <%= link_to '学習', admin_studies_path, class: "nav-link" %>
+              <%= link_to '入金', admin_payments_path, class: "nav-link" %>
+              <%= link_to '受講生', admin_onlines_path, class: "nav-link" %>
+              <%= link_to '通知', admin_notifications_path, class: "nav-link" %>
+              <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: "nav-link" %>
 
-          <!-- 受講生ログイン -->
-          <% elsif online_signed_in? %>
-            <li><%= link_to ' Home', onlines_top_path %></li>
-            <li><%= link_to ' About', homes_about_path %></li>
-            <li><%= link_to ' My page', online_path(current_online) %></li>
-            <li><%= link_to ' Achievement', studies_path %></li>
-            <li><%= link_to ' Log Out', destroy_online_session_path, method: :delete %></li>
+            <!-- 受講生ログイン -->
+            <% elsif online_signed_in? %>
+              <%= link_to 'ホーム', onlines_top_path, class: "nav-link" %>
+              <%= link_to 'アバウト', homes_about_path, class: "nav-link" %>
+              <%= link_to 'マイページ', online_path(current_online), class: "nav-link" %>
+              <%= link_to '成績', studies_path, class: "nav-link" %>
+              <%= link_to 'ログアウト', destroy_online_session_path, method: :delete, class: "nav-link" %>
 
-          <!-- 保護者ログイン -->
-          <% elsif parent_signed_in? %>
-            <li><%= link_to ' About', homes_about_path %></li>
-            <li><%= link_to ' Log Out', destroy_parent_session_path, method: :delete %></li>
+            <!-- 保護者ログイン -->
+            <% elsif parent_signed_in? %>
+              <%= link_to 'アバウト', homes_about_path, class: "nav-link" %>
+              <%= link_to 'ログアウト', destroy_parent_session_path, method: :delete, class: "nav-link" %>
 
-          <!-- ログアウト -->
-          <% else %>
-            <li><%= link_to ' Home', root_path %></li>
-            <li><%= link_to ' About', homes_about_path %></li>
-            <li><%= link_to ' Log In', new_online_session_path %></li>
-            <li><%= link_to ' Admin', new_admin_session_path %></li>
-          <% end %>
-        </ul>
-      </nav>
-    </div>
+            <!-- ログアウト -->
+            <% else %>
+              <%= link_to 'ホーム', root_path, class: "nav-link" %>
+              <%= link_to 'アバウト', homes_about_path, class: "nav-link" %>
+              <%= link_to 'ログイン', new_online_session_path, class: "nav-link" %>
+              <%= link_to '管理者', new_admin_session_path, class: "nav-link" %>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- 受講生ログイン -->
+        <% if online_signed_in? %>
+          <span class="navbar-profile">
+            <%= current_online.first_name %><%= current_online.last_name %>&nbsp;様&nbsp;&nbsp;&nbsp;受講生番号：<%= current_online.membership_number %>
+          </span>
+        <!-- 保護者ログイン -->
+        <% elsif parent_signed_in? %>
+          <span class="navbar-profile">
+            <%= current_parent.first_name %><%= current_parent.last_name %>&nbsp;様&nbsp;&nbsp;&nbsp;受講生番号：<%= current_parent.membership_number %>
+          </span>
+        <% end %>
+      </div>
+    </nav>
   </header>
   
   <body>
+    <div class="container-fluid">
     <%= yield %>
+  </div>
   </body>
 </html>
