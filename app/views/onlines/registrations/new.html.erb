@@ -1,101 +1,123 @@
-<div>
-  <h2>Sign up</h2>
+<div class="row">
+  <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>受講生新規登録</h4>
+      </div>
+      <div class="card-body">
+        <p>いただいた個人情報は、塾の運営、連絡のみの使用に限定し、厳重に管理いたします。</p>
+
+        <%= form_for @online, url: {action: "confirm"} do |f| %>
+          <%= render "onlines/shared/error_messages", resource: resource %>
+
+          <table class="table">
+            <tr class="align-middle">
+              <td style="width: 180px"><%= f.label :first_name, "名前", class: "form-label" %></td>
+              <td>
+                <div class="row">
+                  <div class="col"><%= f.text_field :first_name, autofocus: true, placeholder: "例) 稲荷", class: "form-control" %></div>
+                  <div class="col"><%= f.text_field :last_name, placeholder: "例) 太郎", class: "form-control" %></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="align-middle">
+              <td><%= f.label :kana_name, "名前（カナ）", class: "form-label" %></td>
+              <td><%= f.text_field :kana_name, placeholder: "例) イナリ　タロウ", class: "form-control" %></td>
+            </tr>
+            <tr class="align-middle">
+              <td><%= f.label :parent_name, "名前（保護者様）", class: "form-label" %></td>
+              <td>
+                <div class="row">
+                  <label id="first_name" class="col col-form-label"></label>
+                  <div class="col"><%= f.text_field :parent_name, placeholder: "例) 達也", class: "form-control" %></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="align-middle">
+              <td><%= f.label :gender, "性別", class: "form-label" %></td>
+              <td>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :gender, :男性, class: "form-check-input" %>
+                  <%= f.label :gender_男性, "男性", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :gender, :女性, class: "form-check-input" %>
+                  <%= f.label :gender_女性, "女性", class: "form-check-label" %>
+                </div>
+              </td>
+            </tr>
+            <tr class="align-middle">
+              <td><%= f.label :birthday, "生年月日", class: "form-label" %></td>
+              <td><%= f.date_field :birthday, class: "form-control" %></td>
+            </tr>
+            <tr class="align-middle">
+              <td><%= f.label :high_school, "2021年4月からの学校名", class: "form-label" %></td>
+              <td><%= f.text_field :high_school, placeholder: "例) 京都高校", class: "form-control" %></td>
+            </tr>
+            <tr class="align-middle">
+              <td><%= f.label :grade, "2021年4月からの学年", class: "form-label" %></td>
+              <td><%= f.select :grade, Online.grades.keys, {include_blank: "選択してください"}, class: "grade form-select" %></td>
+            </tr>
+            <tr class="align-middle">
+              <td><%= f.label :postal_code, "郵便番号", class: "form-label" %></td>
+              <td><%= f.text_field :postal_code, placeholder: "例) 000-0000", class: "form-control" %></td>
+            </tr>
+            <tr class="align-middle">
+              <td><%= f.label :prefecture, "都道府県", class: "form-label" %></td>
+              <td><%= f.select :prefecture, Online.prefectures.keys, {include_blank: "選択してください"}, class: "prefecture form-select" %></td>
+            </tr>
+            <tr class="align-middle">
+              <td><%= f.label :address, "市区町村以下の住所", class: "form-label" %></td>
+              <td><%= f.text_field :address, placeholder: "例) 長岡京市開田0-0-0", class: "form-control" %></td>
+            </tr>
+            <tr class="align-middle">
+              <td><%= f.label :phone, "電話番号", class: "form-label" %></td>
+              <td><%= f.text_field :phone, placeholder: "例) 000-0000-0000", class: "form-control" %></td>
+            </tr>
+            <tr class="align-middle">
+              <td><%= f.label :email, "E-mail", class: "form-label" %></td>
+              <td><%= f.email_field :email, placeholder: "例) xxxx@xxx", class: "form-control" %></td>
+            </tr>
+            <tr class="align-middle">
+              <td><%= f.label :parent_email, "E-mail（保護者様）", class: "form-label" %></td>
+              <td><%= f.email_field :parent_email, placeholder: "例) yyyy@yyy", class: "form-control" %></td>
+            </tr>
+            <tr class="align-middle">
+              <td><%= f.label :course, "受講科目", class: "form-label" %></td>
+              <td>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :course, "数IA 1回目", class: "form-check-input" %>
+                  <%= f.label :course_数ia_1回目, "数IA", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :course, "数IIB 1回目", class: "form-check-input" %>
+                  <%= f.label :course_数iib_1回目, "数IIB", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :course, "数IIIC 1回目", class: "form-check-input" %>
+                  <%= f.label :course_数iiic_1回目, "数IIIC", class: "form-check-label" %>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <div class="actions d-grid gap-2 col-8 mx-auto">
+            <%= f.submit "確認画面", class: "btn btn-primary" %>
+            <%= link_to "利用規約へ戻る", "javascript:history.back()", class: "btn btn-outline-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
-<div>
-  <p>いただいた個人情報は、塾の運営、連絡のみの使用に限定し、厳重に管理いたします。</p>
-</div>
 
-<div>  
-  <%= form_for @online, url: {action: "confirm"} do |f| %>
-    <%= render "onlines/shared/error_messages", resource: resource %>
 
-    <div class="field">
-      <%= f.label :first_name, "名前(姓)" %><br />
-      <%= f.text_field :first_name, autofocus: true, placeholder: "例) 稲荷" %>
-    </div>
+<script>
+  const element = document.querySelector('#online_first_name');
+  element.addEventListener('input', handleChange);
 
-    <div class="field">
-      <%= f.label :last_name, "名前(名)" %><br />
-      <%= f.text_field :last_name, placeholder: "例) 太郎" %>
-    </div>
-
-    <div class="field">
-      <%= f.label :kana_name, "名前(カナ)" %><br />
-      <%= f.text_field :kana_name, placeholder: "例) イナリ　タロウ" %>
-    </div>
-
-    <div class="field">
-      <%= f.label :parent_name, "名前(保護者)" %><br />
-      <%= f.text_field :parent_name, placeholder: "例) 達也" %>
-    </div>
-
-    <div class="field">
-      <%= f.label :gender, "性別" %><br />
-      <%= f.radio_button :gender, :男性 %>
-      <%= f.label :男性 %>
-      <%= f.radio_button :gender, :女性 %>
-      <%= f.label :女性 %>
-    </div>
-
-    <div class="field">
-      <%= f.label :birthday, "生年月日" %><br />
-      <%= f.date_field :birthday %>
-    </div>
-
-    <div class="field">
-      <%= f.label :school, "2021年4月からの学校名" %><br />
-      <%= f.text_field :high_school, placeholder: "例) 京都高校" %>
-    </div>
-
-    <div class="field">
-      <%= f.label :grade, "2021年4月からの学年" %><br />
-      <%= f.select :grade, Online.grades.keys, class: "grade" %>
-    </div>
-
-    <div class="field">
-      <%= f.label :postal_code, "郵便番号" %><br />
-      <%= f.text_field :postal_code, placeholder: "例) 000-0000" %>
-    </div>
-
-    <div class="field">
-      <%= f.label :prefecture, "都道府県" %><br />
-      <%= f.select :prefecture, Online.prefectures.keys, class: "prefecture" %>
-    </div>
-
-    <div class="field">
-      <%= f.label :address, "市区町村以下の住所" %><br />
-      <%= f.text_field :address, placeholder: "例) 長岡京市開田０－０－０" %>
-    </div>
-
-    <div class="field">
-      <%= f.label :phone, "電話番号" %><br />
-      <%= f.text_field :phone, placeholder: "例) 000-0000-0000" %>
-    </div>
-
-    <div class="field">
-      <%= f.label :email, "E-mail" %><br />
-      <%= f.email_field :email, placeholder: "例) xxxx@xxx" %>
-    </div>
-
-    <div class="field">
-      <%= f.label :parent_email, "E-mail(保護者)" %><br />
-      <%= f.email_field :parent_email, placeholder: "例) yyyy@yyy" %>
-    </div>
-
-    <div class="field">
-      <%= f.label :course, "受講科目" %><br />
-      <%= f.radio_button :course, "数IA 1回目" %>
-      <%= f.label :math_iaf, "数IA" %>
-      <%= f.radio_button :course, "数IIB 1回目" %>
-      <%= f.label :math_iibf, "数IIB" %>
-      <%= f.radio_button :course, "数IIIC 1回目" %>
-      <%= f.label :math_iiicf, "数IIIC" %>
-    </div>
-
-    <div class="actions">
-      <%= f.submit "confirm" %>
-    </div>
-  <% end %>
-</div>
-
-<%= render "onlines/shared/links" %>
+  function handleChange(event) {
+    const value = event.target.value;
+    document.querySelector('#first_name').innerHTML = value;
+  }
+</script>

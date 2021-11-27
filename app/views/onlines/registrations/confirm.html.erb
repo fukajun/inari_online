@@ -1,117 +1,103 @@
-<div>
-  <h2>Sign up(confirm)</h2>
+<div class="row">
+  <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>登録情報確認</h4>
+      </div>
+      <div class="card-body">
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <%= render "onlines/shared/error_messages", resource: resource %>
+
+          <table class="table">
+            <tr>
+              <td style="width: 180px"><%= f.label :first_name, "名前" %></td>
+              <td><%= @online.first_name %> <%= @online.last_name %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :kana_name, "名前（カナ）" %></td>
+              <td><%= @online.kana_name %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :parent_name, "名前（保護者様）" %></td>
+              <td><%= @online.first_name %> <%= @online.parent_name %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :gender, "性別" %></td>
+              <td><%= @online.gender %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :birthday, "生年月日" %></td>
+              <td><%= @online.birthday.strftime("%Y年%m月%d日") %></td>
+            </tr>
+
+            <tr>
+              <td><%= f.label :school, "2021年4月からの学校名" %></td>
+              <td><%= @online.high_school %><%= @online.junior_high_school %><%= @online.elementary_school %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :grade, "2021年4月からの学年" %></td>
+              <td><%= @online.grade %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :postal_code, "郵便番号" %></td>
+              <td><%= @online.postal_code %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :prefecture, "都道府県" %></td>
+              <td><%= @online.prefecture %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :address, "市区町村以下の住所" %></td>
+              <td><%= @online.address %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :phone, "電話番号" %></td>
+              <td><%= @online.phone %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :email, "E-mail" %></td>
+              <td><%= @online.email %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :parent_email, "E-mail（保護者様）" %></td>
+              <td><%= @online.parent_email %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :course, "受講科目" %></td>
+              <% if @online.course == "数IA 1回目" %>
+                <td><%= f.label :math_iaf, "数IA" %></td>
+              <% elsif @online.course == "数IIB 1回目" %>
+                <td><%= f.label :math_iibf, "数IIB" %></td>
+              <% elsif @online.course == "数IIIC 1回目" %>
+                <td><%= f.label :math_iiicf, "数IIIC" %></td>
+              <% end %>
+            </tr>
+          </table>
+
+          <div class="actions d-grid gap-2 col-8 mx-auto">
+            <%= f.submit "登録する", class: "btn btn-primary" %>
+            <%= link_to "登録内容を変更する", "javascript:history.back()", class: "btn btn-outline-primary" %>
+            <%= f.hidden_field :first_name %>
+            <%= f.hidden_field :last_name %>
+            <%= f.hidden_field :kana_name %>
+            <%= f.hidden_field :parent_name %>
+            <%= f.hidden_field :gender %>
+            <%= f.hidden_field :birthday %>
+            <%= f.hidden_field :high_school %>
+            <%= f.hidden_field :junior_high_school %>
+            <%= f.hidden_field :elementary_school %>
+            <%= f.hidden_field :grade %>
+            <%= f.hidden_field :postal_code %>
+            <%= f.hidden_field :prefecture %>
+            <%= f.hidden_field :address %>
+            <%= f.hidden_field :phone %>
+            <%= f.hidden_field :email %>
+            <%= f.hidden_field :course %>
+            <%= f.hidden_field :parent_email %>
+            <%= f.hidden_field :password %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
-
-<div>  
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= render "onlines/shared/error_messages", resource: resource %>
-
-    <div class="field">
-      <%= f.label :first_name, "名前(姓)" %><br />
-      <%= @online.first_name %>
-      <%= f.hidden_field :first_name %>
-    </div>
-
-    <div class="field">
-      <%= f.label :last_name, "名前(名)" %><br />
-      <%= @online.last_name %>
-      <%= f.hidden_field :last_name %>
-    </div>
-
-    <div class="field">
-      <%= f.label :kana_name, "名前(カナ)" %><br />
-      <%= @online.kana_name %>
-      <%= f.hidden_field :kana_name %>
-    </div>
-
-    <div class="field">
-      <%= f.label :parent_name, "名前(保護者)" %><br />
-      <%= @online.parent_name %>
-      <%= f.hidden_field :parent_name %>
-    </div>
-
-    <div class="field">
-      <%= f.label :gender, "性別" %><br />
-      <%= @online.gender %>
-      <%= f.hidden_field :gender %>
-    </div>
-
-    <div class="field">
-      <%= f.label :birthday, "生年月日" %><br />
-      <%= @online.birthday %>
-      <%= f.hidden_field :birthday %>
-    </div>
-
-    <div class="field">
-      <%= f.label :school, "2021年4月からの学校名" %><br />
-      <%= @online.high_school %>
-      <%= @online.junior_high_school %>
-      <%= @online.elementary_school %>
-      <%= f.hidden_field :high_school %>
-      <%= f.hidden_field :junior_high_school %>
-      <%= f.hidden_field :elementary_school %>
-    </div>
-
-    <div class="field">
-      <%= f.label :grade, "2021年4月からの学年" %><br />
-      <%= @online.grade %>
-      <%= f.hidden_field :grade %>
-    </div>
-
-    <div class="field">
-      <%= f.label :postal_code, "郵便番号" %><br />
-      <%= @online.postal_code %>
-      <%= f.hidden_field :postal_code %>
-    </div>
-
-    <div class="field">
-      <%= f.label :prefecture, "都道府県" %><br />
-      <%= @online.prefecture %>
-      <%= f.hidden_field :prefecture %>
-    </div>
-
-    <div class="field">
-      <%= f.label :address, "市区町村以下の住所" %><br />
-      <%= @online.address %>
-      <%= f.hidden_field :address %>
-    </div>
-
-    <div class="field">
-      <%= f.label :phone, "電話番号" %><br />
-      <%= @online.phone %>
-      <%= f.hidden_field :phone %>
-    </div>
-
-    <div class="field">
-      <%= f.label :email, "E-mail" %><br />
-      <%= @online.email %>
-      <%= f.hidden_field :email %>
-    </div>
-
-    <div class="field">
-      <%= f.label :parent_email, "E-mail(保護者)" %><br />
-      <%= @online.parent_email %>
-      <%= f.hidden_field :parent_email %>
-    </div>
-
-    <div class="field">
-      <%= f.label :course, "受講科目" %><br />
-      <% if @online.course == "数IA 1回目" %>
-        <%= f.label :math_iaf, "数IA" %>
-      <% elsif @online.course == "数IIB 1回目" %>
-        <%= f.label :math_iibf, "数IIB" %>
-      <% elsif @online.course == "数IIIC 1回目" %>
-        <%= f.label :math_iiicf, "数IIIC" %>
-      <% end %>
-      <%= f.hidden_field :course %>
-    </div>
-
-    <div class="actions">
-      <%= f.hidden_field :password %>
-      <%= f.submit "back", name: :back %>
-      <%= f.submit "Sign up" %>
-    </div>
-  <% end %>
-</div>
-
-<%= render "onlines/shared/links" %>
