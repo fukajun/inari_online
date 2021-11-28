@@ -11,11 +11,11 @@ class StudiesController < ApplicationController
 		@studies.each do |i|
 			num = i.question.title.slice(14, 2).to_i
 			if (num == 8 || num == 15 || num == 22)
-				@iafScore.push(i.score)
+				@iafScore.push(i.score.to_s + " 点")
 				if i.score != nil
 					iafCount += 1
 					iafTotal += i.score
-					@iafAverage = iafTotal / iafCount
+					@iafAverage = (iafTotal / iafCount).to_s + " 点"
 				end
 			end
 		end

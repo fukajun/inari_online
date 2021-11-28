@@ -1,17 +1,38 @@
-<h1>Studies#show</h1>
-<p>Find me in app/views/studies/show.html.erb</p>
+<div class="row">
+  <div>
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>採点結果</h4>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3 border-bottom">
+          <div class="col-3"><%= link_to "戻る", 'javascript:history.back()', class: "btn btn-link" %></div>
+          <div class="col-9 text-end">
+            <% if @study.question.title.include?("iaf") %>
+              <span>数IA 1回目 <%= @study.question.title.slice(14, 2).to_i %></span>
+            <% elsif @study.question.title.include?("ias") %>
+              <span>数IA 2回目 <%= @study.question.title.slice(14, 2).to_i %></span>
+            <% elsif @study.question.title.include?("iibf") %>
+              <span>数IIB 1回目 <%= @study.question.title.slice(15, 2).to_i %></span>
+            <% elsif @study.question.title.include?("iibs") %>
+              <span>数IIB 2回目 <%= @study.question.title.slice(15, 2).to_i %></span>
+            <% elsif @study.question.title.include?("iiicf") %>
+              <span>数III 1回目 <%= @study.question.title.slice(16, 2).to_i %></span>
+            <% elsif @study.question.title.include?("iiics") %>
+              <span>数III 2回目 <%= @study.question.title.slice(16, 2).to_i %></span>
+            <% end %>
+            <span class="mx-4"><%= @study.score %> 点</span>
+          </div>
+        </div>
 
-<div class="container">
-	<div class="row">
-		<div>
-			採点結果：<%= @study.score %> 点
-		</div>
-		<div>
-			<% @correction_images.each do |correction_image| %>
-				<figure>
-					<%= attachment_image_tag(correction_image, :image, :width => '100%') %>
-				</figure>
-			<% end %>
-		</div>
-	</div>
+        <div class="row">
+          <% @correction_images.each do |correction_image| %>
+            <figure class="col-lg-6">
+              <%= attachment_image_tag(correction_image, :image, :width => '100%', class: "mb-5 border") %>
+            </figure>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

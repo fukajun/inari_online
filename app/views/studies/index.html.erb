@@ -1,116 +1,115 @@
-<h1>Studies#index</h1>
-<p>Find me in app/views/studies/index.html.erb</p>
+<div class="row">
+  <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>単元テスト</h4>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <th style="width: 24%"></th>
+            <th>1回目</th>
+            <th>2回目</th>
+            <th>3回目</th>
+            <th>平均点</th>
+          </thead>
+          <tbody class="border border-start-0 border-end-0">
+            <tr>
+              <td>数IA 1回目</td>
+              <td><%= @iafScore[0] %></td>
+              <td><%= @iafScore[1] %></td>
+              <td><%= @iafScore[2] %></td>
+              <td><%= @iafAverage %></td>
+            </tr>
+            <tr>
+              <td>数IA 2回目</td>
+              <td><%=  %></td>
+              <td><%=  %></td>
+              <td><%=  %></td>
+              <td><%=  %></td>
+            </tr>
+            <tr>
+              <td>数IIB 1回目</td>
+              <td><%=  %></td>
+              <td><%=  %></td>
+              <td><%=  %></td>
+              <td><%=  %></td>
+            </tr>
+            <tr>
+              <td>数IIB 2回目</td>
+              <td><%=  %></td>
+              <td><%=  %></td>
+              <td><%=  %></td>
+              <td><%=  %></td>
+            </tr>
+            <tr>
+              <td>数III 1回目</td>
+              <td><%=  %></td>
+              <td><%=  %></td>
+              <td><%=  %></td>
+              <td><%=  %></td>
+            </tr>
+            <tr>
+              <td>数III 2回目</td>
+              <td><%=  %></td>
+              <td><%=  %></td>
+              <td><%=  %></td>
+              <td><%=  %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-<div class="container">
-	<div class="row">
-		<h3>単元テスト</h3>
-	</div>
-	<div class="row">
-		<table>
-			<thead>
-				<th></th>
-				<th>1回目</th>
-				<th>2回目</th>
-				<th>3回目</th>
-				<th>平均点</th>
-			</thead>
-			<tbody>
-				<tr>
-					<td>数IA 1回目</td>
-					<td><%= @iafScore[0] %></td>
-					<td><%= @iafScore[1] %></td>
-					<td><%= @iafScore[2] %></td>
-					<td><%= @iafAverage %></td>
-				</tr>
-				<tr>
-					<td>数IA 2回目</td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-				</tr>
-				<tr>
-					<td>数IIB 1回目</td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-				</tr>
-				<tr>
-					<td>数IIB 2回目</td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-				</tr>
-				<tr>
-					<td>数IIIC 1回目</td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-				</tr>
-				<tr>
-					<td>数IIIC 2回目</td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<div class="row">
-		<h3>学習履歴一覧</h3>
-	</div>
-	<div class="row">
-		<table>
-			<thead>
-				<th>クラス</th>
-				<th>問題番号</th>
-				<th>学習日時</th>
-				<th>解答時間(分)</th>
-				<th>採点結果</th>
-			</thead>
-			<% @studies.each do |study| %>
-				<tbody>
-					<% if study.question.title.include?("iaf") %>
-						<td>数IA 1回目</td>
-						<td><%= study.question.title.slice(14, 2) %></td>
-					<% elsif study.question.title.include?("ias") %>
-						<td>数IA 2回目</td>
-						<td><%= study.question.title.slice(14, 2) %></td>
-					<% elsif study.question.title.include?("iibf") %>
-						<td>数IIB 1回目</td>
-						<td><%= study.question.title.slice(15, 2) %></td>
-					<% elsif study.question.title.include?("iibs") %>
-						<td>数IIB 2回目</td>
-						<td><%= study.question.title.slice(15, 2) %></td>
-					<% elsif study.question.title.include?("iiicf") %>
-						<td>数IIIC 1回目</td>
-						<td><%= study.question.title.slice(16, 2) %></td>
-					<% elsif study.question.title.include?("iiics") %>
-						<td>数IIIC 2回目</td>
-						<td><%= study.question.title.slice(16, 2) %></td>
-					<% end %>
-					<td><%= study.created_at.strftime("%Y/%m/%d %H:%M") %></td>
-					<% if study.answer_time.present? %>
-						<td><%= study.answer_time / 60 %></td>
-						<td>
-							<% if study.score.present? %>
-								<%= link_to study_path(study) do %>
-									<%= study.score %> 点
-								<% end %>
-							<% else %>
-								<%= "採点中" %>
-							<% end %>
-						</td>
-					<% else %>
-						<td><%= "-" %></td>
-						<td><%= "試験中" %></td>
-					<% end %>
-				</tbody>
-			<% end %>
-		</table>
-	</div>
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>学習履歴一覧</h4>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <th style="width: 24%">問題</th>
+            <th>学習日時</th>
+            <th>解答時間</th>
+            <th>採点結果</th>
+          </thead>
+          <tbody class="border border-start-0 border-end-0">
+            <% @studies.each do |study| %>
+              <tr style="font-size: 0.8rem">
+                <% if study.question.title.include?("iaf") %>
+                  <td>数IA 1回目 <%= study.question.title.slice(14, 2).to_i %></td>
+                <% elsif study.question.title.include?("ias") %>
+                  <td>数IA 2回目 <%= study.question.title.slice(14, 2).to_i %></td>
+                <% elsif study.question.title.include?("iibf") %>
+                  <td>数IIB 1回目 <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("iibs") %>
+                  <td>数IIB 2回目 <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("iiicf") %>
+                  <td>数III 1回目 <%= study.question.title.slice(16, 2).to_i %></td>
+                <% elsif study.question.title.include?("iiics") %>
+                  <td>数III 2回目 <%= study.question.title.slice(16, 2).to_i %></td>
+                <% end %>
+                <td><%= study.created_at.strftime("%Y年%m月%d日 %H:%M") %></td>
+                <% if study.answer_time.present? %>
+                  <td><%= study.answer_time / 60 %> 分</td>
+                  <td>
+                    <% if study.score.present? %>
+                      <%= link_to study_path(study) do %>
+                        <%= study.score %> 点
+                      <% end %>
+                    <% else %>
+                      <%= "採点中" %>
+                    <% end %>
+                  </td>
+                <% else %>
+                  <td><%= "-" %></td>
+                  <td><%= "試験中" %></td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
