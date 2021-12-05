@@ -1,13 +1,22 @@
-<h1>Math::IaFirst#exercise</h1>
-<p>Find me in app/views/math/ia_first/exercise.html.erb</p>
-
-<% for id in @id do %>
-	<figure>
-		<img src='/assets/math_iaf_exercise_<%= id %>.png' alt="">
-	</figure>
-<% end %>
-
-<div>
-	<%= link_to "index", math_ia_first_index_path %>
-	<%= link_to "next", math_ia_first_path, :method => :put %>
+<div class="row">
+  <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>演習問題</h4>
+      </div>
+      <div class="card-body">
+        <% for id in @id do %>
+          <figure>
+            <img src='/assets/math_iaf_exercise_<%= id %>.png' alt="" width='100%'>
+          </figure>
+        <% end %>
+      </div>
+      <div class="card-footer bg-transparent">
+        <div class="text-center">
+          <%= link_to "一覧画面に戻る", math_ia_first_index_path, class: "btn btn-link" %>
+           <%= link_to "演習解答へ進む", math_ia_first_path, :method => :put, class: "btn btn-link" %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

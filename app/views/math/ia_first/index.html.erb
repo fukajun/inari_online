@@ -1,112 +1,139 @@
-<h1>Math::IaFirst#index</h1>
-<p>Find me in app/views/math/ia_first/index.html.erb</p>
+<div class="row">
+  <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>数IA 1回目</h4>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3 border-bottom">
+          <div class="col-3"><%= link_to "戻る", 'javascript:history.back()', class: "btn btn-link" %></div>
+          <div class="col-9 text-end">
+            <% if @subject.postphonement < 3 %>
+              <%= link_to "テスト開始期限を延期する", math_ia_first_postphone_path, "data-confirm" => "本当に延期しますか?", class: "btn btn-outline-secondary btn-sm" %>
+              <span class="badge bg-light text-secondary">残り <%= 3 - @subject.postphonement %>回</span>
+            <% else %>
+              <%= link_to "テスト開始期限を延期する", math_ia_first_postphone_path, "data-confirm" => "期限の延期回数が3回に達しているため変更できません。次回のテストは必ず期限までに受けましょう。", class: "btn btn-outline-secondary btn-sm" %>
+              <span class="badge bg-light text-secondary">残り <%= 3 - @subject.postphonement %>回</span>
+            <% end %>
+          </div>
+        </div>
 
-<div>
-	<% if @subject.postphonement < 3 %>
-		<%= link_to "Postphone", math_ia_first_postphone_path, "data-confirm" => "本当に延期しますか?" %>
-	<% else %>
-		<%= link_to "Postphone", math_ia_first_postphone_path, "data-confirm" => "期限の延期回数が3回に達しているため変更できません。次回のテストは必ず期限までに受けましょう。" %>
-	<% end %>
-	<%= "延期回数：" %><%= @subject.postphonement %><%= "回" %>
+        <!-- アコーディオン -->
+        <div class="accordion" id="accordionEx">
+          <% for num in 1..22 do %>
+            <div class="accordion-item">
+              <div class="accordion-header" id="heading<%= num %>">
+                <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse<%= num %>" aria-expanded="true" aria-controls="collapse<%= num %>">
+                  <div class="col-5 text-center display-6">テスト <%= num %></div>
+                  <small class="col-6 text-end">テスト開始期限：<%= @subject["lesson#{num}"].strftime("%Y年%m月%d日") %></small>
+                </button>
+              </div>
+              <div id="collapse<%= num %>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordingEx" data-json="<%= @subject.question.to_json %>">
+                <div class="accordion-body">
+                  <!-- 単元テスト -->
+                  <% if num == 8 || num == 15 || num == 22 %>
+                    <ul class="list-group lead text-center">
+                      <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+                        <% if @subject.question >= num %>
+                          <% if @subject.stage >= 0 %>
+                            <% if @studies.find_by(question_id: Question.find_by("title like ?", "math_iaf_test_#{format("%02d", num)}%").id) == nil %>
+                              <% if current_online.status == "有効" %>
+                                <%= link_to "単元テスト問題", math_ia_first_test_path(num), method: :get,
+                                  data:{confirm: "テストを開始しますか？", cancel: "キャンセル", commit: "開始する"},
+                                  title: "内容確認", class: "none-text-underline" %>
+                              <% else %>
+                                <%= "テスト問題" %>
+                              <% end %>
+                            <% else %>
+                              <%= link_to "単元テスト問題", math_ia_first_test_path(num), class: "none-text-underline" %>
+                            <% end %>
+                          <% end %>
+                        <% else %>
+                          <%= "単元テスト問題" %>
+                        <% end %>
+                      </li>
+                      <li class="list-group-item d-grid border border-0 fw-bolder">
+                        <% if @subject.question >= num %>
+                          <% if @subject.question > num || @subject.stage >= 2 %>
+                            <%= link_to "単元テスト解答", math_ia_first_test_answer_path(num), class: "none-text-underline" %>
+                          <% else %>
+                            <%= "単元テスト解答" %>
+                          <% end %>
+                        <% else %>
+                          <%= "単元テスト解答" %>
+                        <% end %>
+                      </li>
+                    </ul>
+                  <!-- 通常テスト -->
+                  <% else %>
+                    <ul class="list-group lead text-center">
+                      <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+                        <% if @subject.question >= num %>
+                          <% if @subject.stage >= 0 %>
+                            <% if @studies.find_by(question_id: Question.find_by("title like ?", "math_iaf_test_#{format("%02d", num)}%").id) == nil %>
+                              <% if current_online.status == "有効" %>
+                                <%= link_to "テスト問題", math_ia_first_test_path(num), method: :get,
+                                  data:{confirm: "テストを開始しますか？", cancel: "キャンセル", commit: "開始する"},
+                                  title: "内容確認", class: "none-text-underline" %>
+                              <% else %>
+                                <%= "テスト問題" %>
+                              <% end %>
+                            <% else %>
+                              <%= link_to "テスト問題", math_ia_first_test_path(num), class: "none-text-underline" %>
+                            <% end %>
+                          <% end %>
+                        <% else %>
+                          <%= "テスト問題" %>
+                        <% end %>
+                      </li>
+                      <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+                        <% if @subject.question >= num %>
+                          <% if @subject.question > num || @subject.stage >= 2 %>
+                           <%= link_to "テスト解答", math_ia_first_test_answer_path(num), class: "none-text-underline" %>
+                         <% else %>
+                           <%= "テスト解答" %>
+                         <% end %>
+                       <% else %>
+                         <%= "テスト解答" %>
+                       <% end %>
+                      </li>
+                      <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+                        <% if @subject.question >= num %>
+                          <% if @subject.question > num || @subject.stage >= 3 %>
+                            <%= link_to "演習問題", math_ia_first_exercise_path(num), class: "none-text-underline" %>
+                          <% else %>
+                            <%= "演習問題" %>
+                          <% end %>
+                        <% else %>
+                          <%= "演習問題" %>
+                        <% end %>
+                      </li>
+                      <li class="list-group-item d-grid border border-0 fw-bolder">
+                        <% if @subject.question >= num %>
+                          <% if @subject.question > num || @subject.stage >= 4 %>
+                            <%= link_to "演習解答", math_ia_first_exercise_answer_path(num), class: "none-text-underline" %>
+                          <% else %>
+                            <%= "演習解答" %>
+                          <% end %>
+                        <% else %>
+                          <%= "演習解答" %>
+                        <% end %>
+                      </li>
+                    </ul>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div>
-	<% for num in 1..22 do %>
-		<div>
-			<div>
-				<p><%= "Lesson" %><%= num %></p>
-				<p>提出期限：<%= @subject["lesson#{num}"].strftime("%Y/%m/%d") %></p>
-			</div>
-			<!-- 単元テストの条件分岐 -->
-			<% if num == 8 || num == 15 || num == 22 %>
-				<ul>
-					<li>
-						<% if @subject.question >= num %>
-							<% if @subject.stage >= 0 %>
-								<% if @studies.find_by(question_id: Question.find_by("title like ?", "math_iaf_test_#{format("%02d", num)}%").id) == nil %>
-									<% if current_online.status == "有効" %>
-										<%= link_to "単元テスト問題", math_ia_first_test_path(num), method: :get,
-											data:{confirm: "テストを開始しますか？", cancel: "キャンセル", commit: "開始する"},
-											title: "内容確認" %>
-									<% else %>
-										<%= "テスト問題" %>
-									<% end %>
-								<% else %>
-									<%= link_to "単元テスト問題", math_ia_first_test_path(num) %>
-								<% end %>
-							<% end %>
-						<% else %>
-							<%= "単元テスト問題" %>
-						<% end %>
-					</li>
-					<li>
-						<% if @subject.question >= num %>
-							<% if @subject.question > num || @subject.stage >= 2 %>
-								<%= link_to "単元テスト解答", math_ia_first_test_answer_path(num) %>
-							<% else %>
-								<%= "単元テスト解答" %>
-							<% end %>
-						<% else %>
-							<%= "単元テスト解答" %>
-						<% end %>
-					</li>
-				</ul>
-			<% else %>
-				<ul>
-					<li>
-						<% if @subject.question >= num %>
-							<% if @subject.stage >= 0 %>
-								<% if @studies.find_by(question_id: Question.find_by("title like ?", "math_iaf_test_#{format("%02d", num)}%").id) == nil %>
-									<% if current_online.status == "有効" %>
-										<%= link_to "テスト問題", math_ia_first_test_path(num), method: :get,
-											data:{confirm: "テストを開始しますか？", cancel: "キャンセル", commit: "開始する"},
-											title: "内容確認" %>
-									<% else %>
-										<%= "テスト問題" %>
-									<% end %>
-								<% else %>
-									<%= link_to "テスト問題", math_ia_first_test_path(num) %>
-								<% end %>
-							<% end %>
-						<% else %>
-							<%= "テスト問題" %>
-						<% end %>
-					</li>
-					<li>
-						<% if @subject.question >= num %>
-							<% if @subject.question > num || @subject.stage >= 2 %>
-								<%= link_to "テスト解答", math_ia_first_test_answer_path(num) %>
-							<% else %>
-								<%= "テスト解答" %>
-							<% end %>
-						<% else %>
-							<%= "テスト解答" %>
-						<% end %>
-					</li>
-					<li>
-						<% if @subject.question >= num %>
-							<% if @subject.question > num || @subject.stage >= 3 %>
-								<%= link_to "演習問題", math_ia_first_exercise_path(num) %>
-							<% else %>
-								<%= "演習問題" %>
-							<% end %>
-						<% else %>
-							<%= "演習問題" %>
-						<% end %>
-					</li>
-					<li>
-						<% if @subject.question >= num %>
-							<% if @subject.question > num || @subject.stage >= 4 %>
-								<%= link_to "演習解答", math_ia_first_exercise_answer_path(num) %>
-							<% else %>
-								<%= "演習解答" %>
-							<% end %>
-						<% else %>
-							<%= "演習解答" %>
-						<% end %>
-					</li>
-				</ul>
-				<% end %>
-		</div>
-	<% end %>
-</div>
+
+<script>
+  const currentQuestionNum = JSON.parse(document.querySelector('#collapse<%= num %>').dataset.json);
+  const accordion = document.getElementById('collapse' + currentQuestionNum);
+  accordion.classList.add('show');
+</script>
