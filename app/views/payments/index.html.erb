@@ -2,44 +2,59 @@
   <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
     <div class="card margin-vertical-20">
       <div class="card-header text-center">
-      	<h4>お支払い履歴</h4>
+        <h4>お支払い履歴</h4>
       </div>
       <div class="card-body">
-      	<table class="table">
-					<thead>
-						<th style="width: 24%">受講クラス</th>
-						<th style="width: 38%">申請日</th>
-						<th style="width: 38%">振込期日</th>
-					</thead>
-					<tbody class="border border-start-0 border-end-0">
-						<% @payments.each do |payment| %>
-							<tr>
-								<td><%= payment[0] %></td>
-								<td>
-									<% if payment[1] == true %>
-										<%= link_to "受講申請", payments_path(course: payment[0]),  method: :post, 
-											data:{
-												confirm: "#{payment[0]}の受講を申請します。<br><br>" +
-												"【注意事項】<br>" + 
-												"・現在受講中の講座がある方は、受講料のお振込みが確認でき、現在受講中の講座が終了したら、次の講座についての案内を送信いたします。<br>" +
-												"・現在受講中の講座がない方(最後に受講した講座がすでに終了している方)は、受講料のお振込みが確認でき次第、次の講座についての案内を送信いたします。",
-												cancel: "キャンセル",
-												commit: "申請する"
-											},
-											title: "内容確認" %>
-									<% elsif payment[1] != "" %>
-										<%= payment[1] %>
-									<% end %>
-								</td>
-								<td>
-									<% if payment[2] != "" %>
-										<%= payment[2] %>
-									<% end %>
-								</td>
-							</tr>
-						<% end %>
-					</tbody>
-				</table>
+        <table class="table">
+          <thead>
+            <th style="width: 24%">受講クラス</th>
+            <th style="width: 38%">申請日</th>
+            <th style="width: 38%">振込期日</th>
+          </thead>
+          <tbody class="border border-start-0 border-end-0">
+            <% @payments.each.with_index(1) do |payment, i| %>
+              <tr>
+                <td><%= payment[0] %></td>
+                <td>
+                  <% if payment[1] == true %>
+                    <a href="" class="" data-bs-toggle="modal" data-bs-target="#modal<%= i %>">受講申請</a>
+                  <% elsif payment[1] != "" %>
+                    <%= payment[1] %>
+                  <% end %>
+                </td>
+                <td>
+                  <% if payment[2] != "" %>
+                    <%= payment[2] %>
+                  <% end %>
+                </td>
+              </tr>
+
+              <!-- モーダル -->
+              <div class="modal fade" id="modal<%= i %>" tabindex="-1" aria-labelledby="modalLabel">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="moda-title" id="modalLabel">内容確認</h5>
+                      <button class="btn-close" data-bs-dismiss="modal" arial-label="閉じる"></button>
+                    </div>
+                    <div class="modal-body">
+                      <span>
+                        <%= payment[0] %>の受講を申請します。<br><br>
+                        【注意事項】<br>
+                        ・現在受講中の講座がある方は、受講料のお振込みが確認でき、現在受講中の講座が終了したら、次の講座についての案内を送信いたします。<br>
+                        ・現在受講中の講座がない方(最後に受講した講座がすでに終了している方)は、受講料のお振込みが確認でき次第、次の講座についての案内を送信いたします。
+                      </span>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-outline-primary" data-bs-dismiss="modal">キャンセル</button>
+                      <%= link_to "申請する", payments_path(course: payment[0]), method: :post, class: "btn btn-primary" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </tbody>
+        </table>
       </div>
       <div class="card-footer bg-transparent">
         <%= link_to "戻る", 'javascript:history.back()', class: "btn btn-link" %>
