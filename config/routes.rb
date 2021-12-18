@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   resources :onlines, only: [:show, :edit, :update]
   resources :studies, only: [:index, :show]
   resources :payments, only: [:index, :create]
-  resources :notifications, only: [:show]
+  resources :notifications, only: [:index, :show]
   resources :reports, only: [:index]
 
   namespace :math do

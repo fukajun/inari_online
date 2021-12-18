@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>お知らせ一覧</h4>
+      </div>
+      <div class="card-body">
+        <div class="row ms-1">
+          <ul class="list-group">
+            <% @notification_histories.each do |history| %>
+              <li class="list-group-item border border-0 border-bottom">
+                <div class="d-flex justify-content-between">
+                  <%= link_to notification_path(history.notification), class: "position-relative flex-grow-1 ps-4 btn-link none-text-underline text-ellipsis" do %>
+                      <%= history.notification.title %>
+                    <% if !history.checked %>
+                      <span class="position-absolute top-50 start-0 translate-middle mx-2 p-2 bg-warning rounded-circle">
+                        <span class="visually-hidden">未読</span>
+                      </span>
+                    <% end %>
+                  <% end %>
+                  <small class="text-nowrap"><%= history.created_at.strftime("%Y年%m月%d日 %H:%M") %></small>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <div class="card-footer bg-transparent">
+        <%= link_to "戻る", 'javascript:history.back()', class: "btn btn-link" %>
+      </div>
+    </div>
+  </div>
+</div>
