@@ -18,7 +18,6 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require_tree .
-//= require data-confirm-modal
 
 $(function() {
 	$(document).on('turbolinks:load', () => {

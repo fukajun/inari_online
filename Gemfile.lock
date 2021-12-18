@@ -90,8 +90,6 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.7)
     crass (1.0.6)
-    data-confirm-modal (1.6.3)
-      railties (>= 3.0)
     devise (4.7.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -241,7 +239,7 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
-    simple_calendar (2.4.2)
+    simple_calendar (2.4.3)
       rails (>= 3.0)
     sinatra (2.0.8.1)
       mustermann (~> 1.0)
@@ -296,7 +294,6 @@ DEPENDENCIES
   capybara (>= 2.15)
   chromedriver-helper
   coffee-rails (~> 4.2)
-  data-confirm-modal
   devise
   dotenv-rails
   jbuilder (~> 2.5)
