@@ -71,6 +71,7 @@ gem "refile-mini_magick"
 gem "dotenv-rails"
 gem "ransack"
 gem "simple_calendar", "~> 2.4"
+gem "kaminari"
 
 gem "pry-byebug"
 gem "letter_opener_web"
