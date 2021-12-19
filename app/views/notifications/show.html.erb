@@ -2,12 +2,15 @@
   <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
     <div class="card margin-vertical-20">
       <div class="card-header text-center">
-        <h4>お知らせ</h4>
+        <h4><%= @notification.title %></h4>
       </div>
       <div class="card-body mx-3">
-        <div class="text-end"><%= @notification.created_at.strftime("%Y年%m月%d日 %H:%M") %></div>
-        <h5 ><%= @notification.title %></h5>
-        <%= safe_join(@notification.body.split("\n"), tag(:br)) %>
+        <div class="text-end">
+          <small><%= @notification.created_at.strftime("%Y年%m月%d日 %H:%M") %></small>
+        </div>
+        <div class="mt-3">
+          <%= safe_join(@notification.body.split("\n"), tag(:br)) %>
+        </div>
       </div>
       <div class="card-footer bg-transparent">
         <%= link_to "戻る", 'javascript:history.back()', class: "btn btn-link" %>

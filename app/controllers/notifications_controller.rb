@@ -2,7 +2,7 @@ class NotificationsController < ApplicationController
   before_action :authenticate_online!
 
   def index
-    @notification_histories = NotificationHistory.where(online_id: current_online.id).order(id: "DESC")
+    @notification_histories = NotificationHistory.where(online_id: current_online.id).order(id: "DESC").page(params[:page])
   end
 
   def show
