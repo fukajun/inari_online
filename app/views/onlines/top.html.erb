@@ -1,93 +1,124 @@
-<h1>Onlines#top</h1>
-<p>Find me in app/views/onlines/top.html.erb</p>
+<div class="row">
+  <div class="col-md-7">
+    <!-- 講座一覧 -->
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>講座一覧</h4>
+      </div>
+      <div class="card-body">
+        <ul class="list-group lead text-center">
+          <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+            <% if @online.math_iaf > 1 %>
+              <%= link_to "数IA 1回目", math_ia_first_index_path, class: "none-text-underline" %>
+            <% else %>
+              <%= "数IA 1回目" %>
+            <% end %>
+          </li>
+          <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+            <% if @online.math_ias > 1 %>
+              <%= link_to "数IA 2回目", math_ia_second_index_path, class: "none-text-underline" %>
+            <% else %>
+              <%= "数IA 2回目" %>
+            <% end %>
+          </li>
+          <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+            <% if @online.math_iibf > 1 %>
+              <%= link_to "数IIB 1回目", math_iib_first_index_path, class: "none-text-underline" %>
+            <% else %>
+              <%= "数IIB 1回目" %>
+            <% end %>
+          </li>
+          <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+            <% if @online.math_iibs > 1 %>
+              <%= link_to "数IIB 2回目", math_iib_second_index_path, class: "none-text-underline" %>
+            <% else %>
+              <%= "数IIB 2回目" %>
+            <% end %>
+          </li>
+          <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+            <% if @online.math_iiicf > 1 %>
+              <%= link_to "数IIIC 1回目", math_iiic_first_index_path, class: "none-text-underline" %>
+            <% else %>
+              <%= "数IIIC 1回目" %>
+            <% end %>
+          </li>
+          <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+            <% if @online.math_iiics > 1 %>
+              <%= link_to "数IIIC 2回目", math_iiic_second_index_path, class: "none-text-underline" %>
+            <% else %>
+              <%= "数IIIC 2回目" %>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-<div class="container">
-	<div class="row">
-		<% if @online.math_iaf > 1 %>
-			<%= link_to "数IA 1回目", math_ia_first_index_path %>
-		<% else %>
-			<%= "数IA 1回目" %>
-		<% end %>
-	</div>
-	<div class="row">
-		<% if @online.math_ias > 1 %>
-			<%= link_to "数IA 2回目", math_ia_second_index_path %>
-		<% else %>
-			<%= "数IA 2回目" %>
-		<% end %>
-	</div>
-	<div class="row">
-		<% if @online.math_iibf > 1 %>
-			<%= link_to "数IIB 1回目", math_iib_first_index_path %>
-		<% else %>
-			<%= "数IIB 1回目" %>
-		<% end %>
-	</div>
-	<div class="row">
-		<% if @online.math_iibs > 1 %>
-			<%= link_to "数IIB 2回目", math_iib_second_index_path %>
-		<% else %>
-			<%= "数IIB 2回目" %>
-		<% end %>
-	</div>
-	<div class="row">
-		<% if @online.math_iiicf > 1 %>
-			<%= link_to "数IIIC 1回目", math_iiic_first_index_path %>
-		<% else %>
-			<%= "数IIIC 1回目" %>
-		<% end %>
-	</div>
-	<div class="row">
-		<% if @online.math_iiics > 1 %>
-			<%= link_to "数IIIC 2回目", math_iiic_second_index_path %>
-		<% else %>
-			<%= "数IIIC 2回目" %>
-		<% end %>
-	</div>
+  <div class="col-md-5">
+    <!-- 通知一覧 -->
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>通知一覧</h4>
+      </div>
+      <div class="card-body">
+        <div class="d-flex justify-content-center">
+          <%= link_to notifications_path, class: "position-relative px-3 btn btn-light text-primary none-text-underline" do %>
+            通知一覧を表示する
+            <% if @notification_histories.where(checked: 0).count > 0 %>
+              <span class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill">
+                <%= @notification_histories.where(checked: 0).count %>
+              </span>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="row">
+          <ul class="list-group">
+            <% @notification_histories.first(5).each do |history| %>
+              <li class="list-group-item border border-0 border-bottom">
+                <div class="d-flex justify-content-between">
+                  <%= link_to notification_path(history.notification), class: "position-relative flex-grow-1 ps-4 btn-link none-text-underline text-ellipsis" do %>
+                      <%= history.notification.title %>
+                    <% if !history.checked %>
+                      <span class="position-absolute top-50 start-0 translate-middle mx-2 p-2 bg-warning rounded-circle">
+                        <span class="visually-hidden">未読</span>
+                      </span>
+                    <% end %>
+                  <% end %>
+                  <small class="text-nowrap"><%= history.created_at.strftime("%m月%d日") %></small>
+                </div>
+              </li>
+            <% end %>
+            <% if @notification_histories.count > 5 %>
+              <li class="list-group-item border-0 border-bottom text-center">・・・</li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-	<div class="row">
-		<%= link_to "お支払い状況確認画面へ", payments_path %>
-	</div>
-	<div class="row">
-		<h3>通知一覧</h3>
-	</div>
-	<div class="row">
-		<table>
-			<thead>
-				<th></th>
-				<th>件名</th>
-				<th>受信日時</th>
-			</thead>
-			<% @notification_histories.each do |history| %>
-				<tbody>
-					<td><%= history.checked ? "既読" : "未読" %></td>
-					<td>
-						<%= link_to notification_path(history.notification) do %>
-							<%= history.notification.title %>
-						<% end %>
-					</td>
-					<td><%= history.created_at.strftime("%Y年%m月%d日 %H:%M") %></td>
-				</tbody>
-			<% end %>
-		</table>
-	</div>
-
-	<div class="row">
-		<h3>カレンダー</h3>
-	</div>
-	<div>
-		<%= month_calendar(events: @calendars) do |date, calendars| %>
-			<%= date.day %>
-			<% calendars.each do |calendar| %>
-			<%= calendar.title %>
-				<div>
-					<% if calendar.check == true %>
-						<%= "〇" %>
-					<% elsif calendar.check == false %>
-						<%= "×" %>
-					<% end %>
-				</div>
-			<% end %>
-		<% end %>
-	</div>
+    <!-- カレンダー -->
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>カレンダー</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <span class="text-end">〇：開講日　✕：休校日</span>
+        </div>
+        <%= month_calendar(events: @calendars) do |date, calendars| %>
+          <%= date.day %>
+          <% calendars.each do |calendar| %>
+          <%= calendar.title %>
+            <div>
+              <% if calendar.check == true %>
+                <%= "〇" %>
+              <% elsif calendar.check == false %>
+                <%= "✕" %>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

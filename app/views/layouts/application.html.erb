@@ -8,8 +8,8 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <header>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <header class="mb-5">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
       <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -32,6 +32,7 @@
               <%= link_to 'アバウト', homes_about_path, class: "nav-link" %>
               <%= link_to 'マイページ', online_path(current_online), class: "nav-link" %>
               <%= link_to '成績', studies_path, class: "nav-link" %>
+              <%= link_to '受講申請', payments_path, class: "nav-link" %>
               <%= link_to 'ログアウト', destroy_online_session_path, method: :delete, class: "nav-link" %>
 
             <!-- 保護者ログイン -->
@@ -51,13 +52,15 @@
 
         <!-- 受講生ログイン -->
         <% if online_signed_in? %>
-          <span class="navbar-profile">
-            <%= current_online.first_name %><%= current_online.last_name %>&nbsp;様&nbsp;&nbsp;&nbsp;受講生番号：<%= current_online.membership_number %>
+          <span class="navbar-profile text-end">
+            受講生番号 : <%= current_online.membership_number %><br>
+            <%= current_online.first_name %><%= current_online.last_name %>&nbsp;様
           </span>
         <!-- 保護者ログイン -->
         <% elsif parent_signed_in? %>
-          <span class="navbar-profile">
-            <%= current_parent.first_name %><%= current_parent.last_name %>&nbsp;様&nbsp;&nbsp;&nbsp;受講生番号：<%= current_parent.membership_number %>
+          <span class="navbar-profile text-end">
+            受講生番号：<%= current_online.membership_number %><br>
+            <%= current_online.first_name %><%= current_online.last_name %>&nbsp;様
           </span>
         <% end %>
       </div>

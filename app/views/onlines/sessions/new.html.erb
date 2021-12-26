@@ -22,15 +22,17 @@
             </div>
           <% end %>
 
-          <div class="actions d-grid gap-2 col-8 mx-auto">
+          <div class="actions d-grid gap-2 col-10 mx-auto text-center">
             <%= f.submit "ログイン", class: "btn btn-primary" %>
-            <%= link_to "新規登録", online_policy_path, class: "btn btn-success" %>
-            <%= link_to "保護者様ログインページ", new_parent_session_path, class: "btn btn-outline-secondary" %>
+            <%= link_to "パスワードを忘れた方はこちら", new_password_path(resource_name) %>
           </div>
         <% end %>
       </div>
       <div class="card-footer text-center">
-        <%= link_to "パスワードを忘れた方はこちら", new_password_path(resource_name) %><br />
+        <div class="actions d-grid gap-2 col-10 mx-auto my-3">
+          <%= link_to "新規登録", online_policy_path, class: "btn btn-success" %>
+          <%= link_to "保護者様ログインページ", new_parent_session_path, class: "btn btn-outline-secondary" %>
+          </div>
       </div>
     </div>
   </div>

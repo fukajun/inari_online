@@ -10,10 +10,10 @@
           <div class="col-9 text-end">
             <% if @subject.postphonement < 3 %>
               <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#postphoneModal">テスト開始期限を延期する</button>
-              <span class="badge bg-light text-secondary">残り <%= 3 - @subject.postphonement %>回</span>
+              <span class="badge bg-light text-secondary fs-6">残り <%= 3 - @subject.postphonement %>回</span>
             <% else %>
               <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#postphoneModal">テスト開始期限を延期する</button>
-              <span class="badge bg-light text-secondary">残り <%= 3 - @subject.postphonement %>回</span>
+              <span class="badge bg-light text-secondary fs-6">残り <%= 3 - @subject.postphonement %>回</span>
             <% end %>
           </div>
         </div>
@@ -24,7 +24,12 @@
             <div class="accordion-item">
               <div class="accordion-header" id="heading<%= num %>">
                 <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse<%= num %>" aria-expanded="true" aria-controls="collapse<%= num %>">
-                  <div class="col-5 text-center display-6">テスト <%= num %></div>
+                  <div class="col-5 text-center display-6 position-relative px-3">
+                    テスト <%= num %>
+                    <% if @subject.question > num %>
+                      <span class="position-absolute top-50 start-0 translate-middle mx-2 p-2 badge bg-success rounded-circle fs-6">✔</span>
+                    <% end %>
+                  </div>
                   <small class="col-6 text-end">テスト開始期限：<%= @subject["lesson#{num}"].strftime("%Y年%m月%d日") %></small>
                 </button>
               </div>
