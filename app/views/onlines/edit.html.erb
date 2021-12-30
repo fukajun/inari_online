@@ -101,6 +101,14 @@
 							<td><%= f.label :parent_email, "E-mail（保護者様）", class: "form-label" %></td>
 							<td><%= f.email_field :parent_email, autocomplete: "parent_email", class: "form-control" %></td>
 						</tr>
+						<tr class="align-middle">
+							<td><%= f.label :password, "パスワード", class: "form-label" %></td>
+							<td><%= f.password_field :password, autocomplete: "password", class: "form-control" %></td>
+						</tr>
+						<tr class="align-middle">
+							<td><%= f.label :password_confirmation, "パスワード（確認用）", class: "form-label" %></td>
+							<td><%= f.password_field :password_confirmation, autocomplete: "password", class: "form-control" %></td>
+						</tr>
 					</table>
 
 					<div class="actions d-grid gap-2 col-8 mx-auto">

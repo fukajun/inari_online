@@ -106,7 +106,13 @@ class OnlinesController < ApplicationController
 
 	def update
 		@online = Online.find(params[:id])
+		if params[:online][:password].blank? && params[:online][:password_confirmation].blank?
+			params[:online].delete("password")
+			params[:online].delete("password_confirmation")
+		end
+
 		if @online.update(online_params)
+			sign_in(@online, bypass: true)
 			redirect_to online_path(@online)
 		else
 			render "edit"
@@ -115,7 +121,7 @@ class OnlinesController < ApplicationController
 
 	private
 	def online_params
-		params.require(:online).permit(:first_name, :last_name, :kana_name, :parent_name, :gender, :birthday, :high_school, :junior_high_school, :elementary_school, :grade, :postal_code, :prefecture, :address, :phone, :parent_email)
+		params.require(:online).permit(:first_name, :last_name, :kana_name, :parent_name, :gender, :birthday, :high_school, :junior_high_school, :elementary_school, :grade, :postal_code, :prefecture, :address, :phone, :parent_email, :password, :password_confirmation)
 	end
 
 	def online_math_params
