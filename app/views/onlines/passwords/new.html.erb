@@ -1,16 +1,29 @@
-<h2>Forgot your password?</h2>
-
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "onlines/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="row">
+  <div class="col-lg-4 offset-lg-4 col-sm-6 offset-sm-3">
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>パスワード再設定</h4>
+      </div>
+      <div class="card-body">
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+          <%= render "onlines/shared/error_messages", resource: resource %>
+          <div class="mb-3">
+            パスワードの再設定を行います。<br>
+            登録されているメールアドレスを入力し、「認証メールを送信する」ボタンをクリックしてください。<br>
+            メールで認証用URLを送付いたしますので、パスワード変更手続きを実施してください。
+          </div>
+          <div class="mb-3">
+            <%= f.label :email, "メールアドレス", class: "form-label" %><br />
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+          </div>
+          <div class="actions d-grid gap-2 col-10 mx-auto text-center">
+            <%= f.submit "認証メールを送信する", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+      <div class="card-footer bg-transparent">
+        <%= link_to "戻る", 'javascript:history.back()', class: "btn btn-link" %>
+      </div>
+    </div>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "onlines/shared/links" %>
+</div>
