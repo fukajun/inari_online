@@ -72,5 +72,6 @@ class PaymentsController < ApplicationController
 		end
 		@payment.save
 		redirect_to request.referer
+		RegistrationMailer.course_application(current_online, @payment).deliver
 	end
 end
