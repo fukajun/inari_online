@@ -70,6 +70,13 @@ Rails.application.routes.draw do
     get "iib_second/:id/exercise", to: "iib_second#exercise", as: "iib_second_exercise"
     get "iib_second/:id/exercise_answer", to: "iib_second#exercise_answer", as: "iib_second_exercise_answer"
     get "iib_second/postphone", to: "iib_second#postphone", as: "iib_second_postphone"
+
+    resources :iiic_first, only: [:index, :update]
+    get "iiic_first/:id/test", to: "iiic_first#test", as: "iiic_first_test"
+    get "iiic_first/:id/test_answer", to: "iiic_first#test_answer", as: "iiic_first_test_answer"
+    get "iiic_first/:id/exercise", to: "iiic_first#exercise", as: "iiic_first_exercise"
+    get "iiic_first/:id/exercise_answer", to: "iiic_first#exercise_answer", as: "iiic_first_exercise_answer"
+    get "iiic_first/postphone", to: "iiic_first#postphone", as: "iiic_first_postphone"
   end
 
   #保護者

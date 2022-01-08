@@ -1,0 +1,2 @@
+module Math::IiicFirstHelper
+end
