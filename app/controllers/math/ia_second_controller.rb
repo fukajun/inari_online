@@ -1,13 +1,13 @@
-class Math::IaFirstController < ApplicationController
+class Math::IaSecondController < ApplicationController
   before_action :authenticate_online!
 
   def index
-    @subject = Subject.find_by(online_id: current_online.id, course: 1)
+    @subject = Subject.find_by(online_id: current_online.id, course: 2)
     @studies = Study.where(online_id: current_online.id)
   end
 
   def postphone
-    subject = Subject.find_by(online_id: current_online.id, course: 1)
+    subject = Subject.find_by(online_id: current_online.id, course: 2)
 
     # 課題提出期限延長
     if subject.postphonement < 3
@@ -38,13 +38,13 @@ class Math::IaFirstController < ApplicationController
   def test
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
-    questionId = Question.find_by("title like ?", "math_iaf_test_#{questionNumber}%").id
-    question = Question.where("title like ?", "math_iaf_test_#{questionNumber}%").where.not("title like ?", "%_answer%").order(title: "ASC")
+    questionId = Question.find_by("title like ?", "math_ias_test_#{questionNumber}%").id
+    question = Question.where("title like ?", "math_ias_test_#{questionNumber}%").where.not("title like ?", "%_answer%").order(title: "ASC")
 
-    subject = Subject.find_by(online_id: current_online.id, course: 1)
+    subject = Subject.find_by(online_id: current_online.id, course: 2)
     @study = Study.find_by(online_id: current_online.id, question_id: questionId)
 
-    if (current_online.math_iaf == 3)
+    if (current_online.math_ias == 3)
       access = true
     elsif (current_online.status == "有効")
       access = (parameter <= subject.question)? true : false
@@ -55,7 +55,7 @@ class Math::IaFirstController < ApplicationController
     if (access)
       @id = Array.new
       question.each do |i|
-        num = i.title.delete!("math_iaf_test_").delete!(".png")
+        num = i.title.delete!("math_ias_test_").delete!(".png")
         @id.push(num)
       end
 
@@ -88,13 +88,13 @@ class Math::IaFirstController < ApplicationController
   def test_answer
     @parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
-    questionId = Question.find_by("title like ?", "math_iaf_test_#{questionNumber}%").id
-    question = Question.where("title like ?", "math_iaf_test_answer_#{questionNumber}%").order(title: "ASC")
+    questionId = Question.find_by("title like ?", "math_ias_test_#{questionNumber}%").id
+    question = Question.where("title like ?", "math_ias_test_answer_#{questionNumber}%").order(title: "ASC")
 
-    subject = Subject.find_by(online_id: current_online.id, course: 1)
+    subject = Subject.find_by(online_id: current_online.id, course: 2)
     study = Study.find_by(online_id: current_online.id, question_id: questionId)
 
-    if (current_online.math_iaf == 3)
+    if (current_online.math_ias == 3)
       access = true
     elsif (current_online.status == "有効")
       if (subject.stage == 1)
@@ -113,7 +113,7 @@ class Math::IaFirstController < ApplicationController
     if (access)
       @id = Array.new
       question.each do |i|
-        num = i.title.delete!("math_iaf_test_answer_").delete!(".png")
+        num = i.title.delete!("math_ias_test_answer_").delete!(".png")
         @id.push(num)
       end
     else
@@ -125,13 +125,13 @@ class Math::IaFirstController < ApplicationController
   def exercise
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
-    questionId = Question.find_by("title like ?", "math_iaf_test_#{questionNumber}%").id
-    question = Question.where("title like ?", "math_iaf_exercise_#{questionNumber}%").where.not("title like ?", "%_answer%").order(title: "ASC")
+    questionId = Question.find_by("title like ?", "math_ias_test_#{questionNumber}%").id
+    question = Question.where("title like ?", "math_ias_exercise_#{questionNumber}%").where.not("title like ?", "%_answer%").order(title: "ASC")
 
-    subject = Subject.find_by(online_id: current_online.id, course: 1)
+    subject = Subject.find_by(online_id: current_online.id, course: 2)
     study = Study.find_by(online_id: current_online.id, question_id: questionId)
 
-    if (current_online.math_iaf == 3)
+    if (current_online.math_ias == 3)
       access = true
     elsif (current_online.status == "有効")
       if (subject.stage == 1)
@@ -150,7 +150,7 @@ class Math::IaFirstController < ApplicationController
     if (access)
       @id = Array.new
       question.each do |i|
-        num = i.title.delete!("math_iaf_exercise_").delete!(".png")
+        num = i.title.delete!("math_ias_exercise_").delete!(".png")
         @id.push(num)
       end
     else
@@ -162,13 +162,13 @@ class Math::IaFirstController < ApplicationController
   def exercise_answer
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
-    questionId = Question.find_by("title like ?", "math_iaf_test_#{questionNumber}%").id
-    question = Question.where("title like ?", "math_iaf_exercise_answer_#{questionNumber}%").order(title: "ASC")
+    questionId = Question.find_by("title like ?", "math_ias_test_#{questionNumber}%").id
+    question = Question.where("title like ?", "math_ias_exercise_answer_#{questionNumber}%").order(title: "ASC")
 
-    subject = Subject.find_by(online_id: current_online.id, course: 1)
+    subject = Subject.find_by(online_id: current_online.id, course: 2)
     study = Study.find_by(online_id: current_online.id, question_id: questionId)
 
-    if (current_online.math_iaf == 3)
+    if (current_online.math_ias == 3)
       access = true
     elsif (current_online.status == "有効")
       access = (parameter < subject.question)? true : false
@@ -179,7 +179,7 @@ class Math::IaFirstController < ApplicationController
     if (access)
       @id = Array.new
       question.each do |i|
-        num = i.title.delete!("math_iaf_exercise_answer_").delete!(".png")
+        num = i.title.delete!("math_ias_exercise_answer_").delete!(".png")
         @id.push(num)
       end
     else
@@ -190,9 +190,9 @@ class Math::IaFirstController < ApplicationController
 
   def update
     questionNumber = "%02d" % params[:id]
-    questionId = Question.find_by("title like ?", "math_iaf_test_#{questionNumber}%").id
+    questionId = Question.find_by("title like ?", "math_ias_test_#{questionNumber}%").id
 
-    subject = Subject.find_by(online_id: current_online.id, course: 1)
+    subject = Subject.find_by(online_id: current_online.id, course: 2)
     study = Study.find_by(online_id: current_online.id, question_id: questionId)
 
     if params[:commit] != nil
@@ -217,16 +217,16 @@ class Math::IaFirstController < ApplicationController
         end
         # 単元修了処理
         if subject.question == 23
-          current_online.update(math_iaf: 3)
+          current_online.update(math_ias: 3)
           subject.update(stage: 0)
         end
       end
-      redirect_to math_ia_first_test_answer_path(params[:id])
+      redirect_to math_ia_second_test_answer_path(params[:id])
     else
       if subject.question == params[:id].to_i
         subject.update(question: subject.question + 1, stage: 1)
       end
-      redirect_to math_ia_first_exercise_answer_path(params[:id])
+      redirect_to math_ia_second_exercise_answer_path(params[:id])
     end
   end
 
