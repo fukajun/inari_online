@@ -8,12 +8,14 @@
         <div class="row mb-3 border-bottom">
           <div class="col-3"><%= link_to "戻る", 'javascript:history.back()', class: "btn btn-link" %></div>
           <div class="col-9 text-end">
-            <% if @subject.postphonement < 3 %>
-              <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#postphoneModal">テスト開始期限を延期する</button>
-              <span class="badge bg-light text-secondary fs-6">残り <%= 3 - @subject.postphonement %>回</span>
-            <% else %>
-              <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#postphoneModal">テスト開始期限を延期する</button>
-              <span class="badge bg-light text-secondary fs-6">残り <%= 3 - @subject.postphonement %>回</span>
+            <% if current_online.math_ias < 3 %>
+              <% if @subject.postphonement < 3 %>
+                <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#postphoneModal">テスト開始期限を延期する</button>
+                <span class="badge bg-light text-secondary fs-6">残り <%= 3 - @subject.postphonement %>回</span>
+              <% else %>
+                <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#postphoneModal">テスト開始期限を延期する</button>
+                <span class="badge bg-light text-secondary fs-6">残り <%= 3 - @subject.postphonement %>回</span>
+              <% end %>
             <% end %>
           </div>
         </div>

@@ -80,6 +80,7 @@ class Math::IaFirstController < ApplicationController
 
       @timeArray = [@study.created_at, @study.answer_time]
     else
+      @subject = subject
       @studies = Study.where(online_id: current_online.id)
       render "index"
     end
@@ -117,6 +118,7 @@ class Math::IaFirstController < ApplicationController
         @id.push(num)
       end
     else
+      @subject = subject
       @studies = Study.where(online_id: current_online.id)
       render "index"
     end
@@ -154,6 +156,7 @@ class Math::IaFirstController < ApplicationController
         @id.push(num)
       end
     else
+      @subject = subject
       @studies = Study.where(online_id: current_online.id)
       render "index"
     end
@@ -183,6 +186,7 @@ class Math::IaFirstController < ApplicationController
         @id.push(num)
       end
     else
+      @subject = subject
       @studies = Study.where(online_id: current_online.id)
       render "index"
     end
