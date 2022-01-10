@@ -8,42 +8,42 @@
       <div class="card-body">
         <ul class="list-group lead text-center">
           <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
-            <% if @online.math_iaf > 1 %>
+            <% if @online.math_iaf >= 3 %>
               <%= link_to "数IA 1回目", math_ia_first_index_path, class: "none-text-underline" %>
             <% else %>
               <%= "数IA 1回目" %>
             <% end %>
           </li>
           <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
-            <% if @online.math_ias > 1 %>
+            <% if @online.math_ias >= 3 %>
               <%= link_to "数IA 2回目", math_ia_second_index_path, class: "none-text-underline" %>
             <% else %>
               <%= "数IA 2回目" %>
             <% end %>
           </li>
           <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
-            <% if @online.math_iibf > 1 %>
+            <% if @online.math_iibf >= 3 %>
               <%= link_to "数IIB 1回目", math_iib_first_index_path, class: "none-text-underline" %>
             <% else %>
               <%= "数IIB 1回目" %>
             <% end %>
           </li>
           <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
-            <% if @online.math_iibs > 1 %>
+            <% if @online.math_iibs >= 3 %>
               <%= link_to "数IIB 2回目", math_iib_second_index_path, class: "none-text-underline" %>
             <% else %>
               <%= "数IIB 2回目" %>
             <% end %>
           </li>
           <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
-            <% if @online.math_iiicf > 1 %>
+            <% if @online.math_iiicf >= 3 %>
               <%= link_to "数IIIC 1回目", math_iiic_first_index_path, class: "none-text-underline" %>
             <% else %>
               <%= "数IIIC 1回目" %>
             <% end %>
           </li>
           <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
-            <% if @online.math_iiics > 1 %>
+            <% if @online.math_iiics >= 3 %>
               <%= link_to "数IIIC 2回目", math_iiic_second_index_path, class: "none-text-underline" %>
             <% else %>
               <%= "数IIIC 2回目" %>

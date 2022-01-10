@@ -47,22 +47,22 @@ class Admin::PaymentsController < ApplicationController
 
         # 振込確認後に学習教科開放
         if @payment.course == "数IA 1回目"
-          @online.math_iaf = 2
+          @online.math_iaf = 3
           @subject.course = 1
         elsif @payment.course == "数IA 2回目"
-          @online.math_ias = 2
+          @online.math_ias = 3
           @subject.course = 2
         elsif @payment.course == "数IIB 1回目"
-          @online.math_iibf = 2
+          @online.math_iibf = 3
           @subject.course = 3
         elsif @payment.course == "数IIB 2回目"
-          @online.math_iibs = 2
+          @online.math_iibs = 3
           @subject.course = 4
         elsif @payment.course == "数IIIC 1回目"
-          @online.math_iiicf = 2
+          @online.math_iiicf = 3
           @subject.course = 5
         elsif @payment.course == "数IIIC 2回目"
-          @online.math_iiics = 2
+          @online.math_iiics = 3
           @subject.course = 6
         end
 

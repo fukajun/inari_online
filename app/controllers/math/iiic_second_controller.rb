@@ -44,7 +44,7 @@ class Math::IiicSecondController < ApplicationController
     subject = Subject.find_by(online_id: current_online.id, course: 6)
     @study = Study.find_by(online_id: current_online.id, question_id: questionId)
 
-    if (current_online.math_iiics == 3)
+    if (current_online.math_iiics == 4)
       access = true
     elsif (current_online.status == "有効")
       access = (parameter <= subject.question)? true : false
@@ -95,7 +95,7 @@ class Math::IiicSecondController < ApplicationController
     subject = Subject.find_by(online_id: current_online.id, course: 6)
     study = Study.find_by(online_id: current_online.id, question_id: questionId)
 
-    if (current_online.math_iiics == 3)
+    if (current_online.math_iiics == 4)
       access = true
     elsif (current_online.status == "有効")
       if (subject.stage == 1)
@@ -133,7 +133,7 @@ class Math::IiicSecondController < ApplicationController
     subject = Subject.find_by(online_id: current_online.id, course: 6)
     study = Study.find_by(online_id: current_online.id, question_id: questionId)
 
-    if (current_online.math_iiics == 3)
+    if (current_online.math_iiics == 4)
       access = true
     elsif (current_online.status == "有効")
       if (subject.stage == 1)
@@ -171,7 +171,7 @@ class Math::IiicSecondController < ApplicationController
     subject = Subject.find_by(online_id: current_online.id, course: 6)
     study = Study.find_by(online_id: current_online.id, question_id: questionId)
 
-    if (current_online.math_iiics == 3)
+    if (current_online.math_iiics == 4)
       access = true
     elsif (current_online.status == "有効")
       access = (parameter < subject.question)? true : false
@@ -221,7 +221,7 @@ class Math::IiicSecondController < ApplicationController
         end
         # 単元修了処理
         if subject.question == 23
-          current_online.update(math_iiics: 3)
+          current_online.update(math_iiics: 4)
           subject.update(stage: 0)
         end
       end

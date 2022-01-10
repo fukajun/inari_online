@@ -11,17 +11,17 @@ class OnlinesController < ApplicationController
 		iiics = @online.math_iiics
 
 		# 課題提出期限確認
-		if iaf == 2
+		if iaf == 3
 			@subject = Subject.find_by(online_id: current_online.id, course: 1)
-		elsif ias == 2
+		elsif ias == 3
 			@subject = Subject.find_by(online_id: current_online.id, course: 2)
-		elsif iibf == 2
+		elsif iibf == 3
 			@subject = Subject.find_by(online_id: current_online.id, course: 3)
-		elsif iibs == 2
+		elsif iibs == 3
 			@subject = Subject.find_by(online_id: current_online.id, course: 4)
-		elsif iiicf == 2
+		elsif iiicf == 3
 			@subject = Subject.find_by(online_id: current_online.id, course: 5)
-		elsif iiics == 2
+		elsif iiics == 3
 			@subject = Subject.find_by(online_id: current_online.id, course: 6)
 		else
 			@subject = Subject.find_by(online_id: current_online.id)
