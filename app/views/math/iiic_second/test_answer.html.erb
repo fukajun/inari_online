@@ -5,9 +5,9 @@
         <h4>テスト解答</h4>
       </div>
       <div class="card-body">
-        <% for id in @id do %>
+        <% @questions.each do |question| %>
           <figure>
-            <img src='/assets/math_iiics_test_answer_<%= id %>.png' alt="" width='100%'>
+            <img src='/assets/<%= question.title %>' alt="" width='100%'>
           </figure>
         <% end %>
       </div>

@@ -18,6 +18,15 @@ class Admin::PaymentsController < ApplicationController
   def update
     @payment = Payment.find(params[:id])
     @online = Online.find(@payment.online_id)
+
+    iaf = @online.math_iaf
+    ias = @online.math_ias
+    iibf = @online.math_iibf
+    iibs = @online.math_iibs
+    iiicf = @online.math_iiicf
+    iiics = @online.math_iiics
+    (iaf != 3 && ias != 3 && iibf != 3 && iibs != 3 && iiicf != 3 && iiics != 3)? startable = true : startable = false
+
     if @payment.update(payment_params)
       # 受講生番号採番
       if @online.membership_number == nil
@@ -39,82 +48,113 @@ class Admin::PaymentsController < ApplicationController
 
       # 振込確認
       if @payment.paid == true
-        # Subjectテーブルに教科登録
-        @subject = Subject.new
-        @subject.online_id = @online.id
-        @subject.question = 1
-        @subject.stage = 1
+        if startable
+          # Subjectテーブルに受講講座登録
+          @subject = Subject.new
+          @subject.online_id = @online.id
+          @subject.question = 1
+          @subject.stage = 1
 
-        # 振込確認後に学習教科開放
-        if @payment.course == "数IA 1回目"
-          @online.math_iaf = 3
-          @subject.course = 1
-        elsif @payment.course == "数IA 2回目"
-          @online.math_ias = 3
-          @subject.course = 2
-        elsif @payment.course == "数IIB 1回目"
-          @online.math_iibf = 3
-          @subject.course = 3
-        elsif @payment.course == "数IIB 2回目"
-          @online.math_iibs = 3
-          @subject.course = 4
-        elsif @payment.course == "数IIIC 1回目"
-          @online.math_iiicf = 3
-          @subject.course = 5
-        elsif @payment.course == "数IIIC 2回目"
-          @online.math_iiics = 3
-          @subject.course = 6
-        end
+          # 振込確認後に受講講座開放
+          if @payment.course == "数IA 1回目"
+            @online.math_iaf = 3
+            @subject.course = 1
+          elsif @payment.course == "数IA 2回目"
+            @online.math_ias = 3
+            @subject.course = 2
+          elsif @payment.course == "数IIB 1回目"
+            @online.math_iibf = 3
+            @subject.course = 3
+          elsif @payment.course == "数IIB 2回目"
+            @online.math_iibs = 3
+            @subject.course = 4
+          elsif @payment.course == "数IIIC 1回目"
+            @online.math_iiicf = 3
+            @subject.course = 5
+          elsif @payment.course == "数IIIC 2回目"
+            @online.math_iiics = 3
+            @subject.course = 6
+          end
 
-        # Subjectテーブルに提出期限登録
-        checkDate = Calendar.where(check: true)
-        today = Time.current
-        lessonArray = Array.new
-        count = -2
-        times = 1
-        checkDate.each do |i|
-          date = i.start_time.strftime("%Y-%m-%d %H:%M:%S")
-          if today < i.start_time - (9 * 60 * 60)
-            if count > 5
-              lessonArray.push(date)
-              lessonColumn = "lesson#{times}"
-              @subject[lessonColumn] = date
-              count = 0
-              times += 1
-              break if times > 22
+          # Subjectテーブルに提出期限登録
+          checkDate = Calendar.where(check: true)
+          today = Time.current
+          lessonArray = Array.new
+          count = -2
+          times = 1
+          checkDate.each do |i|
+            date = i.start_time.strftime("%Y-%m-%d %H:%M:%S")
+            if today < i.start_time - (9 * 60 * 60)
+              if count > 5
+                lessonArray.push(date)
+                lessonColumn = "lesson#{times}"
+                @subject[lessonColumn] = date
+                count = 0
+                times += 1
+                break if times > 22
+              end
+              count += 1
             end
-            count += 1
+          end
+          @subject.save
+        else
+          if @payment.course == "数IA 1回目"
+            @online.math_iaf = 2
+          elsif @payment.course == "数IA 2回目"
+            @online.math_ias = 2
+          elsif @payment.course == "数IIB 1回目"
+            @online.math_iibf = 2
+          elsif @payment.course == "数IIB 2回目"
+            @online.math_iibs = 2
+          elsif @payment.course == "数IIIC 1回目"
+            @online.math_iiicf = 2
+          elsif @payment.course == "数IIIC 2回目"
+            @online.math_iiics = 2
           end
         end
-        @subject.save
       else
         # 振込確認破棄
         if @payment.course == "数IA 1回目"
           @online.math_iaf = 1
-          @subject = Subject.find_by(online_id: @online.id, course: 1)
+          if ias != 2
+            @subject = Subject.find_by(online_id: @online.id, course: 1)
+            @subject.destroy
+          end
         elsif @payment.course == "数IA 2回目"
           @online.math_ias = 1
-          @subject = Subject.find_by(online_id: @online.id, course: 2)
+          if ias != 2
+            @subject = Subject.find_by(online_id: @online.id, course: 2)
+            @subject.destroy
+          end
         elsif @payment.course == "数IIB 1回目"
           @online.math_iibf = 1
-          @subject = Subject.find_by(online_id: @online.id, course: 3)
+          if ias != 2
+            @subject = Subject.find_by(online_id: @online.id, course: 3)
+            @subject.destroy
+          end
         elsif @payment.course == "数IIB 2回目"
           @online.math_iibs = 1
-          @subject = Subject.find_by(online_id: @online.id, course: 4)
+          if ias != 2
+            @subject = Subject.find_by(online_id: @online.id, course: 4)
+            @subject.destroy
+          end
         elsif @payment.course == "数IIIC 1回目"
           @online.math_iiicf = 1
-          @subject = Subject.find_by(online_id: @online.id, course: 5)
+          if ias != 2
+            @subject = Subject.find_by(online_id: @online.id, course: 5)
+            @subject.destroy
+          end
         elsif @payment.course == "数IIIC 2回目"
           @online.math_iiics = 1
-          @subject = Subject.find_by(online_id: @online.id, course: 6)
+          if ias != 2
+            @subject = Subject.find_by(online_id: @online.id, course: 6)
+            @subject.destroy
+          end
         end
-        @subject.destroy
       end
 
       # 会員ステータス更新
-      if @payment.paid == true
-        @online.status = "有効"
-      end
+      @online.status = "有効" if (@payment.paid == true)
 
       @online.update(online_params)
 

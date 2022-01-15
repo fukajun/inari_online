@@ -6,9 +6,9 @@
       </div>
       <div class="card-body">
         <div class="answer_time text-end" data-json="<%= @timeArray.to_json %>"></div>
-        <% for id in @id do %>
+        <% @questions.each do |question| %>
           <figure>
-            <img src='/assets/math_ias_test_<%= id %>.png' alt="" width='100%'>
+            <img src='/assets/<%= question.title %>' alt="" width='100%'>
           </figure>
         <% end %>
       </div>

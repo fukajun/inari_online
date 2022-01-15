@@ -38,8 +38,8 @@ class Math::IaSecondController < ApplicationController
   def test
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
+    @questions = Question.where("title like ?", "math_ias_test_#{questionNumber}%")
     questionId = Question.find_by("title like ?", "math_ias_test_#{questionNumber}%").id
-    question = Question.where("title like ?", "math_ias_test_#{questionNumber}%").where.not("title like ?", "%_answer%").order(title: "ASC")
 
     subject = Subject.find_by(online_id: current_online.id, course: 2)
     @study = Study.find_by(online_id: current_online.id, question_id: questionId)
@@ -53,12 +53,6 @@ class Math::IaSecondController < ApplicationController
     end
 
     if (access)
-      @id = Array.new
-      question.each do |i|
-        num = i.title.delete!("math_ias_test_").delete!(".png")
-        @id.push(num)
-      end
-
       if @study == nil
         @study = Study.new
         @study.online_id = current_online.id
@@ -89,8 +83,8 @@ class Math::IaSecondController < ApplicationController
   def test_answer
     @parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
+    @questions = Question.where("title like ?", "math_ias_test_answer_#{questionNumber}%")
     questionId = Question.find_by("title like ?", "math_ias_test_#{questionNumber}%").id
-    question = Question.where("title like ?", "math_ias_test_answer_#{questionNumber}%").order(title: "ASC")
 
     subject = Subject.find_by(online_id: current_online.id, course: 2)
     study = Study.find_by(online_id: current_online.id, question_id: questionId)
@@ -111,13 +105,7 @@ class Math::IaSecondController < ApplicationController
       end
     end
 
-    if (access)
-      @id = Array.new
-      question.each do |i|
-        num = i.title.delete!("math_ias_test_answer_").delete!(".png")
-        @id.push(num)
-      end
-    else
+    if (!access)
       @subject = subject
       @studies = Study.where(online_id: current_online.id)
       render "index"
@@ -127,8 +115,8 @@ class Math::IaSecondController < ApplicationController
   def exercise
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
+    @questions = Question.where("title like ?", "math_ias_exercise_#{questionNumber}%")
     questionId = Question.find_by("title like ?", "math_ias_test_#{questionNumber}%").id
-    question = Question.where("title like ?", "math_ias_exercise_#{questionNumber}%").where.not("title like ?", "%_answer%").order(title: "ASC")
 
     subject = Subject.find_by(online_id: current_online.id, course: 2)
     study = Study.find_by(online_id: current_online.id, question_id: questionId)
@@ -149,13 +137,7 @@ class Math::IaSecondController < ApplicationController
       end
     end
 
-    if (access)
-      @id = Array.new
-      question.each do |i|
-        num = i.title.delete!("math_ias_exercise_").delete!(".png")
-        @id.push(num)
-      end
-    else
+    if (!access)
       @subject = subject
       @studies = Study.where(online_id: current_online.id)
       render "index"
@@ -165,8 +147,8 @@ class Math::IaSecondController < ApplicationController
   def exercise_answer
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
+    @questions = Question.where("title like ?", "math_ias_exercise_answer_#{questionNumber}%")
     questionId = Question.find_by("title like ?", "math_ias_test_#{questionNumber}%").id
-    question = Question.where("title like ?", "math_ias_exercise_answer_#{questionNumber}%").order(title: "ASC")
 
     subject = Subject.find_by(online_id: current_online.id, course: 2)
     study = Study.find_by(online_id: current_online.id, question_id: questionId)
@@ -179,13 +161,7 @@ class Math::IaSecondController < ApplicationController
       access = ((study != nil) && (parameter < subject.question))? true : false
     end
 
-    if (access)
-      @id = Array.new
-      question.each do |i|
-        num = i.title.delete!("math_ias_exercise_answer_").delete!(".png")
-        @id.push(num)
-      end
-    else
+    if (!access)
       @subject = subject
       @studies = Study.where(online_id: current_online.id)
       render "index"
@@ -200,29 +176,62 @@ class Math::IaSecondController < ApplicationController
     study = Study.find_by(online_id: current_online.id, question_id: questionId)
 
     if params[:commit] != nil
-      # 採点後回答再提出不可
-      if study.score == nil
-        # 初回のみ回答時間登録
-        if study.answer_time == nil
-          currentTime = Time.now;
-          startTime = study.created_at
-          answerTime = currentTime - startTime
-          study.answer_time = answerTime
-        end
-        study.update(study_params)
+      # 初回のみ回答時間登録
+      if study.answer_time == nil
+        currentTime = Time.now;
+        startTime = study.created_at
+        answerTime = currentTime - startTime
+        study.answer_time = answerTime
+      end
+      study.update(study_params)
 
-        # 単元テストの条件分岐
-        if subject.question == params[:id].to_i
-          if subject.question.in?([8, 15, 22])
-            subject.update(question: subject.question + 1)
-          else
-            subject.update(stage: 3)
-          end
+      # 単元テストの条件分岐
+      if subject.question == params[:id].to_i
+        if subject.question.in?([8, 15, 22])
+          subject.update(question: subject.question + 1)
+        else
+          subject.update(stage: 3)
         end
-        # 単元修了処理
-        if subject.question == 23
-          current_online.update(math_ias: 4)
-          subject.update(stage: 0)
+      end
+      # 単元修了処理
+      if subject.question == 23
+        current_online.update(math_ias: 4)
+        subject.update(stage: 0)
+
+        # 次講座申請確認
+        iibf = current_online.math_iibf
+        if (iibf == 2)
+          # Subjectテーブルに受講講座登録
+          @subject = Subject.new
+          @subject.online_id = current_online.id
+          @subject.question = 1
+          @subject.stage = 1
+
+          # 受講講座開放
+          current_online.update(math_iibf: 3)
+          @subject.course = 3
+
+          # Subjectテーブルに提出期限登録
+          checkDate = Calendar.where(check: true)
+          today = Time.current
+          lessonArray = Array.new
+          count = -2
+          times = 1
+          checkDate.each do |i|
+            date = i.start_time.strftime("%Y-%m-%d %H:%M:%S")
+            if today < i.start_time - (9 * 60 * 60)
+              if count > 5
+                lessonArray.push(date)
+                lessonColumn = "lesson#{times}"
+                @subject[lessonColumn] = date
+                count = 0
+                times += 1
+                break if times > 22
+              end
+              count += 1
+            end
+          end
+          @subject.save
         end
       end
       redirect_to math_ia_second_test_answer_path(params[:id])
