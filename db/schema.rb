@@ -72,22 +72,22 @@ ActiveRecord::Schema.define(version: 2021_07_30_143715) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "first_name"
-    t.string "last_name"
-    t.string "kana_name"
-    t.string "parent_name"
-    t.integer "gender"
+    t.string "first_name", default: "", null: false
+    t.string "last_name", default: "", null: false
+    t.string "kana_name", default: "", null: false
+    t.string "parent_name", default: "", null: false
+    t.integer "gender", default: 0, null: false
     t.date "birthday"
     t.string "high_school"
     t.string "junior_high_school"
     t.string "elementary_school"
-    t.integer "grade", default: 0
-    t.integer "postal_code"
-    t.integer "prefecture", default: 0
-    t.string "address"
-    t.string "phone"
-    t.string "parent_email"
-    t.integer "course"
+    t.integer "grade", default: 0, null: false
+    t.string "postal_code", default: "", null: false
+    t.integer "prefecture", default: 0, null: false
+    t.string "address", default: "", null: false
+    t.string "phone", default: "", null: false
+    t.string "parent_email", default: "", null: false
+    t.integer "course", default: 0, null: false
     t.integer "math_iaf", default: 0
     t.integer "math_ias", default: 0
     t.integer "math_iibf", default: 0

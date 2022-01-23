@@ -16,13 +16,24 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
     @online = Online.new(sign_up_params)
     @online.password = Devise.friendly_token.first(8) #パスワード自動生成
 
-    # 学校登録調整
-    if @online.grade == "中1" || @online.grade == "中2" || @online.grade == "中3"
-      @online.junior_high_school = @online.high_school
-      @online.high_school = nil
-    elsif @online.grade == "小学生"
-      @online.elementary_school = @online.high_school
-      @online.high_school = nil
+    # 学校名登録調整
+    school = nil
+    if !@online.high_school.blank?
+      school = @online.high_school
+    elsif !@online.junior_high_school.blank?
+      school = @online.junior_high_school
+    elsif !@online.elementary_school.blank?
+      school = @online.elementary_school
+    end
+    @online.update(high_school: nil, junior_high_school: nil, elementary_school: nil)
+
+    if @online.grade == nil
+    elsif @online.grade.include?("高")
+      @online.high_school = school
+    elsif @online.grade.include?("中")
+      @online.junior_high_school = school
+    elsif @online.grade.include?("小")
+      @online.elementary_school = school
     end
 
     if @online.valid?

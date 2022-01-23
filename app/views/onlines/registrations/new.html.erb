@@ -8,9 +8,16 @@
         <p>いただいた個人情報は、塾の運営、連絡のみの使用に限定し、厳重に管理いたします。</p>
 
         <%= form_for @online, url: {action: "confirm"} do |f| %>
-          <%= render "onlines/shared/error_messages", resource: resource %>
-
           <table class="table">
+            <% if @online.errors.include?(:first_name) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :first_name %>
+              </td></tr>
+            <% elsif @online.errors.include?(:last_name) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :last_name %>
+              </td></tr>
+            <% end %>
             <tr class="align-middle">
               <td style="width: 180px"><%= f.label :first_name, "名前", class: "form-label" %></td>
               <td>
@@ -20,10 +27,22 @@
                 </div>
               </td>
             </tr>
+
+            <% if @online.errors.include?(:kana_name) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :kana_name %>
+              </td></tr>
+            <% end %>
             <tr class="align-middle">
               <td><%= f.label :kana_name, "名前（カナ）", class: "form-label" %></td>
               <td><%= f.text_field :kana_name, placeholder: "例) イナリ　タロウ", class: "form-control" %></td>
             </tr>
+
+            <% if @online.errors.include?(:parent_name) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :parent_name %>
+              </td></tr>
+            <% end %>
             <tr class="align-middle">
               <td><%= f.label :parent_name, "名前（保護者様）", class: "form-label" %></td>
               <td>
@@ -33,6 +52,12 @@
                 </div>
               </td>
             </tr>
+
+            <% if @online.errors.include?(:gender) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :gender %>
+              </td></tr>
+            <% end %>
             <tr class="align-middle">
               <td><%= f.label :gender, "性別", class: "form-label" %></td>
               <td>
@@ -46,42 +71,123 @@
                 </div>
               </td>
             </tr>
+
+            <% if @online.errors.include?(:birthday) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :birthday %>
+              </td></tr>
+            <% end %>
             <tr class="align-middle">
               <td><%= f.label :birthday, "生年月日", class: "form-label" %></td>
               <td><%= f.date_field :birthday, class: "form-control" %></td>
             </tr>
+
+            <% if @online.errors.include?(:high_school) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :high_school %>
+              </td></tr>
+            <% elsif @online.errors.include?(:junior_high_school) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :junior_high_school %>
+              </td></tr>
+            <% elsif @online.errors.include?(:elementary_school) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :elementary_school %>
+              </td></tr>
+            <% end %>
+
+            <% if !@online.elementary_school.blank? %>
+              <tr class="align-middle">
+                <td><%= f.label :elementary_school, "小学校名", class: "form-label" %></td>
+                <td><%= f.text_field :elementary_school, placeholder: "例) 京都小学校", class: "form-control" %></td>
+              </tr>
+            <% elsif !@online.junior_high_school.blank? %>
+              <tr class="align-middle">
+                <td><%= f.label :junior_high_school, "中学校名", class: "form-label" %></td>
+                <td><%= f.text_field :junior_high_school, placeholder: "例) 京都中学校", class: "form-control" %></td>
+              </tr>
+            <% else %>
+              <tr class="align-middle">
+                <td><%= f.label :high_school, "2022年4月からの学校名", class: "form-label" %></td>
+                <td><%= f.text_field :high_school, placeholder: "例) 京都高校", class: "form-control" %></td>
+              </tr>
+            <% end %>
+
+            <% if @online.errors.include?(:grade) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :grade %>
+              </td></tr>
+            <% end %>
             <tr class="align-middle">
-              <td><%= f.label :high_school, "2021年4月からの学校名", class: "form-label" %></td>
-              <td><%= f.text_field :high_school, placeholder: "例) 京都高校", class: "form-control" %></td>
-            </tr>
-            <tr class="align-middle">
-              <td><%= f.label :grade, "2021年4月からの学年", class: "form-label" %></td>
+              <td><%= f.label :grade, "2022年4月からの学年", class: "form-label" %></td>
               <td><%= f.select :grade, Online.grades.keys, {include_blank: "選択してください"}, class: "grade form-select" %></td>
             </tr>
+
+            <% if @online.errors.include?(:postal_code) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :postal_code %>
+              </td></tr>
+            <% end %>
             <tr class="align-middle">
               <td><%= f.label :postal_code, "郵便番号", class: "form-label" %></td>
               <td><%= f.text_field :postal_code, placeholder: "例) 000-0000", class: "form-control" %></td>
             </tr>
+
+            <% if @online.errors.include?(:prefecture) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :prefecture %>
+              </td></tr>
+            <% end %>
             <tr class="align-middle">
               <td><%= f.label :prefecture, "都道府県", class: "form-label" %></td>
               <td><%= f.select :prefecture, Online.prefectures.keys, {include_blank: "選択してください"}, class: "prefecture form-select" %></td>
             </tr>
+
+            <% if @online.errors.include?(:address) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :address %>
+              </td></tr>
+            <% end %>
             <tr class="align-middle">
               <td><%= f.label :address, "市区町村以下の住所", class: "form-label" %></td>
               <td><%= f.text_field :address, placeholder: "例) 長岡京市開田0-0-0", class: "form-control" %></td>
             </tr>
+
+            <% if @online.errors.include?(:phone) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :phone %>
+              </td></tr>
+            <% end %>
             <tr class="align-middle">
               <td><%= f.label :phone, "電話番号", class: "form-label" %></td>
               <td><%= f.text_field :phone, placeholder: "例) 000-0000-0000", class: "form-control" %></td>
             </tr>
+
+            <% if @online.errors.include?(:email) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :email %>
+              </td></tr>
+            <% end %>
             <tr class="align-middle">
               <td><%= f.label :email, "E-mail", class: "form-label" %></td>
               <td><%= f.email_field :email, placeholder: "例) xxxx@xxx", class: "form-control" %></td>
             </tr>
+
+            <% if @online.errors.include?(:parent_email) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :parent_email %>
+              </td></tr>
+            <% end %>
             <tr class="align-middle">
               <td><%= f.label :parent_email, "E-mail（保護者様）", class: "form-label" %></td>
               <td><%= f.email_field :parent_email, placeholder: "例) yyyy@yyy", class: "form-control" %></td>
             </tr>
+
+            <% if @online.errors.include?(:course) %>
+              <tr class="border border-white"><td colspan="2">
+                <%= render "layouts/error_messages", model: @online, attribute: :course %>
+              </td></tr>
+            <% end %>
             <tr class="align-middle">
               <td><%= f.label :course, "受講科目", class: "form-label" %></td>
               <td>
