@@ -57,6 +57,12 @@ class Onlines::RegistrationsController < Devise::RegistrationsController
         @online.math_iibf = 1
       elsif (@online.course == "数IIIC 1回目")
         @online.math_iiicf = 1
+      elsif (@online.course == "演習1 1回目(前半)")
+        @online.math_ex1f = 1
+      elsif (@online.course == "演習2(前半)")
+        @online.math_ex3f = 1
+      elsif (@online.course == "演習数III(前半)")
+        @online.math_ex4f = 1
       end
       @online.save
 

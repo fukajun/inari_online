@@ -22,6 +22,14 @@ class AddNameToOnlines < ActiveRecord::Migration[5.2]
     add_column :onlines, :math_iibs, :integer, default: 0
     add_column :onlines, :math_iiicf, :integer, default: 0
     add_column :onlines, :math_iiics, :integer, default: 0
+    add_column :onlines, :math_ex1f, :integer, default: 0
+    add_column :onlines, :math_ex1s, :integer, default: 0
+    add_column :onlines, :math_ex2f, :integer, default: 0
+    add_column :onlines, :math_ex2s, :integer, default: 0
+    add_column :onlines, :math_ex3f, :integer, default: 0
+    add_column :onlines, :math_ex3s, :integer, default: 0
+    add_column :onlines, :math_ex4f, :integer, default: 0
+    add_column :onlines, :math_ex4s, :integer, default: 0
     add_column :onlines, :membership_number, :integer
     add_column :onlines, :status, :boolean, null: false, default: true
     add_column :onlines, :note, :string

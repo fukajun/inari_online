@@ -188,22 +188,10 @@
                 <%= render "layouts/error_messages", model: @online, attribute: :course %>
               </td></tr>
             <% end %>
+            </tr>
             <tr class="align-middle">
               <td><%= f.label :course, "受講科目", class: "form-label" %></td>
-              <td>
-                <div class="form-check form-check-inline">
-                  <%= f.radio_button :course, "数IA 1回目", class: "form-check-input" %>
-                  <%= f.label :course_数ia_1回目, "数IA", class: "form-check-label" %>
-                </div>
-                <div class="form-check form-check-inline">
-                  <%= f.radio_button :course, "数IIB 1回目", class: "form-check-input" %>
-                  <%= f.label :course_数iib_1回目, "数IIB", class: "form-check-label" %>
-                </div>
-                <div class="form-check form-check-inline">
-                  <%= f.radio_button :course, "数IIIC 1回目", class: "form-check-input" %>
-                  <%= f.label :course_数iiic_1回目, "数IIIC", class: "form-check-label" %>
-                </div>
-              </td>
+              <td><%= f.select :course, {"数IA": "数IA 1回目", "数IIB": "数IIB 1回目", "数III": "数IIIC 1回目", "演習1": "演習1 1回目(前半)", "演習2": "演習2(前半)", "演習数III": "演習数III(前半)"}, {include_blank: "選択してください"}, class: "course form-select" %></td>
             </tr>
           </table>
 

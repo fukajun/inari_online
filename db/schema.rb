@@ -94,6 +94,14 @@ ActiveRecord::Schema.define(version: 2021_07_30_143715) do
     t.integer "math_iibs", default: 0
     t.integer "math_iiicf", default: 0
     t.integer "math_iiics", default: 0
+    t.integer "math_ex1f", default: 0
+    t.integer "math_ex1s", default: 0
+    t.integer "math_ex2f", default: 0
+    t.integer "math_ex2s", default: 0
+    t.integer "math_ex3f", default: 0
+    t.integer "math_ex3s", default: 0
+    t.integer "math_ex4f", default: 0
+    t.integer "math_ex4s", default: 0
     t.integer "membership_number"
     t.boolean "status", default: true, null: false
     t.string "note"
