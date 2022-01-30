@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :math do
+    get 'ex1_first/index'
+  end
+  
   root to: 'homes#top'
   get 'homes/top'
   get 'homes/about'
