@@ -11,7 +11,7 @@
           </figure>
         <% end %>
         <div class="mt-4 d-flex justify-content-center">
-          <%= paginate @question, window: 1 %>
+          <%= paginate @question, window: 1, params_name: "learning" %>
         </div>
       </div>
       <div class="card-footer bg-transparent">
