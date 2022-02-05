@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  namespace :math do
-    get 'ex1_first/index'
-  end
   
   root to: 'homes#top'
   get 'homes/top'
@@ -88,6 +85,14 @@ Rails.application.routes.draw do
     get "iiic_second/:id/exercise", to: "iiic_second#exercise", as: "iiic_second_exercise"
     get "iiic_second/:id/exercise_answer", to: "iiic_second#exercise_answer", as: "iiic_second_exercise_answer"
     get "iiic_second/postphone", to: "iiic_second#postphone", as: "iiic_second_postphone"
+
+    resources :ex1_first, only: [:index, :update]
+    get "ex1_first/:id/lecture", to: "ex1_first#lecture", as: "ex1_first_lecture"
+    get "ex1_first/:id/exercise", to: "ex1_first#exercise", as: "ex1_first_exercise"
+    get "ex1_first/:id/homework", to: "ex1_first#homework", as: "ex1_first_homework"
+    get "ex1_first/:id/test", to: "ex1_first#test", as: "ex1_first_test"
+    get "ex1_first/:id/test_answer", to: "ex1_first#test_answer", as: "ex1_first_test_answer"
+    get "ex1_first/postphone", to: "ex1_first#postphone", as: "ex1_first_postphone"
   end
 
   #保護者

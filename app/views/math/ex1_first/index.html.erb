@@ -1,2 +1,167 @@
-<h1>Math::Ex1First#index</h1>
-<p>Find me in app/views/math/ex1_first/index.html.erb</p>
+<div class="row">
+  <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>演習1 1回目(前半)</h4>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3 border-bottom">
+          <div class="col-3"><%= link_to "戻る", 'javascript:history.back()', class: "btn btn-link" %></div>
+          <div class="col-9 text-end">
+            <% if current_online.math_ex1f <= 3 %>
+              <% if @subject.postphonement < 3 %>
+                <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#postphoneModal">開始期限を延期する</button>
+                <span class="badge bg-light text-secondary fs-6">残り <%= 3 - @subject.postphonement %>回</span>
+              <% else %>
+                <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#postphoneModal">開始期限を延期する</button>
+                <span class="badge bg-light text-secondary fs-6">残り <%= 3 - @subject.postphonement %>回</span>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- アコーディオン -->
+        <div class="accordion" id="accordionEx">
+          <% for num in 1..22 do %>
+            <div class="accordion-item">
+              <div class="accordion-header" id="heading<%= num %>">
+                <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse<%= num %>" aria-expanded="true" aria-controls="collapse<%= num %>">
+                  <div class="col-5 text-center display-6 position-relative px-3">
+                    Lesson <%= num %>
+                    <% if @subject.question > num %>
+                      <span class="position-absolute top-50 start-0 translate-middle mx-2 p-2 badge bg-success rounded-circle fs-6">✔</span>
+                    <% end %>
+                  </div>
+                  <small class="col-6 text-end">開始期限：<%= @subject["lesson#{num}"].strftime("%Y年%m月%d日") %></small>
+                </button>
+              </div>
+              <div id="collapse<%= num %>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordingEx" data-json="<%= @subject.question.to_json %>">
+                <div class="accordion-body">
+                  <!-- ポイント講義 -->
+                  <% if num == 1 || num == 4 || num == 7 || num == 10 || num == 13 || num == 18 || num == 22  %>
+                    <ul class="list-group lead text-center">
+                      <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+                        <% if @subject.question >= num %>
+                          <%= link_to "ポイント講義", math_ex1_first_lecture_path(num), class: "none-text-underline" %>
+                        <% else %>
+                          <%= "ポイント講義" %>
+                        <% end %>
+                      </li>
+                    </ul>
+                  <!-- テスト -->
+                  <% elsif num == 21 %>
+                    <ul class="list-group lead text-center">
+                      <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+                        <% if @subject.question >= num %>
+                          <% if @subject.stage >= 0 %>
+                            <% if @studies.find_by(question_id: Question.find_by("title like ?", "math_ex1f_test_#{format("%02d", num)}%").id) == nil %>
+                              <% if current_online.status == "有効" %>
+                                <a href="" class="none-text-underline" data-bs-toggle="modal" data-bs-target="#test<%= num %>Modal">テスト問題</a>
+                              <% else %>
+                                <%= "テスト問題" %>
+                              <% end %>
+                            <% else %>
+                              <%= link_to "テスト問題", math_ex1_first_test_path(num), class: "none-text-underline" %>
+                            <% end %>
+                          <% end %>
+                        <% else %>
+                          <%= "テスト問題" %>
+                        <% end %>
+                      </li>
+                      <li class="list-group-item d-grid border border-0 fw-bolder">
+                        <% if @subject.question >= num %>
+                          <% if @subject.question > num || @subject.stage >= 2 %>
+                            <%= link_to "テスト解答", math_ex1_first_test_answer_path(num), class: "none-text-underline" %>
+                          <% else %>
+                            <%= "テスト解答" %>
+                          <% end %>
+                        <% else %>
+                          <%= "テスト解答" %>
+                        <% end %>
+                      </li>
+                    </ul>
+                  <!-- 演習 -->
+                  <% else %>
+                    <ul class="list-group lead text-center">
+                      <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+                        <% if @subject.question >= num %>
+                          <%= link_to "テキスト解答", math_ex1_first_homework_path(num), class: "none-text-underline" %>
+                        <% else %>
+                          <%= "テキスト解答" %>
+                        <% end %>
+                      </li>
+                      <li class="list-group-item d-grid border border-0 fw-bolder">
+                        <% if @subject.question >= num %>
+                          <% if @subject.question > num || @subject.stage >= 2 %>
+                            <%= link_to "演習問題", math_ex1_first_exercise_path(num), class: "none-text-underline" %>
+                          <% else %>
+                            <%= "演習問題" %>
+                          <% end %>
+                        <% else %>
+                          <%= "演習問題" %>
+                        <% end %>
+                      </li>
+                    </ul>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+
+            <!-- モーダル(テスト) -->
+            <div class="modal fade" id="test<%= num %>Modal" tabindex="-1" aria-labelledby="modalLabel">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="moda-title" id="modalLabel">内容確認</h5>
+                    <button class="btn-close" data-bs-dismiss="modal" arial-label="閉じる"></button>
+                  </div>
+                  <div class="modal-body">
+                    <span>テストを開始しますか？</span>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-outline-primary" data-bs-dismiss="modal">キャンセル</button>
+                    <%= link_to "開始する", math_ex1_first_test_path(num), method: :get, class: "btn btn-primary" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- モーダル(延期) -->
+<div class="modal fade" id="postphoneModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="moda-title" id="modalLabel">内容確認</h5>
+        <button class="btn-close" data-bs-dismiss="modal" arial-label="閉じる"></button>
+      </div>
+      <% if @subject.postphonement < 3 %>
+        <div class="modal-body">
+          <span>本当に延期しますか?</span>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-primary" data-bs-dismiss="modal">キャンセル</button>
+          <%= link_to "延期する", math_ex1_first_postphone_path, class: "btn btn-primary" %>
+        </div>
+      <% else %>
+        <div class="alert alert-warning alert-dismissible fade show mb-0">
+          <span>期限の延期回数が3回に達しているため変更できません。<br>次回は必ず期限までに受けましょう。</span>
+          <button class="btn-close" data-bs-dismiss="modal" arial-label="閉じる"></button>         
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const currentQuestionNum = JSON.parse(document.querySelector('#collapse<%= num %>').dataset.json);
+  const accordion = document.getElementById('collapse' + currentQuestionNum);
+  accordion.classList.add('show');
+</script>
