@@ -45,7 +45,9 @@ class Math::Ex1FirstController < ApplicationController
     totalPage = questions.page(params[:page]).total_count
     subject = Subject.find_by(online_id: current_online.id, course: 7)
 
-    if (current_online.math_ex1f == 4)
+    if (questions.empty?)
+      access = false
+    elsif (current_online.math_ex1f == 4)
       access = true
     else
       access = ((parameter <= subject.question))? true : false
@@ -125,7 +127,9 @@ class Math::Ex1FirstController < ApplicationController
       end
     end
 
-    if (current_online.math_iaf == 4)
+    if (questions.empty?)
+      access = false
+    elsif (current_online.math_ex1f == 4)
       access = true
     else
       access = (parameter <= subject.question)? true : false
@@ -150,7 +154,9 @@ class Math::Ex1FirstController < ApplicationController
     totalPage = questions.page(params[:page]).total_count
     subject = Subject.find_by(online_id: current_online.id, course: 7)
 
-    if (current_online.math_iaf == 4)
+    if (questions.empty?)
+      access = false
+    elsif (current_online.math_ex1f == 4)
       access = true
     else
       if (subject.stage == 1)
@@ -173,12 +179,14 @@ class Math::Ex1FirstController < ApplicationController
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
     @questions = Question.where("title like ?", "math_ex1f_test_#{questionNumber}%")
-    questionId = Question.find_by("title like ?", "math_ex1f_test_#{questionNumber}%").id
+    questionId = Question.find_by("title like ?", "math_ex1f_test_#{questionNumber}%")
 
     subject = Subject.find_by(online_id: current_online.id, course: 7)
-    @study = Study.find_by(online_id: current_online.id, question_id: questionId)
+    @study = Study.find_by(online_id: current_online.id, question_id: questionId.id) if (!questionId.nil?)
 
-    if (current_online.math_ex1f == 4)
+    if (@questions.empty?)
+      access = false
+    elsif (current_online.math_ex1f == 4)
       access = true
     elsif (current_online.status == "有効")
       access = (parameter <= subject.question)? true : false
@@ -190,7 +198,7 @@ class Math::Ex1FirstController < ApplicationController
       if @study == nil
         @study = Study.new
         @study.online_id = current_online.id
-        @study.question_id = questionId
+        @study.question_id = questionId.id
         @study.save
       end
 
@@ -206,12 +214,14 @@ class Math::Ex1FirstController < ApplicationController
     @parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
     @questions = Question.where("title like ?", "math_ex1f_test_answer_#{questionNumber}%")
-    questionId = Question.find_by("title like ?", "math_ex1f_test_#{questionNumber}%").id
+    questionId = Question.find_by("title like ?", "math_ex1f_test_#{questionNumber}%")
 
     subject = Subject.find_by(online_id: current_online.id, course: 7)
-    study = Study.find_by(online_id: current_online.id, question_id: questionId)
+    study = Study.find_by(online_id: current_online.id, question_id: questionId.id) if (!questionId.nil?)
 
-    if (current_online.math_ex1f == 4)
+    if (@questions.empty?)
+      access = false
+    elsif (current_online.math_ex1f == 4)
       access = true
     elsif (current_online.status == "有効")
       if (subject.stage == 1)
@@ -237,10 +247,10 @@ class Math::Ex1FirstController < ApplicationController
   def update
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
-    questionId = Question.find_by("title like ?", "math_ex1f_test_#{questionNumber}%").id
+    questionId = Question.find_by("title like ?", "math_ex1f_test_#{questionNumber}%")
 
     subject = Subject.find_by(online_id: current_online.id, course: 7)
-    study = Study.find_by(online_id: current_online.id, question_id: questionId)
+    study = Study.find_by(online_id: current_online.id, question_id: questionId.id)
 
     # 初回のみ回答時間登録
     if study.answer_time == nil
@@ -255,8 +265,6 @@ class Math::Ex1FirstController < ApplicationController
 
     redirect_to math_ex1_first_test_answer_path(params[:id])
   end
-
-
 
   private
   def study_params
