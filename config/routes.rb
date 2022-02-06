@@ -93,6 +93,14 @@ Rails.application.routes.draw do
     get "ex1_first/:id/test", to: "ex1_first#test", as: "ex1_first_test"
     get "ex1_first/:id/test_answer", to: "ex1_first#test_answer", as: "ex1_first_test_answer"
     get "ex1_first/postphone", to: "ex1_first#postphone", as: "ex1_first_postphone"
+
+    resources :ex1_second, only: [:index, :update]
+    get "ex1_second/:id/lecture", to: "ex1_second#lecture", as: "ex1_second_lecture"
+    get "ex1_second/:id/exercise", to: "ex1_second#exercise", as: "ex1_second_exercise"
+    get "ex1_second/:id/homework", to: "ex1_second#homework", as: "ex1_second_homework"
+    get "ex1_second/:id/test", to: "ex1_second#test", as: "ex1_second_test"
+    get "ex1_second/:id/test_answer", to: "ex1_second#test_answer", as: "ex1_second_test_answer"
+    get "ex1_second/postphone", to: "ex1_second#postphone", as: "ex1_second_postphone"
   end
 
   #保護者
