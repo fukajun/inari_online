@@ -39,12 +39,14 @@ class Math::IiicFirstController < ApplicationController
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
     @questions = Question.where("title like ?", "math_iiicf_test_#{questionNumber}%")
-    questionId = Question.find_by("title like ?", "math_iiicf_test_#{questionNumber}%").id
+    questionId = Question.find_by("title like ?", "math_iiicf_test_#{questionNumber}%")
 
     subject = Subject.find_by(online_id: current_online.id, course: 5)
-    @study = Study.find_by(online_id: current_online.id, question_id: questionId)
+    @study = Study.find_by(online_id: current_online.id, question_id: questionId.id) if (!questionId.nil?)
 
-    if (current_online.math_iiicf == 4)
+    if (@questions.empty?)
+      access = false
+    elsif (current_online.math_iiicf == 4)
       access = true
     elsif (current_online.status == "有効")
       access = (parameter <= subject.question)? true : false
@@ -56,7 +58,7 @@ class Math::IiicFirstController < ApplicationController
       if @study == nil
         @study = Study.new
         @study.online_id = current_online.id
-        @study.question_id = questionId
+        @study.question_id = questionId.id
         @study.save
         # 受講申請案内
         if questionNumber == "16"
@@ -84,12 +86,14 @@ class Math::IiicFirstController < ApplicationController
     @parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
     @questions = Question.where("title like ?", "math_iiicf_test_answer_#{questionNumber}%")
-    questionId = Question.find_by("title like ?", "math_iiicf_test_#{questionNumber}%").id
+    questionId = Question.find_by("title like ?", "math_iiicf_test_#{questionNumber}%")
 
     subject = Subject.find_by(online_id: current_online.id, course: 5)
-    study = Study.find_by(online_id: current_online.id, question_id: questionId)
+    study = Study.find_by(online_id: current_online.id, question_id: questionId.id) if (!questionId.nil?)
 
-    if (current_online.math_iiicf == 4)
+    if (@questions.empty?)
+      access = false
+    elsif (current_online.math_iiicf == 4)
       access = true
     elsif (current_online.status == "有効")
       if (subject.stage == 1)
@@ -116,12 +120,14 @@ class Math::IiicFirstController < ApplicationController
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
     @questions = Question.where("title like ?", "math_iiicf_exercise_#{questionNumber}%")
-    questionId = Question.find_by("title like ?", "math_iiicf_test_#{questionNumber}%").id
+    questionId = Question.find_by("title like ?", "math_iiicf_test_#{questionNumber}%")
 
     subject = Subject.find_by(online_id: current_online.id, course: 5)
-    study = Study.find_by(online_id: current_online.id, question_id: questionId)
+    study = Study.find_by(online_id: current_online.id, question_id: questionId.id) if (!questionId.nil?)
 
-    if (current_online.math_iiicf == 4)
+    if (@questions.empty?)
+      access = false
+    elsif (current_online.math_iiicf == 4)
       access = true
     elsif (current_online.status == "有効")
       if (subject.stage == 1)
@@ -148,12 +154,14 @@ class Math::IiicFirstController < ApplicationController
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
     @questions = Question.where("title like ?", "math_iiicf_exercise_answer_#{questionNumber}%")
-    questionId = Question.find_by("title like ?", "math_iiicf_test_#{questionNumber}%").id
+    questionId = Question.find_by("title like ?", "math_iiicf_test_#{questionNumber}%")
 
     subject = Subject.find_by(online_id: current_online.id, course: 5)
-    study = Study.find_by(online_id: current_online.id, question_id: questionId)
+    study = Study.find_by(online_id: current_online.id, question_id: questionId.id) if (!questionId.nil?)
 
-    if (current_online.math_iiicf == 4)
+    if (@questions.empty?)
+      access = false
+    elsif (current_online.math_iiicf == 4)
       access = true
     elsif (current_online.status == "有効")
       access = (parameter < subject.question)? true : false
@@ -170,10 +178,10 @@ class Math::IiicFirstController < ApplicationController
 
   def update
     questionNumber = "%02d" % params[:id]
-    questionId = Question.find_by("title like ?", "math_iiicf_test_#{questionNumber}%").id
+    questionId = Question.find_by("title like ?", "math_iiicf_test_#{questionNumber}%")
 
     subject = Subject.find_by(online_id: current_online.id, course: 5)
-    study = Study.find_by(online_id: current_online.id, question_id: questionId)
+    study = Study.find_by(online_id: current_online.id, question_id: questionId.id)
 
     if params[:commit] != nil
       # 初回のみ回答時間登録
