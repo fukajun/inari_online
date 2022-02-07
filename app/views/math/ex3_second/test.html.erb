@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>テスト問題</h4>
+      </div>
+      <div class="card-body">
+        <div class="answer_time text-end" data-json="<%= @timeArray.to_json %>"></div>
+        <% @questions.each do |question| %>
+          <figure>
+            <img src='/assets/<%= question.title %>' alt="" width='100%'>
+          </figure>
+        <% end %>
+      </div>
+      <div class="card-footer bg-transparent">
+        <% if current_online.status == "有効" && @study.score == nil %>
+          <%= form_for(@study, url: math_ex3_second_path) do |f| %>
+            <div class="input-group my-3">
+              <%= f.attachment_field :answer_images_images, multiple: true, onchange: 'selectFile(this)', class: "form-control" %>
+              <%= f.submit "提出する", id: 'send', disabled: true, class: "btn btn-primary" %>
+            </div>
+          <% end %>
+          <div id="preview"></div>
+        <% else %>
+          <div class="text-center">
+            <%= link_to "一覧画面に戻る", math_ex3_second_index_path, class: "btn btn-link" %>
+            <%= link_to "テスト解答へ進む", math_ex3_second_test_answer_path, class: "btn btn-link" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const timeJSON = JSON.parse(document.querySelector('.answer_time').dataset.json);
+  const startTime = Date.parse(timeJSON[0]);
+  const answerTime = timeJSON[1];
+
+  if (answerTime === null){
+    setInterval(() => {
+      let currentTime = Date.now();
+      let diff = parseInt((currentTime - startTime) / 1000);
+      let minute = ('00' + parseInt(diff / 60)).slice(-2);
+      let second = ('00' + diff % 60).slice(-2);
+      document.querySelector('.answer_time').innerHTML = `経過時間：${minute}:${second}`;
+    });
+  }
+
+
+  function selectFile(test) {
+    if (test.files.length == 0) {
+      document.getElementById('send').disabled = true;
+    } else {
+      document.getElementById('send').disabled = false;
+    }
+
+    let preview = document.getElementById('preview');
+    while (preview.firstChild) {
+      preview.removeChild(preview.firstChild);
+    }
+
+    for (let i = 0; i < test.files.length; i++) {
+      let reader = new FileReader();
+      reader.onload = (function (e) {
+        let img = new Image();
+        img.classList.add('mb-3');
+        img.classList.add('mx-1');
+        img.classList.add('border');
+        img.src = e.target.result;
+        img.style.width = "30%";
+        document.getElementById('preview').appendChild(img);
+      });
+      reader.readAsDataURL(test.files[i]);
+    }
+  }
+</script>

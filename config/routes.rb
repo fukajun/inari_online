@@ -125,6 +125,14 @@ Rails.application.routes.draw do
     get "ex3_first/:id/test", to: "ex3_first#test", as: "ex3_first_test"
     get "ex3_first/:id/test_answer", to: "ex3_first#test_answer", as: "ex3_first_test_answer"
     get "ex3_first/postphone", to: "ex3_first#postphone", as: "ex3_first_postphone"
+
+    resources :ex3_second, only: [:index, :update]
+    get "ex3_second/:id/lecture", to: "ex3_second#lecture", as: "ex3_second_lecture"
+    get "ex3_second/:id/exercise", to: "ex3_second#exercise", as: "ex3_second_exercise"
+    get "ex3_second/:id/homework", to: "ex3_second#homework", as: "ex3_second_homework"
+    get "ex3_second/:id/test", to: "ex3_second#test", as: "ex3_second_test"
+    get "ex3_second/:id/test_answer", to: "ex3_second#test_answer", as: "ex3_second_test_answer"
+    get "ex3_second/postphone", to: "ex3_second#postphone", as: "ex3_second_postphone"
   end
 
   #保護者
