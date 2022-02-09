@@ -1,13 +1,13 @@
-class Math::Ex3SecondController < ApplicationController
+class Math::Ex4SecondController < ApplicationController
   before_action :authenticate_online!
 
   def index
-    @subject = Subject.find_by(online_id: current_online.id, course: 12)
+    @subject = Subject.find_by(online_id: current_online.id, course: 14)
     @studies = Study.where(online_id: current_online.id)
   end
 
   def postphone
-    subject = Subject.find_by(online_id: current_online.id, course: 12)
+    subject = Subject.find_by(online_id: current_online.id, course: 14)
 
     # 課題提出期限延長
     if subject.postphonement < 3
@@ -38,16 +38,16 @@ class Math::Ex3SecondController < ApplicationController
   def lecture
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
-    questions = Question.where("title like ?", "math_ex3s_lecture_#{questionNumber}%")
+    questions = Question.where("title like ?", "math_ex4s_lecture_#{questionNumber}%")
     @question = questions.page(params[:page]).per(1)
 
     currentPage = questions.page(params[:page]).current_page
     totalPage = questions.page(params[:page]).total_count
-    subject = Subject.find_by(online_id: current_online.id, course: 12)
+    subject = Subject.find_by(online_id: current_online.id, course: 14)
 
     if (questions.empty?)
       access = false
-    elsif (current_online.math_ex3s == 4)
+    elsif (current_online.math_ex4s == 4)
       access = true
     else
       access = ((parameter <= subject.question))? true : false
@@ -65,12 +65,12 @@ class Math::Ex3SecondController < ApplicationController
   def homework
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
-    questions = Question.where("title like ?", "math_ex3s_homework_#{questionNumber}%")
+    questions = Question.where("title like ?", "math_ex4s_homework_#{questionNumber}%")
     @question = questions.page(params[:page]).per(1)
 
     currentPage = questions.page(params[:page]).current_page
     totalPage = questions.page(params[:page]).total_count
-    subject = Subject.find_by(online_id: current_online.id, course: 12)
+    subject = Subject.find_by(online_id: current_online.id, course: 14)
 
     # 受講申請案内
     if ((questionNumber == "16") && (subject.question == 16) && (subject.stage == 1) && (currentPage == totalPage))
@@ -87,7 +87,7 @@ class Math::Ex3SecondController < ApplicationController
 
     if (questions.empty?)
       access = false
-    elsif (current_online.math_ex3s == 4)
+    elsif (current_online.math_ex4s == 4)
       access = true
     else
       access = (parameter <= subject.question)? true : false
@@ -105,16 +105,16 @@ class Math::Ex3SecondController < ApplicationController
   def exercise
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
-    questions = Question.where("title like ?", "math_ex3s_exercise_#{questionNumber}%")
+    questions = Question.where("title like ?", "math_ex4s_exercise_#{questionNumber}%")
     @question = questions.page(params[:page]).per(1)
 
     currentPage = questions.page(params[:page]).current_page
     totalPage = questions.page(params[:page]).total_count
-    subject = Subject.find_by(online_id: current_online.id, course: 12)
+    subject = Subject.find_by(online_id: current_online.id, course: 14)
 
     if (questions.empty?)
       access = false
-    elsif (current_online.math_ex3s == 4)
+    elsif (current_online.math_ex4s == 4)
       access = true
     elsif (subject.question == 17)
     	access = (parameter <= subject.question)? true : false
@@ -138,15 +138,15 @@ class Math::Ex3SecondController < ApplicationController
   def test
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
-    @questions = Question.where("title like ?", "math_ex3s_test_#{questionNumber}%")
-    questionId = Question.find_by("title like ?", "math_ex3s_test_#{questionNumber}%")
+    @questions = Question.where("title like ?", "math_ex4s_test_#{questionNumber}%")
+    questionId = Question.find_by("title like ?", "math_ex4s_test_#{questionNumber}%")
 
-    subject = Subject.find_by(online_id: current_online.id, course: 12)
+    subject = Subject.find_by(online_id: current_online.id, course: 14)
     @study = Study.find_by(online_id: current_online.id, question_id: questionId.id) if (!questionId.nil?)
 
     if (@questions.empty?)
       access = false
-    elsif (current_online.math_ex3s == 4)
+    elsif (current_online.math_ex4s == 4)
       access = true
     elsif (current_online.status == "有効")
       access = (parameter <= subject.question)? true : false
@@ -173,15 +173,15 @@ class Math::Ex3SecondController < ApplicationController
   def test_answer
     @parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
-    @questions = Question.where("title like ?", "math_ex3s_test_answer_#{questionNumber}%")
-    questionId = Question.find_by("title like ?", "math_ex3s_test_#{questionNumber}%")
+    @questions = Question.where("title like ?", "math_ex4s_test_answer_#{questionNumber}%")
+    questionId = Question.find_by("title like ?", "math_ex4s_test_#{questionNumber}%")
 
-    subject = Subject.find_by(online_id: current_online.id, course: 12)
+    subject = Subject.find_by(online_id: current_online.id, course: 14)
     study = Study.find_by(online_id: current_online.id, question_id: questionId.id) if (!questionId.nil?)
 
     if (@questions.empty?)
       access = false
-    elsif (current_online.math_ex3s == 4)
+    elsif (current_online.math_ex4s == 4)
       access = true
     elsif (current_online.status == "有効")
       if (subject.stage == 1)
@@ -207,9 +207,9 @@ class Math::Ex3SecondController < ApplicationController
   def update
     parameter = params[:id].to_i
     questionNumber = "%02d" % params[:id]
-    questionId = Question.find_by("title like ?", "math_ex3s_test_#{questionNumber}%")
+    questionId = Question.find_by("title like ?", "math_ex4s_test_#{questionNumber}%")
 
-    subject = Subject.find_by(online_id: current_online.id, course: 12)
+    subject = Subject.find_by(online_id: current_online.id, course: 14)
     study = Study.find_by(online_id: current_online.id, question_id: questionId.id)
 
     # 初回のみ回答時間登録
@@ -225,11 +225,11 @@ class Math::Ex3SecondController < ApplicationController
 
     # 単元修了処理
     if subject.question == 23
-      current_online.update(math_ex3s: 4)
+      current_online.update(math_ex4s: 4)
       subject.update(stage: 0)
     end
 
-    redirect_to math_ex3_second_test_answer_path(params[:id])
+    redirect_to math_ex4_second_test_answer_path(params[:id])
   end
 
   private
