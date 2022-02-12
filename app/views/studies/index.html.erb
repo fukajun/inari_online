@@ -16,45 +16,102 @@
           <tbody class="border border-start-0 border-end-0">
             <tr>
               <td>数IA 1回目</td>
-              <td><%= @iafScore[0] %></td>
-              <td><%= @iafScore[1] %></td>
-              <td><%= @iafScore[2] %></td>
-              <td><%= @iafAverage %></td>
+              <td><%= @scoreArray[0] %></td>
+              <td><%= @scoreArray[1] %></td>
+              <td><%= @scoreArray[2] %></td>
+              <td><%= @scoreAverage[0] %></td>
             </tr>
             <tr>
               <td>数IA 2回目</td>
-              <td><%=  %></td>
-              <td><%=  %></td>
-              <td><%=  %></td>
-              <td><%=  %></td>
+              <td><%= @scoreArray[3] %></td>
+              <td><%= @scoreArray[4] %></td>
+              <td><%= @scoreArray[5] %></td>
+              <td><%= @scoreAverage[1] %></td>
             </tr>
             <tr>
               <td>数IIB 1回目</td>
-              <td><%=  %></td>
-              <td><%=  %></td>
-              <td><%=  %></td>
-              <td><%=  %></td>
+              <td><%= @scoreArray[6] %></td>
+              <td><%= @scoreArray[7] %></td>
+              <td><%= @scoreArray[8] %></td>
+              <td><%= @scoreAverage[2] %></td>
             </tr>
             <tr>
               <td>数IIB 2回目</td>
-              <td><%=  %></td>
-              <td><%=  %></td>
-              <td><%=  %></td>
-              <td><%=  %></td>
+              <td><%= @scoreArray[9] %></td>
+              <td><%= @scoreArray[10] %></td>
+              <td><%= @scoreArray[11] %></td>
+              <td><%= @scoreAverage[3] %></td>
             </tr>
             <tr>
               <td>数III 1回目</td>
-              <td><%=  %></td>
-              <td><%=  %></td>
-              <td><%=  %></td>
-              <td><%=  %></td>
+              <td><%= @scoreArray[12] %></td>
+              <td><%= @scoreArray[13] %></td>
+              <td><%= @scoreArray[14] %></td>
+              <td><%= @scoreAverage[4] %></td>
             </tr>
             <tr>
               <td>数III 2回目</td>
-              <td><%=  %></td>
-              <td><%=  %></td>
-              <td><%=  %></td>
-              <td><%=  %></td>
+              <td><%= @scoreArray[15] %></td>
+              <td><%= @scoreArray[16] %></td>
+              <td><%= @scoreArray[17] %></td>
+              <td><%= @scoreAverage[5] %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>直前演習</h4>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <th style="width: 24%"></th>
+            <th>1回目</th>
+            <th>2回目</th>
+            <th>3回目</th>
+            <th>4回目</th>
+            <th>5回目</th>
+            <th>平均点</th>
+          </thead>
+          <tbody class="border border-start-0 border-end-0">
+            <tr>
+              <td>演習1 1回目</td>
+              <td><%= @scoreArray[18] %></td>
+              <td><%= @scoreArray[19] %></td>
+              <td><%= @scoreArray[20] %></td>
+              <td><%= @scoreArray[21] %></td>
+              <td><%= @scoreArray[22] %></td>
+              <td><%= @scoreAverage[6] %></td>
+            </tr>
+            <tr>
+              <td>演習1 2回目</td>
+              <td><%= @scoreArray[23] %></td>
+              <td><%= @scoreArray[24] %></td>
+              <td><%= @scoreArray[25] %></td>
+              <td><%= @scoreArray[26] %></td>
+              <td><%= @scoreArray[27] %></td>
+              <td><%= @scoreAverage[7] %></td>
+            </tr>
+            <tr>
+              <td>演習2</td>
+              <td><%= @scoreArray[28] %></td>
+              <td><%= @scoreArray[29] %></td>
+              <td><%= @scoreArray[30] %></td>
+              <td><%= @scoreArray[31] %></td>
+              <td><%= @scoreArray[32] %></td>
+              <td><%= @scoreAverage[8] %></td>
+            </tr>
+            <tr>
+              <td>演習数III</td>
+              <td><%= @scoreArray[33] %></td>
+              <td><%= @scoreArray[34] %></td>
+              <td><%= @scoreArray[35] %></td>
+              <td><%= @scoreArray[36] %></td>
+              <td><%= @scoreArray[37] %></td>
+              <td><%= @scoreAverage[9] %></td>
             </tr>
           </tbody>
         </table>
@@ -68,7 +125,7 @@
       <div class="card-body">
         <table class="table">
           <thead>
-            <th style="width: 24%">問題</th>
+            <th style="width: 32%">問題</th>
             <th>学習日時</th>
             <th>解答時間</th>
             <th>採点結果</th>
@@ -88,6 +145,22 @@
                   <td>数III 1回目 <%= study.question.title.slice(16, 2).to_i %></td>
                 <% elsif study.question.title.include?("iiics") %>
                   <td>数III 2回目 <%= study.question.title.slice(16, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex1f") %>
+                  <td>演習1 1回目(前半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex1s") %>
+                  <td>演習1 1回目(後半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex2f") %>
+                  <td>演習1 2回目(前半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex2s") %>
+                  <td>演習1 2回目(後半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex3f") %>
+                  <td>演習2(前半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex3s") %>
+                  <td>演習2(後半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex4f") %>
+                  <td>演習数III(前半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex4s") %>
+                  <td>演習数III(後半) <%= study.question.title.slice(15, 2).to_i %></td>
                 <% end %>
                 <td><%= study.created_at.strftime("%Y年%m月%d日 %H:%M") %></td>
                 <% if study.answer_time.present? %>
