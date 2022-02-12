@@ -7,7 +7,7 @@
       </div>
       <div class="card-body">
         <ul class="list-group lead text-center">
-          <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+          <li class="list-group-item d-grid border border-0 border-top border-bottom fw-bolder">
             <% if @online.math_iaf >= 3 %>
               <%= link_to "数IA 1回目", math_ia_first_index_path, class: "none-text-underline" %>
             <% else %>
@@ -47,6 +47,64 @@
               <%= link_to "数IIIC 2回目", math_iiic_second_index_path, class: "none-text-underline" %>
             <% else %>
               <%= "数IIIC 2回目" %>
+            <% end %>
+          </li>
+        </ul>
+        <ul class="list-group lead text-center mt-3">
+          <li class="list-group-item d-grid border border-0 border-top border-bottom fw-bolder">
+            <% if @online.math_ex1f >= 3 %>
+              <%= link_to "演習1 1回目(前半)", math_ex1_first_index_path, class: "none-text-underline" %>
+            <% else %>
+              <%= "演習1 1回目(前半)" %>
+            <% end %>
+          </li>
+          <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+            <% if @online.math_ex1s >= 3 %>
+              <%= link_to "演習1 1回目(後半)", math_ex1_second_index_path, class: "none-text-underline" %>
+            <% else %>
+              <%= "演習1 1回目(後半)" %>
+            <% end %>
+          </li>
+          <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+            <% if @online.math_ex2f >= 3 %>
+              <%= link_to "演習1 2回目(前半)", math_ex2_first_index_path, class: "none-text-underline" %>
+            <% else %>
+              <%= "演習1 2回目(前半)" %>
+            <% end %>
+          </li>
+          <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+            <% if @online.math_ex2s >= 3 %>
+              <%= link_to "演習1 2回目(後半)", math_ex2_second_index_path, class: "none-text-underline" %>
+            <% else %>
+              <%= "演習1 2回目(後半)" %>
+            <% end %>
+          </li>
+          <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+            <% if @online.math_ex3f >= 3 %>
+              <%= link_to "演習2(前半)", math_ex3_first_index_path, class: "none-text-underline" %>
+            <% else %>
+              <%= "演習2(前半)" %>
+            <% end %>
+          </li>
+          <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+            <% if @online.math_ex3s >= 3 %>
+              <%= link_to "演習2(後半)", math_ex3_second_index_path, class: "none-text-underline" %>
+            <% else %>
+              <%= "演習2(後半)" %>
+            <% end %>
+          </li>
+          <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+            <% if @online.math_ex4f >= 3 %>
+              <%= link_to "演習数III(前半)", math_ex4_first_index_path, class: "none-text-underline" %>
+            <% else %>
+              <%= "演習数III(前半)" %>
+            <% end %>
+          </li>
+          <li class="list-group-item d-grid border border-0 border-bottom fw-bolder">
+            <% if @online.math_ex4s >= 3 %>
+              <%= link_to "演習数III(後半)", math_ex4_second_index_path, class: "none-text-underline" %>
+            <% else %>
+              <%= "演習数III(後半)" %>
             <% end %>
           </li>
         </ul>

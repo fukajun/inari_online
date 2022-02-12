@@ -3,84 +3,82 @@ class OnlinesController < ApplicationController
 
   def top
     @online = current_online
-    iaf = @online.math_iaf
-    ias = @online.math_ias
-    iibf = @online.math_iibf
-    iibs = @online.math_iibs
-    iiicf = @online.math_iiicf
-    iiics = @online.math_iiics
-    (iaf == 3 || ias == 3 || iibf == 3 || iibs == 3 || iiicf == 3 || iiics == 3)? taking_course = true : taking_course = false
 
-    if taking_course
-      # 課題提出期限確認
-      if iaf == 3
-        @subject = Subject.find_by(online_id: current_online.id, course: 1)
-      elsif ias == 3
-        @subject = Subject.find_by(online_id: current_online.id, course: 2)
-      elsif iibf == 3
-        @subject = Subject.find_by(online_id: current_online.id, course: 3)
-      elsif iibs == 3
-        @subject = Subject.find_by(online_id: current_online.id, course: 4)
-      elsif iiicf == 3
-        @subject = Subject.find_by(online_id: current_online.id, course: 5)
-      elsif iiics == 3
-        @subject = Subject.find_by(online_id: current_online.id, course: 6)
-      end
+    learning = Array.new(14)
+    learning[0] = @online.math_iaf
+    learning[1] = @online.math_ias
+    learning[2] = @online.math_iibf
+    learning[3] = @online.math_iibs
+    learning[4]  = @online.math_iiicf
+    learning[5] = @online.math_iiics
+    learning[6] = @online.math_ex1f
+    learning[7] = @online.math_ex1s
+    learning[8] = @online.math_ex2f
+    learning[9] = @online.math_ex2s
+    learning[10] = @online.math_ex3f
+    learning[11] = @online.math_ex3s
+    learning[12] = @online.math_ex4f
+    learning[13] = @online.math_ex4s
 
-      # 課題提出期限自動更新
-      today = Time.current
-      loopTime = 3 - @subject.postphonement
+    for num in 1..14 do
+      if learning[num - 1] == 3
+        @subject = Subject.find_by(online_id: current_online.id, course: num)
 
-      # 期限超過による更新
-      loopTime.times do
-        lessonId = @subject.question
+        # 課題提出期限自動更新
+        today = Time.current
+        loopTime = 3 - @subject.postphonement
 
-        if @subject.stage == 1
-          deadLine = @subject["lesson#{lessonId}"]
-        elsif (@subject.stage == 3) && (@subject.question != 22)
-          lessonId += 1
-          deadLine = @subject["lesson#{lessonId}"]
-        else
-          deadLine = today + (24 * 60 * 60)
-        end
+        # 期限超過による更新
+        loopTime.times do
+          lessonId = @subject.question
 
-        if (today > deadLine - (9 * 60 * 60))
-          checkDate = Calendar.where(check: true)
-          lessonArray = Array.new
-          checkDate.each do |i|
-            date = i.start_time.strftime("%Y-%m-%d %H:%M:%S")
-            lessonArray.push(date)
+          if @subject.stage == 1
+            deadLine = @subject["lesson#{lessonId}"]
+          elsif (@subject.stage >= 2) && (@subject.question != 22)
+            lessonId += 1
+            deadLine = @subject["lesson#{lessonId}"]
+          else
+            deadLine = today + (24 * 60 * 60)
           end
 
-          lessonArray.each do |j|
-            lessonColumn = "lesson#{lessonId}"
-            if (@subject[lessonColumn].strftime("%Y-%m-%d %H:%M:%S") == j)
-              index = lessonArray.index(j)
-              @subject[lessonColumn] = lessonArray[index + 6]
-              lessonId += 1
-              break if lessonId > 22
+          if (today > deadLine - (9 * 60 * 60))
+            checkDate = Calendar.where(check: true)
+            lessonArray = Array.new
+            checkDate.each do |i|
+              date = i.start_time.strftime("%Y-%m-%d %H:%M:%S")
+              lessonArray.push(date)
             end
+
+            lessonArray.each do |j|
+              lessonColumn = "lesson#{lessonId}"
+              if (@subject[lessonColumn].strftime("%Y-%m-%d %H:%M:%S") == j)
+                index = lessonArray.index(j)
+                @subject[lessonColumn] = lessonArray[index + 6]
+                lessonId += 1
+                break if lessonId > 22
+              end
+            end
+            @subject.postphonement += 1
+            loopTime -= 1
+            @subject.update(subject_params)
           end
-          @subject.postphonement += 1
-          loopTime -= 1
-          @subject.update(subject_params)
-        end
-      end
-
-      # 期限超過かつ延期回数満期によるステータス失効
-      if (loopTime <= 0)
-        lessonId = @subject.question
-        if @subject.stage == 1
-          deadLine = @subject["lesson#{lessonId}"]
-        elsif @subject.stage == 3
-          lessonId += 1
-          deadLine = @subject["lesson#{lessonId}"]
-        else
-          deadLine = today + (24 * 60 * 60)
         end
 
-        if (today > deadLine - (9 * 60 * 60))
-          @online.update(status: "失効")
+        # 期限超過かつ延期回数満期によるステータス失効
+        if (loopTime <= 0)
+          lessonId = @subject.question
+          if @subject.stage == 1
+            deadLine = @subject["lesson#{lessonId}"]
+          elsif @subject.stage >= 2
+            lessonId += 1
+            deadLine = @subject["lesson#{lessonId}"]
+          else
+            deadLine = today + (24 * 60 * 60)
+          end
+
+          if (today > deadLine - (9 * 60 * 60))
+            @online.update(status: "失効")
+          end
         end
       end
     end
