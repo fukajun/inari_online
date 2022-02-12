@@ -59,8 +59,8 @@
         <!-- 保護者ログイン -->
         <% elsif parent_signed_in? %>
           <span class="navbar-profile text-end">
-            受講生番号：<%= current_online.membership_number %><br>
-            <%= current_online.first_name %><%= current_online.last_name %>&nbsp;様
+            受講生番号：<%= current_parent.membership_number %><br>
+            <%= current_parent.first_name %><%= current_parent.last_name %>&nbsp;様
           </span>
         <% end %>
       </div>
