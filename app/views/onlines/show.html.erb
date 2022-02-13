@@ -5,92 +5,96 @@
         <h4>登録情報</h4>
       </div>
       <div class="card-body">
-      	<table class="table">
-					<tr>
-						<td style="width: 160px">受講生番号</td>
-						<td><%= @online.membership_number %></td>
-					</tr>
-					<tr>
-						<td>会員ステータス</td>
-						<td><%= @online.status %></td>
-					</tr>
-					<tr>
-						<td>受講科目</td>
-						<% if current_online.status == "有効" %>
-							<td><%= @online.course %></td>
-						<% end %>
-					</tr>
-					<tr>
-						<td>名前</td>
-						<td><%= @online.first_name %> <%= @online.last_name %></td>
-					</tr>
-					<tr>
-						<td>名前（カナ）</td>
-						<td><%= @online.kana_name %></td>
-					</tr>
-					<tr>
-						<td>名前（保護者様）</td>
-						<td><%= @online.first_name %> <%= @online.parent_name %></td>
-					</tr>
-					<tr>
-						<td>性別</td>
-						<td><%= @online.gender %></td>
-					</tr>
-					<tr>
-						<td>生年月日</td>
-						<td><%= @online.birthday.strftime("%Y年%m月%d日") %></td>
-					</tr>
-					<tr>
-						<% if @online.high_school != "" %>
-							<td>高校</td>
-							<td><%= @online.high_school %></td>
-						<% end %>
-					</tr>
-					<tr>
-						<% if @online.junior_high_school != "" %>
-							<td>中学校</td>
-							<td><%= @online.junior_high_school %></td>
-						<% end %>
-					</tr>
-					<tr>
-						<% if @online.elementary_school != "" %>
-							<td>小学校</td>
-							<td><%= @online.elementary_school %></td>
-						<% end %>
-					</tr>
-					<tr>
-						<td>学年</td>
-						<td><%= @online.grade %></td>
-					</tr>
-					<tr>
-						<td>郵便番号</td>
-						<td><%= @online.postal_code %></td>
-					</tr>
-					<tr>
-						<td>都道府県</td>
-						<td><%= @online.prefecture %></td>
-					</tr>
-					<tr>
-						<td>市区町村以下の住所</td>
-						<td><%= @online.address %></td>
-					</tr>
-					<tr>
-						<td>電話番号</td>
-						<td><%= @online.phone %></td>
-					</tr>
-					<tr>
-						<td>E-mail</td>
-						<td><%= @online.email %></td>
-					</tr>
-					<tr>
-						<td>E-mail（保護者様）</td>
-						<td><%= @online.parent_email %></td>
-					</tr>
-				</table>
+        <table class="table">
+          <tr>
+            <td style="width: 160px">受講生番号</td>
+            <td><%= @online.membership_number %></td>
+          </tr>
+          <tr>
+            <td>会員ステータス</td>
+            <td><%= @online.status %></td>
+          </tr>
+          <tr>
+            <td>受講科目</td>
+            <td>
+              <% if current_online.status == "有効" %>
+                <% @takingLectures.each do |takingLecture| %>
+                  <%= takingLecture %><br>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td>名前</td>
+            <td><%= @online.first_name %> <%= @online.last_name %></td>
+          </tr>
+          <tr>
+            <td>名前（カナ）</td>
+            <td><%= @online.kana_name %></td>
+          </tr>
+          <tr>
+            <td>名前（保護者様）</td>
+            <td><%= @online.first_name %> <%= @online.parent_name %></td>
+          </tr>
+          <tr>
+            <td>性別</td>
+            <td><%= @online.gender %></td>
+          </tr>
+          <tr>
+            <td>生年月日</td>
+            <td><%= @online.birthday.strftime("%Y年%m月%d日") %></td>
+          </tr>
+          <tr>
+            <% if @online.high_school != "" %>
+              <td>高校</td>
+              <td><%= @online.high_school %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <% if @online.junior_high_school != "" %>
+              <td>中学校</td>
+              <td><%= @online.junior_high_school %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <% if @online.elementary_school != "" %>
+              <td>小学校</td>
+              <td><%= @online.elementary_school %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td>学年</td>
+            <td><%= @online.grade %></td>
+          </tr>
+          <tr>
+            <td>郵便番号</td>
+            <td><%= @online.postal_code %></td>
+          </tr>
+          <tr>
+            <td>都道府県</td>
+            <td><%= @online.prefecture %></td>
+          </tr>
+          <tr>
+            <td>市区町村以下の住所</td>
+            <td><%= @online.address %></td>
+          </tr>
+          <tr>
+            <td>電話番号</td>
+            <td><%= @online.phone %></td>
+          </tr>
+          <tr>
+            <td>E-mail</td>
+            <td><%= @online.email %></td>
+          </tr>
+          <tr>
+            <td>E-mail（保護者様）</td>
+            <td><%= @online.parent_email %></td>
+          </tr>
+        </table>
 
-				<div class="actions d-grid gap-2 col-8 mx-auto">
-					<%= link_to "登録内容を変更する", edit_online_path, class: "btn btn-primary" %>
-			  </div>
+        <div class="actions d-grid gap-2 col-8 mx-auto">
+          <%= link_to "登録内容を変更する", edit_online_path, class: "btn btn-primary" %>
+          </div>
       </div>
     </div>
   </div>

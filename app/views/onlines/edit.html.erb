@@ -17,9 +17,13 @@
             </tr>
             <tr>
               <td>受講科目</td>
-              <% if current_online.status == "有効" %>
-                <td><%= @online.course %></td>
-              <% end %>
+              <td>
+                <% if current_online.status == "有効" %>
+                  <% @takingLectures.each do |takingLecture| %>
+                    <%= takingLecture %><br>
+                  <% end %>
+                <% end %>
+              </td>
             </tr>
 
             <% if @online.errors.include?(:first_name) %>

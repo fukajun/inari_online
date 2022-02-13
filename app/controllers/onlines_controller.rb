@@ -92,6 +92,30 @@ class OnlinesController < ApplicationController
 
   def show
     @online = Online.find(params[:id])
+
+    learning = Array.new(14)
+    learning[0] = @online.math_iaf
+    learning[1] = @online.math_ias
+    learning[2] = @online.math_iibf
+    learning[3] = @online.math_iibs
+    learning[4]  = @online.math_iiicf
+    learning[5] = @online.math_iiics
+    learning[6] = @online.math_ex1f
+    learning[7] = @online.math_ex1s
+    learning[8] = @online.math_ex2f
+    learning[9] = @online.math_ex2s
+    learning[10] = @online.math_ex3f
+    learning[11] = @online.math_ex3s
+    learning[12] = @online.math_ex4f
+    learning[13] = @online.math_ex4s
+
+    @takingLectures = Array.new()
+    for num in 1..14 do
+      if (learning[num - 1] == 3)
+        @takingLectures.push(Online.courses.keys[num - 1])
+      end
+    end
+
     if @online.id != current_online.id
       redirect_to online_path(current_online.id)
     end
@@ -99,6 +123,30 @@ class OnlinesController < ApplicationController
 
   def edit
     @online = Online.find(params[:id])
+
+    learning = Array.new(14)
+    learning[0] = @online.math_iaf
+    learning[1] = @online.math_ias
+    learning[2] = @online.math_iibf
+    learning[3] = @online.math_iibs
+    learning[4]  = @online.math_iiicf
+    learning[5] = @online.math_iiics
+    learning[6] = @online.math_ex1f
+    learning[7] = @online.math_ex1s
+    learning[8] = @online.math_ex2f
+    learning[9] = @online.math_ex2s
+    learning[10] = @online.math_ex3f
+    learning[11] = @online.math_ex3s
+    learning[12] = @online.math_ex4f
+    learning[13] = @online.math_ex4s
+
+    @takingLectures = Array.new()
+    for num in 1..14 do
+      if (learning[num - 1] == 3)
+        @takingLectures.push(Online.courses.keys[num - 1])
+      end
+    end
+
     if @online.id != current_online.id
       redirect_to online_path(current_online.id)
     end
