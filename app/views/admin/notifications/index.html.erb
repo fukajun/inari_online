@@ -1,28 +1,54 @@
-<h1>Admin::Notifications#index</h1>
-<p>Find me in app/views/admin/notifications/index.html.erb</p>
+<div class="row">
+  <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+    <div class="card margin-vertical-20">
+    	<div class="card-header text-center">
+        <h4>通知一覧</h4>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3 border-bottom">
+          <div class="col-3"><%= link_to "戻る", 'javascript:history.back()', class: "btn btn-link" %></div>
+          <div class="col-9 text-end"><%= link_to "新規投稿", new_admin_notification_path, class: "btn btn-primary btn-sm" %></div>
+        </div>
 
-<div class="container">
-	<div class="row">
-		<h3>通知一覧</h3>
-	</div>
-	<div><%= link_to "新規投稿", new_admin_notification_path %></div>
-	<div class="row">
-		<table>
-			<thead>
-				<th>送信日時</th>
-				<th>件名</th>
-			</thead>
-			<% @notifications.each do |notification| %>
-				<tbody>
-					<td><%= notification.created_at.strftime("%Y年%m月%d日 %H:%M") %></td>
-					<td>
-						<%= link_to admin_notification_path(notification) do %>
-							<%= notification.title %>
-						<% end %>
-					</td>
-					<td><%= link_to "削除", admin_notification_path(notification), method: :delete, "data-confirm" => "本当に削除しますか？" %></td>
-				</tbody>
-			<% end %>
-		</table>
-	</div>
+        <div class="row ms-1">
+          <ul class="list-group">
+            <% @notifications.each do |notification| %>
+              <li class="list-group-item border border-0 border-bottom">
+                <div class="d-flex justify-content-between">
+                  <%= link_to admin_notification_path(notification), class: "position-relative flex-grow-1 ps-4 btn-link none-text-underline text-ellipsis" do %>
+                      <%= notification.title %>
+                  <% end %>
+                  <small class="d-flex align-items-center text-nowrap"><%= notification.created_at.strftime("%Y年%m月%d日 %H:%M") %></small>
+                  <button class="btn btn-link none-text-underline" data-bs-toggle="modal" data-bs-target="#deleteModal">削除</button>
+                </div>
+              </li>
+
+              <!-- モーダル(削除) -->
+              <div class="modal fade" id="deleteModal" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="moda-title" id="modalLabel">内容確認</h5>
+                      <button class="btn-close" data-bs-dismiss="modal" arial-label="閉じる"></button>
+                    </div>
+                    <div class="modal-body">
+                      <span>本当に削除しますか?</span>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-outline-primary" data-bs-dismiss="modal">キャンセル</button>
+                      <%= link_to "削除する", admin_notification_path(notification), method: :delete, class: "btn btn-primary" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <% end %>
+          </ul>
+        </div>
+        <div class="mt-4 d-flex justify-content-center pagination-sm">
+          <%= paginate @notifications, window: 2, params_name: "notification" %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
