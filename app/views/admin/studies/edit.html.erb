@@ -1,56 +1,74 @@
-<h1>Admin::Studies#edit</h1>
-<p>Find me in app/views/admin/studies/edit.html.erb</p>
-
-<div class="container">
-	<div class="row">
-		<div class="col-sm-4">
-			<%= render 'online-info', study: @study %>
-		</div>
-		<div class="col-sm-8">
-			<%= form_for(@study, url: admin_study_path) do |f| %>
-				<div>
-					採点結果：<%= f.text_field :score, autofocus: true, autocomplete: "score" %> 点
-				</div>
-				<div class="field"><%= f.attachment_field :correction_images_images, multiple: true %></div>
-				<div>
-					<%= f.submit "send" %>
-				</div>
-			<% end %>
-			<img id="preview_0" style="width:30%;">
-			<img id="preview_1" style="width:30%;">
-			<img id="preview_2" style="width:30%;">
-			<img id="preview_3" style="width:30%;">
-			<img id="preview_4" style="width:30%;">
-			<img id="preview_5" style="width:30%;">
-			<img id="preview_6" style="width:30%;">
-			<img id="preview_7" style="width:30%;">
-			<img id="preview_8" style="width:30%;">
-			<img id="preview_9" style="width:30%;">
-			<img id="preview_10" style="width:30%;">
-			<img id="preview_11" style="width:30%;">
-		</div>
-	</div>
+<div class="row">
+  <div class="col-md-4">
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h5>受講生情報</h5>
+      </div>
+      <div class="card-body">
+        <%= render 'online-info', study: @study %>
+      </div>
+    </div>
+  </div>
+  <!-- 採点 -->
+  <div class="col-md-8">
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>採点</h4>
+      </div>
+      <div class="card-body">
+        <%= form_for(@study, url: admin_study_path) do |f| %>
+          <div class="input-group my-3">
+            <span class="input-group-text text-light bg-primary">採点結果</span>
+            <%= f.number_field :score, autofocus: true, autocomplete: "score", class: "form-control score" %>
+          </div>
+          <div class="input-group my-3">
+            <%= f.attachment_field :correction_images_images, multiple: true, onchange: 'selectFile(this)', class: "form-control" %>
+            <%= f.submit "送信する", id: 'send', disabled: true, class: "btn btn-primary" %>
+          </div>
+        <% end %>
+        <div id="preview"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 
 <script>
-	$('#study_correction_images_images').on('change', function (e) {
-		// 初期化
-		let reader = new FileReader(12);
-		for (let i = 0; i < 12; i++) {
-			$(`#preview_${i}`).attr('src', "");
-		}
+  const score = document.querySelector('.score');
+  const inputCorrection = document.getElementById('study_correction_images_images');
 
-		for (let i = 0; i < e.target.files.length; i++) {
-			reader[i] = new FileReader();
-			reader[i].onload = finisher(i, e);
-			reader[i].readAsDataURL(e.target.files[i]);
+  score.addEventListener('input', handleChange);
+  inputCorrection.addEventListener('change', handleChange);
 
-			function finisher(i, e) {
-				return function(e) {
-					$(`#preview_${i}`).attr('src', e.target.result);
-				}
-			}
-		}
-	});
+
+  function selectFile(correction_image) {
+    while (preview.firstChild) {
+      preview.removeChild(preview.firstChild);
+    }
+
+    for (let i = 0; i < correction_image.files.length; i++) {
+      let reader = new FileReader();
+      reader.onload = (function (e) {
+        let img = new Image();
+        img.classList.add('mb-3');
+        img.classList.add('mx-1');
+        img.classList.add('border');
+        img.src = e.target.result;
+        img.style.width = "30%";
+        document.getElementById('preview').appendChild(img);
+      });
+      reader.readAsDataURL(correction_image.files[i]);
+    }
+  }
+
+  function handleChange(event) {
+    let scoreNum = score.value;
+    let inputCorrectionNum = inputCorrection.files.length;
+
+    if ((scoreNum != "") && (inputCorrectionNum > 0)) {
+      document.getElementById('send').disabled = false;
+    } else {
+      document.getElementById('send').disabled = true;
+    }
+  }
 </script>

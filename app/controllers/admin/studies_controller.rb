@@ -4,7 +4,7 @@ class Admin::StudiesController < ApplicationController
 	def index
 		@q = Online.ransack(params[:q])
 		@onlines = @q.result(distinct: true)
-		@studies = Study.where(online_id: @onlines).reverse_order
+		@studies = Study.where(online_id: @onlines).reverse_order.page(params[:page])
   end
 
 	def show

@@ -1,70 +1,89 @@
-<h1>Admin::Studies#index</h1>
-<p>Find me in app/views/admin/studies/index.html.erb</p>
-
-<div class="container">
-	<div class="row">
-		<h3>答案一覧</h3>
-	</div>
-	<div class="row">
-		<%= search_form_for(@q, url: admin_studies_path) do |f| %>
-			<%= f.search_field :first_name_or_last_name_or_membership_number_eq %>
-			<%= f.submit "検索" %>
-		<% end %>
-	</div>
-	<div class="row">
-		<table>
-			<thead>
-				<th>受信日時</th>
-				<th>受講生番号</th>
-				<th>受講者氏名</th>
-				<th>クラス</th>
-				<th>問題番号</th>
-				<th>解答時間(分)</th>
-				<th>採点結果</th>
-			</thead>
-			<% @studies.each do |study| %>
-				<tbody>
-					<td>
-						<%= link_to admin_study_path(study) do %>
-							<%= study.created_at.strftime("%Y/%m/%d %H:%M") %>
-						<% end %>
-					</td>
-					<td><%= study.online.membership_number %></td>
-					<td><%= study.online.first_name %> <%= study.online.last_name %></td>
-					<% if study.question.title.include?("iaf") %>
-						<td>数IA 1回目</td>
-						<td><%= study.question.title.slice(14, 2) %></td>
-					<% elsif study.question.title.include?("ias") %>
-						<td>数IA 2回目</td>
-						<td><%= study.question.title.slice(14, 2) %></td>
-					<% elsif study.question.title.include?("iibf") %>
-						<td>数IIB 1回目</td>
-						<td><%= study.question.title.slice(15, 2) %></td>
-					<% elsif study.question.title.include?("iibs") %>
-						<td>数IIB 2回目</td>
-						<td><%= study.question.title.slice(15, 2) %></td>
-					<% elsif study.question.title.include?("iiicf") %>
-						<td>数IIIC 1回目</td>
-						<td><%= study.question.title.slice(16, 2) %></td>
-					<% elsif study.question.title.include?("iiics") %>
-						<td>数IIIC 2回目</td>
-						<td><%= study.question.title.slice(16, 2) %></td>
-					<% end %>
-					<% if study.answer_time.present? %>
-						<td><%= study.answer_time / 60 %></td>
-						<td>
-							<% if study.score.present? %>
-								<%= study.score %> 点
-							<% else %>
-								<%= "-" %>
-							<% end %>
-						</td>
-					<% else %>
-						<td><%= "-" %></td>
-						<td><%= "試験中" %></td>
-					<% end %>
-				</tbody>
-			<% end %>
-		</table>
-	</div>
+<div class="row">
+  <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>答案一覧</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-6 offset-3">
+            <%= search_form_for(@q, url: admin_studies_path) do |f| %>
+              <div class="input-group">
+                <%= f.search_field :first_name_or_last_name_or_membership_number_eq, class: "form-control" %>
+                <%= f.submit "検索", class: "btn btn-primary" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <table class="table">
+          <thead>
+            <th>受講日時</th>
+            <th>受講生番号</th>
+            <th>氏名</th>
+            <th>問題</th>
+            <th>解答時間</th>
+            <th>採点結果</th>
+          </thead>
+          <tbody class="border border-start-0 border-end-0">
+            <% @studies.each do |study| %>
+              <tr style="font-size: 0.8rem">
+                <td>
+                  <%= link_to admin_study_path(study) do %>
+                    <%= study.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+                  <% end %>
+                </td>
+                <td><%= study.online.membership_number %></td>
+                <td><%= study.online.first_name %> <%= study.online.last_name %></td>
+                <% if study.question.title.include?("iaf") %>
+                  <td>数IA 1回目 <%= study.question.title.slice(14, 2).to_i %></td>
+                <% elsif study.question.title.include?("ias") %>
+                  <td>数IA 2回目 <%= study.question.title.slice(14, 2).to_i %></td>
+                <% elsif study.question.title.include?("iibf") %>
+                  <td>数IIB 1回目 <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("iibs") %>
+                  <td>数IIB 2回目 <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("iiicf") %>
+                  <td>数III 1回目 <%= study.question.title.slice(16, 2).to_i %></td>
+                <% elsif study.question.title.include?("iiics") %>
+                  <td>数III 2回目 <%= study.question.title.slice(16, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex1f") %>
+                  <td>演習1 1回目(前半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex1s") %>
+                  <td>演習1 1回目(後半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex2f") %>
+                  <td>演習1 2回目(前半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex2s") %>
+                  <td>演習1 2回目(後半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex3f") %>
+                  <td>演習2(前半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex3s") %>
+                  <td>演習2(後半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex4f") %>
+                  <td>演習数III(前半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex4s") %>
+                  <td>演習数III(後半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% end %>
+                <% if study.answer_time.present? %>
+                  <td><%= study.answer_time / 60 %> 分</td>
+                  <td>
+                    <% if study.score.present? %>
+                      <%= study.score %> 点
+                    <% else %>
+                      <%= "-" %>
+                    <% end %>
+                  </td>
+                <% else %>
+                  <td><%= "-" %></td>
+                  <td><%= "試験中" %></td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <div class="mt-4 d-flex justify-content-center pagination-sm">
+          <%= paginate @studies, window: 2, params_name: "notification" %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
