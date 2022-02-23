@@ -1,7 +1,7 @@
 <%= paginator.render do %>
   <nav>
     <ul class="pagination">
-      <% if params_name == "notification" %>
+      <% if params_name == "standard" %>
         <%= first_page_tag unless current_page.first? %>
         <%= prev_page_tag unless current_page.first? %>
         <% each_page do |page| %>

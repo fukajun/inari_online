@@ -1,214 +1,301 @@
-<div class="container">
-	<div class="row">
-		<h3>登録情報確認画面</h3>
-	</div>
-	<div class="row">
-		<h4>登録情報</h4>
-		<table>
-			<tr>
-				<td>受講生番号</td>
-				<td><%= @online.membership_number %></td>
-			</tr>
-			<tr>
-				<td>会員ステータス</td>
-				<td><%= @online.status %></td>
-			</tr>
-			<tr>
-				<td>登録日</td>
-				<td><%= @online.created_at.strftime("%Y年%m月%d日") %></td>
-			</tr>
-			<tr>
-				<td>名前(姓)</td>
-				<td><%= @online.first_name %></td>
-			</tr>
-			<tr>
-				<td>名前(名)</td>
-				<td><%= @online.last_name %></td>
-			</tr>
-			<tr>
-				<td>名前(カナ)</td>
-				<td><%= @online.kana_name %></td>
-			</tr>
-			<tr>
-				<td>名前(保護者)</td>
-				<td><%= @online.parent_name %></td>
-			</tr>
-			<tr>
-				<td>性別</td>
-				<td><%= @online.gender %></td>
-			</tr>
-			<tr>
-				<td>生年月日</td>
-				<td><%= @online.birthday %></td>
-			</tr>
-			<tr>
-				<% if @online.high_school != "" %>
-					<td>高校</td>
-					<td><%= @online.high_school %></td>
-				<% end %>
-			</tr>
-			<tr>
-				<% if @online.junior_high_school != "" %>
-					<td>中学校</td>
-					<td><%= @online.junior_high_school %></td>
-				<% end %>
-			</tr>
-			<tr>
-				<% if @online.elementary_school != "" %>
-					<td>小学校</td>
-					<td><%= @online.elementary_school %></td>
-				<% end %>
-			</tr>
-			<tr>
-				<td>学年</td>
-				<td><%= @online.grade %></td>
-			</tr>
-			<tr>
-				<td>郵便番号</td>
-				<td><%= @online.postal_code %></td>
-			</tr>
-			<tr>
-				<td>都道府県</td>
-				<td><%= @online.prefecture %></td>
-			</tr>
-			<tr>
-				<td>市区町村以下の住所</td>
-				<td><%= @online.address %></td>
-			</tr>
-			<tr>
-				<td>電話番号</td>
-				<td><%= @online.phone %></td>
-			</tr>
-			<tr>
-				<td>E-mail</td>
-				<td><%= @online.email %></td>
-			</tr>
-			<tr>
-				<td>E-mail(保護者)</td>
-				<td><%= @online.parent_email %></td>
-			</tr>
-			<tr>
-				<td>受講科目</td>
-				<td><%= @online.course %></td>
-			</tr>
-			<tr>
-				<td>延期回数</td>
-				<td><%= @subject.postphonement %><%= "回" %></td>
-			</tr>
-			<tr>
-				<td>備考</td>
-				<td><%= @online.note %></td>
-			</tr>
-		</table>
-	</div>
-	<div>
-		<%= link_to "Edit", edit_admin_online_path, class: "btn btn-primary btn-lg center-block" %>
-	</div>
+<div class="row">
+  <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+    <!-- 登録情報 -->
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>登録情報</h4>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <tr>
+            <td style="width: 160px">受講生番号</td>
+            <td><%= @online.membership_number %></td>
+          </tr>
+          <tr>
+            <td>会員ステータス</td>
+            <td><%= @online.status %></td>
+          </tr>
+          <tr>
+            <td>登録日</td>
+            <td><%= @online.created_at.strftime("%Y年%m月%d日") %></td>
+          </tr>
+          <tr>
+            <td>受講科目</td>
+            <td>
+              <% if @online.status == "有効" %>
+                <% @takingLectures.each do |key, value| %>
+                <div class="row">
+                  <div class="col-7"><%= key %></div>
+                  <div class="col-5 badge bg-white text-secondary text-start fs-8">延期回数：<%= value %>回</div>
+                </div>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td>名前</td>
+            <td><%= @online.first_name %> <%= @online.last_name %></td>
+          </tr>
+          <tr>
+            <td>名前（カナ）</td>
+            <td><%= @online.kana_name %></td>
+          </tr>
+          <tr>
+            <td>名前（保護者様）</td>
+            <td><%= @online.first_name %> <%= @online.parent_name %></td>
+          </tr>
+          <tr>
+            <td>性別</td>
+            <td><%= @online.gender %></td>
+          </tr>
+          <tr>
+            <td>生年月日</td>
+            <td><%= @online.birthday.strftime("%Y年%m月%d日") %></td>
+          </tr>
+          <tr>
+            <% if @online.high_school != "" %>
+              <td>高校</td>
+              <td><%= @online.high_school %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <% if @online.junior_high_school != "" %>
+              <td>中学校</td>
+              <td><%= @online.junior_high_school %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <% if @online.elementary_school != "" %>
+              <td>小学校</td>
+              <td><%= @online.elementary_school %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td>学年</td>
+            <td><%= @online.grade %></td>
+          </tr>
+          <tr>
+            <td>郵便番号</td>
+            <td><%= @online.postal_code %></td>
+          </tr>
+          <tr>
+            <td>都道府県</td>
+            <td><%= @online.prefecture %></td>
+          </tr>
+          <tr>
+            <td>市区町村以下の住所</td>
+            <td><%= @online.address %></td>
+          </tr>
+          <tr>
+            <td>電話番号</td>
+            <td><%= @online.phone %></td>
+          </tr>
+          <tr>
+            <td>E-mail</td>
+            <td><%= @online.email %></td>
+          </tr>
+          <tr>
+            <td>E-mail（保護者様）</td>
+            <td><%= @online.parent_email %></td>
+          </tr>
+          <tr>
+            <td>備考</td>
+            <td><%= @online.note %></td>
+          </tr>
+        </table>
 
-	<div class="row">
-		<h3>単元テスト</h3>
-	</div>
-	<div class="row">
-		<table>
-			<thead>
-				<th></th>
-				<th>1回目</th>
-				<th>2回目</th>
-				<th>3回目</th>
-				<th>平均点</th>
-			</thead>
-			<tbody>
-				<tr>
-					<td>数IA 1回目</td>
-					<td><%= @iafScore[0] %></td>
-					<td><%= @iafScore[1] %></td>
-					<td><%= @iafScore[2] %></td>
-					<td><%= @iafAverage %></td>
-				</tr>
-				<tr>
-					<td>数IA 2回目</td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-				</tr>
-				<tr>
-					<td>数IIB 1回目</td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-				</tr>
-				<tr>
-					<td>数IIB 2回目</td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-				</tr>
-				<tr>
-					<td>数IIIC 1回目</td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-				</tr>
-				<tr>
-					<td>数IIIC 2回目</td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-					<td><%=  %></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<div class="row">
-		<h3>学習履歴一覧</h3>
-	</div>
-	<div class="row">
-		<table>
-			<thead>
-				<th>クラス</th>
-				<th>問題番号</th>
-				<th>学習日時</th>
-				<th>解答時間(分)</th>
-				<th>得点</th>
-			</thead>
-			<% @studies.each do |study| %>
-				<tbody>
-					<td><%= study.online.course %></td>
-					<% if study.question.title.include?("iaf") %>
-						<td><%= study.question.title.slice(14, 2) %></td>
-					<% elsif study.question.title.include?("ias") %>
-						<td><%= study.question.title.slice(14, 2) %></td>
-					<% elsif study.question.title.include?("iibf") %>
-						<td><%= study.question.title.slice(15, 2) %></td>
-					<% elsif study.question.title.include?("iibs") %>
-						<td><%= study.question.title.slice(15, 2) %></td>
-					<% elsif study.question.title.include?("iiicf") %>
-						<td><%= study.question.title.slice(16, 2) %></td>
-					<% elsif study.question.title.include?("iiics") %>
-						<td><%= study.question.title.slice(16, 2) %></td>
-					<% end %>
-					<td><%= study.created_at.strftime("%Y/%m/%d %H:%M") %></td>
-					<% if study.answer_time.present? %>
-						<td><%= study.answer_time / 60 %></td>
-						<td>
-							<%= link_to admin_study_path(study) do %>
-								<% if study.score.present? %>
-									<%= study.score %> 点
-								<% else %>
-									<%= "採点中" %>
-								<% end %>
-							<% end %>
-						</td>
-					<% else %>
-						<td><%= "-" %></td>
-						<td><%= "試験中" %></td>
-					<% end %>
-				</tbody>
-			<% end %>
-		</table>
-	</div>
+        <div class="actions d-grid gap-2 col-8 mx-auto">
+          <%= link_to "登録内容を変更する", edit_admin_online_path, class: "btn btn-primary btn-lg center-block" %>
+        </div>
+      </div>
+    </div>
+
+    <!-- 単元テスト -->
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>単元テスト</h4>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <th style="width: 24%"></th>
+            <th>1回目</th>
+            <th>2回目</th>
+            <th>3回目</th>
+            <th>平均点</th>
+          </thead>
+          <tbody class="border border-start-0 border-end-0">
+            <tr>
+              <td>数IA 1回目</td>
+              <td><%= @scoreArray[0] %></td>
+              <td><%= @scoreArray[1] %></td>
+              <td><%= @scoreArray[2] %></td>
+              <td><%= @scoreAverage[0] %></td>
+            </tr>
+            <tr>
+              <td>数IA 2回目</td>
+              <td><%= @scoreArray[3] %></td>
+              <td><%= @scoreArray[4] %></td>
+              <td><%= @scoreArray[5] %></td>
+              <td><%= @scoreAverage[1] %></td>
+            </tr>
+            <tr>
+              <td>数IIB 1回目</td>
+              <td><%= @scoreArray[6] %></td>
+              <td><%= @scoreArray[7] %></td>
+              <td><%= @scoreArray[8] %></td>
+              <td><%= @scoreAverage[2] %></td>
+            </tr>
+            <tr>
+              <td>数IIB 2回目</td>
+              <td><%= @scoreArray[9] %></td>
+              <td><%= @scoreArray[10] %></td>
+              <td><%= @scoreArray[11] %></td>
+              <td><%= @scoreAverage[3] %></td>
+            </tr>
+            <tr>
+              <td>数III 1回目</td>
+              <td><%= @scoreArray[12] %></td>
+              <td><%= @scoreArray[13] %></td>
+              <td><%= @scoreArray[14] %></td>
+              <td><%= @scoreAverage[4] %></td>
+            </tr>
+            <tr>
+              <td>数III 2回目</td>
+              <td><%= @scoreArray[15] %></td>
+              <td><%= @scoreArray[16] %></td>
+              <td><%= @scoreArray[17] %></td>
+              <td><%= @scoreAverage[5] %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 直前演習 -->
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>直前演習</h4>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <th style="width: 24%"></th>
+            <th>1回目</th>
+            <th>2回目</th>
+            <th>3回目</th>
+            <th>4回目</th>
+            <th>5回目</th>
+            <th>平均点</th>
+          </thead>
+          <tbody class="border border-start-0 border-end-0">
+            <tr>
+              <td>演習1 1回目</td>
+              <td><%= @scoreArray[18] %></td>
+              <td><%= @scoreArray[19] %></td>
+              <td><%= @scoreArray[20] %></td>
+              <td><%= @scoreArray[21] %></td>
+              <td><%= @scoreArray[22] %></td>
+              <td><%= @scoreAverage[6] %></td>
+            </tr>
+            <tr>
+              <td>演習1 2回目</td>
+              <td><%= @scoreArray[23] %></td>
+              <td><%= @scoreArray[24] %></td>
+              <td><%= @scoreArray[25] %></td>
+              <td><%= @scoreArray[26] %></td>
+              <td><%= @scoreArray[27] %></td>
+              <td><%= @scoreAverage[7] %></td>
+            </tr>
+            <tr>
+              <td>演習2</td>
+              <td><%= @scoreArray[28] %></td>
+              <td><%= @scoreArray[29] %></td>
+              <td><%= @scoreArray[30] %></td>
+              <td><%= @scoreArray[31] %></td>
+              <td><%= @scoreArray[32] %></td>
+              <td><%= @scoreAverage[8] %></td>
+            </tr>
+            <tr>
+              <td>演習数III</td>
+              <td><%= @scoreArray[33] %></td>
+              <td><%= @scoreArray[34] %></td>
+              <td><%= @scoreArray[35] %></td>
+              <td><%= @scoreArray[36] %></td>
+              <td><%= @scoreArray[37] %></td>
+              <td><%= @scoreAverage[9] %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 学習履歴一覧 -->
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>学習履歴一覧</h4>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <th style="width: 32%">問題</th>
+            <th>学習日時</th>
+            <th>解答時間</th>
+            <th>採点結果</th>
+          </thead>
+          <tbody class="border border-start-0 border-end-0">
+            <% @studies.each do |study| %>
+              <tr style="font-size: 0.8rem">
+                <% if study.question.title.include?("iaf") %>
+                  <td>数IA 1回目 <%= study.question.title.slice(14, 2).to_i %></td>
+                <% elsif study.question.title.include?("ias") %>
+                  <td>数IA 2回目 <%= study.question.title.slice(14, 2).to_i %></td>
+                <% elsif study.question.title.include?("iibf") %>
+                  <td>数IIB 1回目 <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("iibs") %>
+                  <td>数IIB 2回目 <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("iiicf") %>
+                  <td>数III 1回目 <%= study.question.title.slice(16, 2).to_i %></td>
+                <% elsif study.question.title.include?("iiics") %>
+                  <td>数III 2回目 <%= study.question.title.slice(16, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex1f") %>
+                  <td>演習1 1回目(前半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex1s") %>
+                  <td>演習1 1回目(後半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex2f") %>
+                  <td>演習1 2回目(前半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex2s") %>
+                  <td>演習1 2回目(後半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex3f") %>
+                  <td>演習2(前半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex3s") %>
+                  <td>演習2(後半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex4f") %>
+                  <td>演習数III(前半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% elsif study.question.title.include?("ex4s") %>
+                  <td>演習数III(後半) <%= study.question.title.slice(15, 2).to_i %></td>
+                <% end %>
+                <td><%= study.created_at.strftime("%Y年%m月%d日 %H:%M") %></td>
+                <% if study.answer_time.present? %>
+                  <td><%= study.answer_time / 60 %> 分</td>
+                  <td>
+                    <%= link_to admin_study_path(study) do %>
+                      <% if study.score.present? %>
+                        <%= study.score %> 点
+                      <% else %>
+                        <%= "採点中" %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                <% else %>
+                  <td><%= "-" %></td>
+                  <td><%= "試験中" %></td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

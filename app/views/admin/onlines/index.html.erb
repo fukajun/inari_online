@@ -1,82 +1,96 @@
-<div class="container">
-	<div class="row">
-		<h3>登録情報確認画面</h3>
-	</div>
-	<div class="row">
-		<div class="col-sm-4">
-			<div class="row">
-				<%= search_form_for(@q, url: admin_onlines_path) do |f| %>
-					<%= f.search_field :first_name_or_last_name_or_membership_number_eq %>
-					<div><%= check_box_tag :AllStudent, true, ("true" == params[:AllStudent]) %>全登録者</div>
-					<div><%= f.check_box :course_eq_any, {multiple: true}, 1, '' %>数IA 1回目</div>
-					<div><%= f.check_box :course_eq_any, {multiple: true}, 2, '' %>数IA 2回目</div>
-					<div><%= f.check_box :course_eq_any, {multiple: true}, 3, '' %>数IIB 1回目</div>
-					<div><%= f.check_box :course_eq_any, {multiple: true}, 4, '' %>数IIB 2回目</div>
-					<div><%= f.check_box :course_eq_any, {multiple: true}, 5, '' %>数IIIC 1回目</div>
-					<div><%= f.check_box :course_eq_any, {multiple: true}, 6, '' %>数IIIC 2回目</div>
-					<%= f.submit "検索" %>
-				<% end %>
-			</div>
-			<div class="row">
-				<h4>受講生数</h4>
-				<table class="table">
-					<tr>
-						<td>合計</td>
-						<td><%= @AllStudent %></td>
-					</tr>
-					<tr>
-						<td>数IA 1回目</td>
-						<td><%= @mathIAF %></td>
-					</tr>
-					<tr>
-						<td>数IA 2回目</td>
-						<td><%= @mathIAS %></td>
-					</tr>
-					<tr>
-						<td>数IIB 1回目</td>
-						<td><%= @mathIIBF %></td>
-					</tr>
-					<tr>
-						<td>数IIB 2回目</td>
-						<td><%= @mathIIBS %></td>
-					</tr>
-					<tr>
-						<td>数IIIC 1回目</td>
-						<td><%= @mathIIICF %></td>
-					</tr>
-					<tr>
-						<td>数IIIC 2回目</td>
-						<td><%= @mathIIICS %></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-		<div class="col-sm-8">
-			<div class="row">
-				<h4>受講生一覧</h4>
-			</div>
-			<table>
-				<thead>
-					<th>受講生番号</th>
-					<th>氏名</th>
-					<th>受講科目</th>
-					<th>学年</th>
-					<th>ステータス</th>
-				</thead>
-				<% @onlines.each do |online| %>
-					<tbody>
-						<td><%= online.membership_number %></td>
-						<td>
-							<%= link_to admin_online_path(online) do %>
-								<%= online.first_name %> <%= online.last_name %>
-							<% end %>
-						</td>
-						<td><%= online.course %></td>
-						<td><%= online.grade %></td>
-						<td><%= online.status %></td>
-					</tbody>
-				<% end %>
-			</table>
-		</div>
-	</div>
+<div class="row">
+  <div class="col-lg-10 offset-lg-1">
+    <div class="row">
+      <!-- 受講生数 -->
+      <div class="col-md-4">
+        <div class="card margin-vertical-20">
+          <div class="card-header text-center">
+            <h4>受講生数</h4>
+          </div>
+          <div class="card-body">
+            <ul class="list-group">
+              <% @learningCount.each_with_index do |learningCount, index| %>
+                <li class="list-group-item border border-0 border-bottom">
+                  <div class=" row">
+                    <div class="col-xl-8 col-md-10 col-4"><%= @courses[index] %></div>
+                    <div class="col-xl-4 col-md-2 col-8"><%= learningCount %></div>
+                  </div>
+                </li>
+              <% end %>
+              <li class="list-group-item border border-0 border-bottom">
+                <div class=" row">
+                  <div class="col-xl-8 col-md-10 col-4">合計</div>
+                  <div class="col-xl-4 col-md-2 col-8"><%= @allLearningCount %></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 受講生一覧 -->
+      <div class="col-md-8">
+        <div class="card margin-vertical-20">
+          <div class="card-header text-center">
+            <h4>受講生一覧</h4>
+          </div>
+          <div class="card-body mx-3">
+            <div class="row">
+              <%= search_form_for(@q, url: admin_onlines_path) do |f| %>
+                <div class="input-group">
+                  <%= f.search_field :first_name_or_last_name_or_membership_number_eq, class: "form-control" %>
+                  <%= f.submit "検索", class: "btn btn-primary" %>
+                </div>
+
+                <div class="row my-1">
+                  <div class="d-grid col dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">講座選択</button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                      <% @courses.each_with_index do |course, index| %>
+                        <li><span class="form-check">
+                          <%= f.check_box :course_eq_any, {multiple: true, id: "q_course#{index + 1}", class: "form-check-input"} , index + 1, '' %>
+                          <%= f.label "course#{index + 1}", course, class: "form-label" %>
+                        </span></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                  <div class="col form-check mt-2">
+                    <%= check_box_tag :q_online_all, true, ("true" == params[:q_online_all]), class: "form-check-input" %>
+                    <%= f.label "online_all", "全登録者", class: "form-label" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <table class="table">
+              <thead>
+                <th>受講生番号</th>
+                <th>氏名</th>
+                <th>受講科目</th>
+                <th>学年</th>
+                <th>ステータス</th>
+              </thead>
+              <tbody class="border border-start-0 border-end-0">
+                <% @onlines.each do |online| %>
+                  <tr>
+                    <td><%= online.membership_number %></td>
+                    <td>
+                      <%= link_to admin_online_path(online) do %>
+                        <%= online.first_name %> <%= online.last_name %>
+                      <% end %>
+                    </td>
+                    <td><%= online.course %></td>
+                    <td><%= online.grade %></td>
+                    <td><%= online.status %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <div class="mt-4 d-flex justify-content-center pagination-sm">
+              <%= paginate @onlines, window: 2, params_name: "standard" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
