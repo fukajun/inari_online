@@ -1,23 +1,24 @@
-<h1>Admins#top</h1>
-<p>Find me in app/views/admins/top.html.erb</p>
-
-<div class="container">
-	<div class="row">
-		<h3>カレンダー</h3>
-	</div>
-	<div>
-		<%= month_calendar(events: @calendars) do |date, calendars| %>
-			<%= date.day %>
-			<% calendars.each do |calendar| %>
-			<%= calendar.title %>
-				<div>
-					<% if calendar.check == true %>
-						<%= link_to "〇", admin_calendar_path(calendar, params: {check: true}), method: :put %>
-					<% elsif calendar.check == false %>
-						<%= link_to "×", admin_calendar_path(calendar, params: {check: false}), method: :put %>
-					<% end %>
-				</div>
-			<% end %>
-		<% end %>
-	</div>
+<div class="row">
+  <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>カレンダー</h4>
+      </div>
+      <div class="card-body">
+        <%= month_calendar(events: @calendars) do |date, calendars| %>
+          <%= date.day %>
+          <% calendars.each do |calendar| %>
+            <%= calendar.title %>
+            <div>
+              <% if calendar.check == true %>
+                <%= link_to "〇", admin_calendar_path(calendar, params: {check: true}), method: :put, class: "none-text-underline" %>
+              <% elsif calendar.check == false %>
+                <%= link_to "×", admin_calendar_path(calendar, params: {check: false}), method: :put, class: "none-text-underline" %>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
