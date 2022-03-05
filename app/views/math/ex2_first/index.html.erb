@@ -35,7 +35,7 @@
                   <small class="col-6 text-end">開始期限：<%= @subject["lesson#{num}"].strftime("%Y年%m月%d日") %></small>
                 </button>
               </div>
-              <div id="collapse<%= num %>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordingEx" data-json="<%= @subject.question.to_json %>">
+              <div id="collapse<%= num %>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionEx" data-json="<%= @subject.question.to_json %>">
                 <div class="accordion-body">
                   <!-- ポイント講義 -->
                   <% if num == 1 || num == 4 || num == 7 || num == 10 || num == 13 || num == 18 || num == 22  %>
