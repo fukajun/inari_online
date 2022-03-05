@@ -1,6 +1,0 @@
-<% if @status == 'success' %>
-	location.reload();
-<% elsif @status == 'fail' %>
-	alert('更新に失敗しました');
-	$("#payment-modal").modal("hide");
-<% end %>

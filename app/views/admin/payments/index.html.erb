@@ -1,58 +1,152 @@
-<h1>Admin::Payments#index</h1>
-<p>Find me in app/views/admin/payments/index.html.erb</p>
+<div class="row">
+  <div class="col-lg-10 offset-lg-1">
+    <div class="card margin-vertical-20">
+      <div class="card-header text-center">
+        <h4>支払い一覧</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-10 offset-1">
+            <%= search_form_for(@q, url: admin_payments_path) do |f| %>
+              <div class="row">
+                <div class="col-8">
+                  <div class="input-group">
+                    <%= f.search_field :first_name_or_last_name_or_membership_number_eq, class: "form-control" %>
+                    <%= f.submit "検索", class: "btn btn-primary" %>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-check mt-2">
+                    <%= check_box_tag :q_unpaid, true, ("true" == params[:q_unpaid]), class: "all_select form-check-input" %>
+                    <%= f.label "unpaid", "未入金", class: "form-label" %>
+                  </div>
+                </div>
+            	</div>
+            <% end %>
+          </div>
+        </div>
+        <table class="table">
+          <thead style="font-size: 0.9rem">
+            <th>申請日</th>
+            <th>受講生番号</th>
+            <th>受講者 (保護者) 氏名</th>
+            <th>受講クラス</th>
+            <th>振込期日</th>
+            <th></th>
+          </thead>
+          <tbody class="border border-start-0 border-end-0" style="font-size: 0.8rem">
+            <% @payments.each.with_index(1) do |payment, i| %>
+              <tr>
+                <td><%= payment.created_at.strftime("%Y年%m月%d日 %H:%M") %></td>
+                <td><%= payment.online.membership_number %></td>
+                <td>
+                  <%= link_to admin_online_path(payment.online) do %>
+                    <%= payment.online.first_name %> <%= payment.online.last_name %> (<%= payment.online.parent_name %>)
+                  <% end %>
+                </td>
+                <td>
+                  <% if payment.course == nil %>
+                    <%= payment.online.course %>
+                  <% else %>
+                    <%= payment.course %>
+                  <% end %>
+                </td>
+                <td>
+                  <% if payment.paid == true %>
+                    振込済
+                  <% elsif (payment.online.math_iaf + payment.online.math_ias + payment.online.math_iibf + payment.online.math_iibs + payment.online.math_iiicf + payment.online.math_iiics) < 2 %>
+                    <%= (payment.created_at + 14.days).strftime("%Y年%m月%d日") %>
+                  <% else %>
+                    -
+                  <% end %>
+                </td>
+                <td>
+                  <% if payment.paid == true %>
+                    <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#paymentModal<%= i %>">登録解除</button>
+                  <% elsif payment.paid == false %>
+                    <div class="btn-group btn-group-sm">
+                      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#paymentModal<%= i %>">登録</button>
+                      <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#deleteModal<%= i %>">✕</button>
+                    </div>
+                  <% end %>
+                </td>
+              </tr>
 
-<div class="container">
-	<div class="row">
-		<h3>支払い一覧</h3>
-	</div>
-	<div class="row">
-		<%= search_form_for(@q, url: admin_payments_path) do |f| %>
-			<%= f.search_field :first_name_or_last_name_or_membership_number_eq %>
-			<%= check_box_tag :unpaid, true, ("true" == params[:unpaid]) %>未入金
-			<%= f.submit "検索" %>
-		<% end %>
-	</div>
-	<div class="row">
-		<table>
-			<thead>
-				<th>申請日</th>
-				<th>受講生番号</th>
-				<th>受講者氏名</th>
-				<th>保護者氏名</th>
-				<th>保護者メールアドレス</th>
-				<th>受講クラス</th>
-				<th>振込期日</th>
-				<th></th>
-			</thead>
-			<% @payments.each do |payment| %>
-				<tbody>
-					<td><%= payment.created_at.strftime("%Y年%m月%d日 %H:%M") %></td>
-					<td><%= payment.online.membership_number %></td>
-					<td>
-						<%= link_to edit_admin_payment_path(payment), remote: true do %>
-							<%= payment.online.first_name %> <%= payment.online.last_name %>
-						<% end %>
-					</td>
-					<td><%= payment.online.parent_name %></td>
-					<td><%= payment.online.parent_email %></td>
-					<% if payment.course == nil %>
-						<td><%= payment.online.course %></td>
-					<% else %>
-						<td><%= payment.course %></td>
-					<% end %>
-					<% if payment.paid == true %>
-						<td>振込済</td>
-					<% elsif (payment.online.math_iaf + payment.online.math_ias + payment.online.math_iibf + payment.online.math_iibs + payment.online.math_iiicf + payment.online.math_iiics) < 2 %>
-						<td><%= (payment.created_at + 14.days).strftime("%Y年%m月%d日") %></td>
-					<% else %>
-						<td>-</td>
-					<% end %>
-					<td><%= link_to "削除", admin_payment_path(payment), method: :delete, "data-confirm" => "本当に削除しますか？" %></td>
-				</tbody>
-			<% end %>
-		</table>
-	</div>
+              <!-- モーダル(受講登録) -->
+              <div class="modal fade" id="paymentModal<%= i %>" tabindex="-1" aria-labelledby="modalLabel">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="moda-title" id="modalLabel">内容確認</h5>
+                      <button class="btn-close" data-bs-dismiss="modal" arial-label="閉じる"></button>
+                    </div>
+
+                    <% if payment.paid == false %>
+                      <div class="modal-body">
+                        <span><%= payment.online.first_name %> <%= payment.online.last_name %>様の 『<%= payment.course %>』 の受講を登録します。</span>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-outline-primary" data-bs-dismiss="modal">キャンセル</button>
+                        <%= link_to "登録する", admin_payment_path(payment.course_before_type_cast, online_id: payment.online_id, paid: 1), method: :put, class: "btn btn-primary" %>
+                      </div>
+                    <% else %>
+                      <div class="modal-body">
+                        <span><%= payment.online.first_name %> <%= payment.online.last_name %>様の 『<%= payment.course %>』 の受講登録を解除します。</span>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-outline-danger" data-bs-dismiss="modal">キャンセル</button>
+                        <%= link_to "解除する", admin_payment_path(payment.course_before_type_cast, online_id: payment.online_id, paid: 0), method: :put, class: "btn btn-danger" %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+              <!-- モーダル(受講申請削除) -->
+              <div class="modal fade" id="deleteModal<%= i %>" tabindex="-1" aria-labelledby="modalLabel">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header bg-danger bg-opacity-10">
+                      <h5 class="moda-title" id="modalLabel">内容確認</h5>
+                      <button class="btn-close" data-bs-dismiss="modal" arial-label="閉じる"></button>
+                    </div>
+                    <div class="modal-body bg-danger bg-opacity-10">
+                      <span><%= payment.online.first_name %> <%= payment.online.last_name %>様の 『<%= payment.course %>』 の受講申請を削除します。</span>
+                    </div>
+                    <div class="modal-footer bg-danger bg-opacity-10">
+                      <button class="btn btn-outline-danger" data-bs-dismiss="modal">キャンセル</button>
+                      <button class="btn btn-danger" data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#deleteConfirmModal<%= i %>">削除する</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- モーダル(受講申請削除確認) -->
+              <div class="modal fade" id="deleteConfirmModal<%= i %>" tabindex="-1" aria-labelledby="modalLabel">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header bg-danger bg-opacity-10">
+                      <h5 class="moda-title" id="modalLabel">内容確認</h5>
+                      <button class="btn-close" data-bs-dismiss="modal" arial-label="閉じる"></button>
+                    </div>
+                    <div class="modal-body bg-danger bg-opacity-10">
+                      <span>これまでの学習記録もあわせて削除されます。よろしいですか？</span>
+                    </div>
+                    <div class="modal-footer bg-danger bg-opacity-10">
+                      <button class="btn btn-outline-danger" data-bs-dismiss="modal">キャンセル</button>
+                      <%= link_to "削除する", admin_payment_path(payment.course_before_type_cast, online_id: payment.online_id), method: :delete, class: "btn btn-danger" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <% end %>
+          </tbody>
+        </table>
+        <div class="mt-4 d-flex justify-content-center pagination-sm">
+          <%= paginate @payments, window: 2, params_name: "standard" %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<!-- modal -->
-<div id="payment-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

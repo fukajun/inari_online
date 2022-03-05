@@ -78,6 +78,22 @@ class PaymentsController < ApplicationController
       current_online.update(math_iiicf: 1)
     elsif (@payment.course == "数IIIC 2回目")
       current_online.update(math_iiics: 1)
+    elsif (@payment.course == "演習1 1回目(前半)")
+      current_online.update(math_ex1f: 1)
+    elsif (@payment.course == "演習1 1回目(後半)")
+      current_online.update(math_ex1s: 1)
+    elsif (@payment.course == "演習1 2回目(前半)")
+      current_online.update(math_ex2f: 1)
+    elsif (@payment.course == "演習1 2回目(後半)")
+      current_online.update(math_ex2s: 1)
+    elsif (@payment.course == "演習2(前半)")
+      current_online.update(math_ex3f: 1)
+    elsif (@payment.course == "演習2(後半)")
+      current_online.update(math_ex3s: 1)
+    elsif (@payment.course == "演習数III(前半)")
+      current_online.update(math_ex4f: 1)
+    elsif (@payment.course == "演習数III(後半)")
+      current_online.update(math_ex4s: 1)
     end
     @payment.save
     redirect_to request.referer
