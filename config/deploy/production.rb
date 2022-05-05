@@ -42,11 +42,11 @@ server '54.64.132.252', user: 'ec2-user', roles: %w{app web db}
 #
 # Global options
 # --------------
-#  set :ssh_options, {
-#    keys: %w(/home/user_name/.ssh/id_rsa),
+ set :ssh_options, {
+ 	keys: '~/.ssh/aws-inari_online.pem'
 #    forward_agent: false,
 #    auth_methods: %w(password)
-#  }
+ }
 #
 # The server-based syntax can be used to override options:
 # ------------------------------------
